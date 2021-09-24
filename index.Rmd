@@ -1,0 +1,57 @@
+--- 
+title: "Stata Fortbildungen am BIBB"
+author: "Andreas Filser"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+# output: bookdown::pdf_document2
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+```{r setup, echo = F, message=F, warning = F}
+if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
+list.of.packages <- c("tidyr","dplyr","readr","haven","rmarkdown","bookdown","devtools","tidyverse","knitr") # Pakete eintragen
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(echo = T)
+# knitr::opts_chunk$set(dpi=400)
+# devtools::install_github("hemken/Statamarkdown")
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+library(Statamarkdown)
+library(tidyverse)
+library(ggthemes)
+```
+
+# Herzlich Willkommen {-}
+
+
+```{r pl4, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center', echo = F,message=F,warning=FALSE}
+ggplot(palmerpenguins::penguins,aes(x = bill_depth_mm, fill = factor(island))) + geom_histogram(color = "grey30") + theme_stata()  + guides(color = "none") + scale_fill_brewer(palette = "YlGnBu",name="") + facet_grid(~island)
+```
+
+Hier entsteht das Begleitskript für die Stata-Weiterbildungen am BIBB von Andreas Filser vom XX bis zum XX.2021. 
+
+```{r kapitel, ft.align = "center",message=F,warning=F, echo = F}
+library(kableExtra)
+opts <- options(knitr.kable.NA = "")
+
+readxl::read_xlsx("00_kapitel.xlsx",sheet = 1) %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F) %>% 
+  column_spec(1,bold = T)
+```
+
+
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

@@ -1,0 +1,40 @@
+# Einführung in Stata II {#stata2}
+
+
+```{r setup3, echo = F, message=F, warning = F}
+if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+library(Statamarkdown)
+library(tidyverse)
+library(ggthemes)
+```
+
+Seminarinhalte
+
+## Grundlegende Stata Funktionen
+
++ Verändern und Generieren von Variablen sowie Labeln
++ Anwendung deskriptiver Befehle
++ Gewichtung
++ Hilfe-Funktionen
++ Umgang mit ados
++ Programmieren einfacher Schleifen
++ Übersichtlicher Aufbau von do-files
+
+
+```{stata s3_input2}
+display ""
+display 3 + 12
+```
+
+
+```{stata s3_input3}
+dis ""
+dis 3*3
+```
+
+
+```{r pl2, fig.cap='Here is a nice figure!', out.width='80%', fig.asp=.75, fig.align='center', echo = F}
+ggplot(pressure,aes(x =temperature, y = pressure, color = factor(pressure))) + geom_line(color = "navy") + geom_point() + theme_stata()  + guides(color = "none")
+```

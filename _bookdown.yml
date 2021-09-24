@@ -1,0 +1,7 @@
+book_filename: "StataBIBB"
+delete_merged_file: true
+output_dir: "docs"
+language:
+  ui:
+    chapter_name: ""
+rmd_files: ['index.Rmd','01-IntroI.Rmd','02-EinfuehrI.Rmd','03-EinfuehrII.Rmd','04-Table_export.Rmd','05-Macro.Rmd']

@@ -1,0 +1,31 @@
+bookdown::gitbook:
+# bookdown::bs4_book:
+#   theme:
+#     primary: "#005885"
+#   css: style.css
+    # base_font:
+    #   google: Roboto
+    # heading_font:
+    #   google:
+    #     family: Roboto
+    #     wght: 200
+    # code_font:
+    #   google:
+    #     # arguments to sass::font_google()
+    #     family: Roboto
+    #     local: false
+  config:
+    toc:
+      before: |
+        <li><a href="./">A Minimal Book Example</a></li>
+      after: |
+        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    download: ["pdf", "epub"]
+
+# bookdown::pdf_book:
+#   includes:
+#     in_header: preamble.tex
+#   latex_engine: xelatex
+#   citation_package: natbib
+#   keep_tex: yes
+# bookdown::epub_book: default

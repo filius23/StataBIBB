@@ -1,0 +1,30 @@
+# Tabellenexport mit Stata {#tables}
+
+
+```{r setup4, echo = F, message=F, warning = F}
+if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+library(Statamarkdown)
+library(tidyverse)
+library(ggthemes)
+```
+
+Seminarinhalte
+
++ Verschiedene Befehle zum Erzeugen von Häufigkeits-, Kreuz- und Regressionstabellen
++ Formatieren der entstandenen Tabellen
++ Matching der Befehle zum Erzeugen von Word-/LaTex-Tabellen mit den jeweiligen deskriptiven und multivariaten Stata-Befehlen
+
+```{stata s4_input2}
+display ""
+display 3 + 12
+```
+
+
+```{stata s4_input3}
+dis ""
+dis 3*3
+```
+
+
