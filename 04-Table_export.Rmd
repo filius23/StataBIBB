@@ -16,15 +16,18 @@ Seminarinhalte
 + Formatieren der entstandenen Tabellen
 + Matching der Befehle zum Erzeugen von Word-/LaTex-Tabellen mit den jeweiligen deskriptiven und multivariaten Stata-Befehlen
 
-```{stata s4_input2}
-display ""
-display 3 + 12
+
+```{stata s4_input3, eval = F}
+qui reg inc c.age##c.age i.sex i.educ
+est store m1 
+esttab m1, stats( r2 N,fmt(a3)) mti noeqlines compress nolines brack nonumbers replace obslast   cells("b(fmt(a3)) se(fmt(a3)) p(fmt(3))")  
 ```
-
-
-```{stata s4_input3}
-dis ""
-dis 3*3
+```{stata s4_tab1, echo = F}
+set linesize 100
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui mvdecode inc age sex educ, mv(-99/-1)
+qui reg inc c.age##c.age i.sex i.educ
+qui est store m1 
+esttab m1, stats( r2 N,fmt(a3)) mti noeqlines compress nolines brack nonumbers replace obslast   cells("b(fmt(a3)) se(fmt(a3)) p(fmt(3))")  
 ```
-
 

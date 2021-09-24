@@ -34,7 +34,7 @@ library(ggthemes)
 ggplot(palmerpenguins::penguins,aes(x = bill_depth_mm, fill = factor(island))) + geom_histogram(color = "grey30") + theme_stata()  + guides(color = "none") + scale_fill_brewer(palette = "YlGnBu",name="") + facet_grid(~island)
 ```
 
-Hier entsteht das Begleitskript für die Stata-Weiterbildungen am BIBB von Andreas Filser vom XX bis zum XX.2021. 
+**Hier entsteht das Begleitskript für die Stata-Weiterbildungen am BIBB von Andreas Filser vom XX bis zum XX.2021.** 
 
 ```{r kapitel, ft.align = "center",message=F,warning=F, echo = F}
 library(kableExtra)
