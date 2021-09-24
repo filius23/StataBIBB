@@ -22,14 +22,13 @@ Kombination von Macros und Schleifen für effizientes Programmieren sowie Macro-
 
 
 ```{stata s5_input2}
-display ""
-display 3 + 12
+
+loc t1 Hello world , this is a loop
+foreach x of loc t1 {
+    
+	dis "`x'"
+}
 ```
 
-
-```{stata s5_input3}
-dis ""
-dis 3*3
-```
 
 
