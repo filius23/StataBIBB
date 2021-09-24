@@ -116,7 +116,16 @@ In dieser Variablenübersicht können mit Hilfe des Suchfelds (oranger Kreis) au
 knitr::include_graphics("./pics/01_Stata8_Datensatz_suche.PNG")
 ```
 
+
+
+
+
 ## Daten, Codebücher, Fragebogen
+
+<!-- https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html -->
+::: {#hello .greeting .message style="padding: 1em; margin: 1em 0; color: #2C3E50; background-color: #FDEBD0; border: 3px #FAD7A0;"}
+  **Update zu BIBB/BAuA-Erwerbstätigenbefragung**
+:::
 
 Die Daten des hier geladenen Datensatzes enthalten die Angaben von 3477 Befragten des Allbus 2018. Die *Allgemeine Bevölkerungsumfrage der Sozialwissenschaften* (ALLBUS) ist ein Vorhaben von GESIS, das in Zusammenarbeit mit der Studien-Koordinationsgruppe ALLBUS (KG ALLBUS) als wissenschaftlichem Beratungsgremium realisiert wird (https://www.gesis.org/allbus/allbus). Die Daten werden dabei mit Hilfe von Interviews werden persönlich-mündlich durchgeführt. Im Jahr 2000 erfolgte der Umstieg von traditionellen Papierfragebögen (paper and pencil interviewing - PAPI) zur computerunterstützten Befragung mit Laptop (computer assisted interviewing CAPI).
 
