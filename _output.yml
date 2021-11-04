@@ -1,8 +1,10 @@
+# output:
 bookdown::gitbook:
+  css: style.css
+# bookdown::gitbook:
 # bookdown::bs4_book:
-#   theme:
-#     primary: "#005885"
-#   css: style.css
+  # theme:
+  #   primary: "#005885"
     # base_font:
     #   google: Roboto
     # heading_font:

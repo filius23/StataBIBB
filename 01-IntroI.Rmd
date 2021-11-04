@@ -4,6 +4,7 @@
 ```{r setup1, echo = F, message=F, warning = F}
 if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
 stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+# stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 library(Statamarkdown)
 library(tidyverse)
@@ -81,22 +82,26 @@ knitr::include_graphics("./pics/01_Stata7_dofile_save.png")
 Das ist aber alles soweit sehr unspektulär - es gibt schönere und günstigere Taschenrechner als Stata. Die eigentliche Stärke von Stata ist die Analyse von Datensätzen. Diese müssen zunächst eingelesen werden. Im einfachsten Fall liegen die Daten als Stata-Datensatz (mit der Endung `.dta`) vor und wir können die Daten wie folgt einlesen:
 
 ```{stata readin, eval = F}
-cd "C:/Users/Andreas/Dokumente/Statistik/"
-use "Allbus2018.dta"
+cd "C:/Kurse/Stata_BIBB/data/"
+use "BIBBBAuA_2018_suf1.0.dta"
 ```
 
-Der Einlesevorgang besteht also aus zwei Befehlen: zuerst geben wir `cd` den Pfad an, unter welchem der einzulesende Datensatz zu finden ist. Natürlich hängt der Dateipfad aber ganz davon ab, wo Sie den Datensatz gespeichert haben, hier ist es "C:/Users/Andreas/Dokumente/Statistik/":
+Der Einlesevorgang besteht also aus zwei Befehlen: zuerst geben wir `cd` den Pfad an, unter welchem der einzulesende Datensatz zu finden ist. Natürlich hängt der Dateipfad aber ganz davon ab, wo Sie den Datensatz gespeichert haben, hier ist es "C:/Kurse/Stata_BIBB/data/":
 
-```{r,echo = F, out.height="60%",out.width="60%", fig.align="center"}
+```{r,echo = F, out.height="80%",out.width="80%", fig.align="center"}
 knitr::include_graphics("./pics/01_directory.png")
 ```
 Um den Pfad des Ordners herauszufinden, klicken Sie bei Windows in die obere Adresszeile im Explorerfenster: 
-```{r,echo = F, out.height="85%",out.width="85%", fig.align="center"}
+```{r,echo = F, out.height="55%",out.width="65%", fig.align="center"}
 knitr::include_graphics("./pics/01_Dateipfad_WIN.png")
 ```
 
-In iOS (Mac) finden Sie den Pfad indem Sie einmal mit der rechten Maustaste auf die Datei und unter Informationen den Reiter "Ort" wählen.
+:::note
+In iOS (Mac) finden Sie den Pfad, indem Sie einmal mit der rechten Maustaste auf die Datei klicken und dann die ALT-Taste gedrückt halten. Dann sollte die Option "...als Pfadname kopieren" erscheinen. [**Youtube Anleitung**](https://www.youtube.com/watch?v=zcb3D6Xdv4s)
+:::
 
+
+Hat das funktioniert?   
 Wir haben zwei Möglichkeiten zu das aktuelle Arbeitsverzeichnis überprüfen: wir sehen das aktuelle Arbeitsverzeichnis im Stata-Fenster links unten oder wir geben `pwd` ein:
 ```{r,echo = F, out.height="60%",out.width="60%", fig.align="center"}
 knitr::include_graphics("./pics/01_Stata_directory.png")
@@ -104,48 +109,36 @@ knitr::include_graphics("./pics/01_Stata_directory.png")
 
 Wir können diese beiden Schritte natürlich auch einfach kombinieren und den gesamten Pfad nach `use` angeben:
 ```{stata readin2, eval = F}
-use "C:/Users/Andreas/Dokumente/Statistik/Allbus2018.dta"
+use "C:/Kurse/Stata_BIBB/data/BIBBBAuA_2018_suf1.0.dta"
 ```
 
 Wenn das funktioniert hat, dann sehen wir im Fenster rechts eine Variablenübersicht:
-```{r datensatz_eingelesen, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
-knitr::include_graphics("./pics/01_Stata8_Datensatz_pfeil.PNG")
+```{r datensatz_eingelesen, echo = F,out.width = "90%",fig.height= 4, fig.align="center"}
+knitr::include_graphics("./pics/01_Stata8_Datensatz.PNG")
 ```
-In dieser Variablenübersicht können mit Hilfe des Suchfelds (oranger Kreis) auch nach Variablen suchen:
-```{r variablen_suche, echo = F,out.width = "40%",fig.height= 2.5, fig.align="center"}
-knitr::include_graphics("./pics/01_Stata8_Datensatz_suche.PNG")
-```
-
-
-
-
 
 ## Daten, Codebücher, Fragebogen
 
-<!-- https://bookdown.org/yihui/rmarkdown-cookbook/custom-blocks.html -->
-::: {#hello .greeting .message style="padding: 1em; margin: 1em 0; color: #2C3E50; background-color: #FDEBD0; border: 3px #FAD7A0;"}
-  **Update zu BIBB/BAuA-Erwerbstätigenbefragung**
-:::
 
-Die Daten des hier geladenen Datensatzes enthalten die Angaben von 3477 Befragten des Allbus 2018. Die *Allgemeine Bevölkerungsumfrage der Sozialwissenschaften* (ALLBUS) ist ein Vorhaben von GESIS, das in Zusammenarbeit mit der Studien-Koordinationsgruppe ALLBUS (KG ALLBUS) als wissenschaftlichem Beratungsgremium realisiert wird (https://www.gesis.org/allbus/allbus). Die Daten werden dabei mit Hilfe von Interviews werden persönlich-mündlich durchgeführt. Im Jahr 2000 erfolgte der Umstieg von traditionellen Papierfragebögen (paper and pencil interviewing - PAPI) zur computerunterstützten Befragung mit Laptop (computer assisted interviewing CAPI).
+Die Daten des hier geladenen Datensatzes enthalten die Angaben von 20012 Befragten der BIBB/BAuA-Erwerbstätigenbefragung 2018. Die BIBB/BAuA ist eine repräsentativbefragung von in Deutschland zu Arbeit und Beruf im Wandel und Erwerb und Verwertung beruflicher Qualifikation.
 
-Das heißt, die hier geladenen Daten beruhen auf standardisierten Interviews. Derartige Datensätze werden in der Regel zusammen mit einem Codebuch und dem Fragenkatalog veröffentlicht. Sie finden das Codebuch und den Fragenkatalog für den Allbus 2018 auf ILIAS - ebenso für alle weiteren Datensätze, die wir im Lauf dieser Woche verwenden werden. Im Fragenkatalog finden wir den exakten Wortlaut der Fragen:
+Das heißt, die hier geladenen Daten beruhen auf standardisierten Interviews. Derartige Datensätze werden in der Regel zusammen mit einem Codebuch, Methodenreport und dem Fragenkatalog veröffentlicht. Im Fragebogen der BIBB/BAuA 2018 finden wir den exakten Wortlaut der Fragen:
 
 ```{r Fragenb, echo = F,out.width = "90%",fig.height= 3, fig.align="center",dpi = 600}
 knitr::include_graphics("./pics/01_Fragebogen.PNG")
 ```
 
-Im Codebuch ("Variable Report") finden wir eine Beschreibung der Variablen in unserem Datensatz:
+Hier sind auch die Anweisungen an die Interviewenden vermerkt, z.B. dass die Vorgaben zum Schichtmodell zunächst nicht vorgelesen werden sollen. Außerdem werden im Methodenbericht weitere Variablen vorgestellt, die bereits im Datensatz enthalten sind, beispielsweise das Alter der Befragten, der Wohnort und die berufliche Stellung:
 
-```{r codeb, echo = F,out.width = "90%",fig.height= 3, fig.align="center",dpi = 600}
-knitr::include_graphics("./pics/01_Codebuch.PNG")
+```{r 01methoden, echo = F,out.width = "90%",fig.height= 3, fig.align="center",dpi = 600}
+knitr::include_graphics("./pics/01_methodenbericht.PNG")
 ```
 
-Die Antworten der Befragten werden dann im Datensatz gesammelt. Dazu werden den Antworten in der Regel Zahlencodes zugewiesen (siehe die ganz linke Spalte im Codebuch) und so abgelegt. Stata erlaubt dann in einem zweiten Schritt, dass diese Zahlen wieder mit Wertelabeln versehen werden (siehe untere Darstellung) - dazu kommen wir später. In diesem Datensatz entspricht dann jede Zeile einer befragten Person:
-```{r codierung, echo = F,out.width = "100%",fig.height= 3, fig.align="center",dpi = 600}
+Die Antworten der Befragten werden dann im Datensatz gesammelt. Dazu werden den Antworten in der Regel Zahlencodes zugewiesen (siehe die ganz linke Spalte im Fragebogen) und so abgelegt. Stata erlaubt dann in einem zweiten Schritt, dass diese Zahlen wieder mit Wertelabeln versehen werden - dazu kommen wir später. In diesem Datensatz entspricht dann jede Zeile einer befragten Person:
+```{r codierung, echo = F,out.width = "100%",fig.height= 4, fig.align="center",dpi = 600}
 knitr::include_graphics("./pics/01_Codierung_label.PNG")
 ```
-Sowohl im Codebuch als auch in der Fragebogendokumentation finden wir Kürzel links bzw. rechts oben, welche die Variablennamen für den Datensatz angeben.
+In Fragebogendokumentation finden wir Kürzel links oben, welche die Variablennamen für den Datensatz angeben.
 
 ## Überblicksbefehle
 
@@ -153,7 +146,7 @@ Für eine erste Annäherung an die Daten helfen uns drei Überblicksbefehle:  `b
 
 ```{stata readin2x, eval = F}
 cd "C:/Users/Andreas/Dokumente/Statistik/"
-use "Allbus2018.dta"
+use "BIBBBAuA_2018_suf1.0.dta"
 ```
 
 ### `describe`
@@ -163,35 +156,44 @@ describe, short
 ```
 ```{stata desc_actual, echo = F, collectcode=F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 describe, short
 ```
-Hier wurde also ein Datensatz geladen, welcher 3477 Fälle/Zeilen (`obs`) und 708 Variablen/Spalten (`vars`) enthält. 
+Hier wurde also ein Datensatz geladen, welcher 20012 Fälle/Zeilen (`obs`) und 683 Variablen/Spalten (`vars`) enthält. 
 (Wir können den Befehl auch als `d,s` abkürzen)
 
 Wir können den `describe` Befehl auch nutzen, um Informationen zu einer Variable zu erhalten. Dazu hängen wir einfach eine oder mehrere Variablen an `describe` an:
 ```{stata des_var, eval=FALSE}
-describe pv01
+describe F209
 ```
 
 ```{stata des_var1, echo = F, collectcode=F}
 set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-describe pv01
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+describe F209
 ```
 
-Hier sehen wir also in der ersten Spalte nochmal den vollständigen Variablennamen, den Variablentypen (`storage type` - mehr dazu [hier](#var_types)) sowie - falls vorhanden - eine Beschreibung der Variable (`variable label`) sowie der Ausprägungen der Variable (`value label`)
+Hier sehen wir also in der ersten Spalte nochmal den vollständigen Variablennamen, den Variablentypen (`storage type` - mehr dazu [hier](#var_types)) sowie - falls vorhanden - eine Beschreibung der Variable (`variable label`) sowie (ggf.) die Labels für Ausprägungen der Variable (`value label`).
+Letztere können wir mit Hilfe von `labelbook` aufrufen (mehr zu Labels später):
+```{stata des_var5_lab, eval=FALSE}
+labelbook F209
+```
 
+```{stata des_var5_lab2, echo = F, collectcode=F}
+set linesize 80
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+labelbook F209
+```
 
-Wir können auch alle Variablen aufrufen, die mit pa beginnen, indem wir einen `*` einsetzen:
+Wir können auch alle Variablen aufrufen, die mit `F209` beginnen, indem wir einen `*` einsetzen:
 ```{stata des_var5, eval=FALSE}
-d pv*
+describe F209*
 ```
 
 ```{stata des_var5b, echo = F, collectcode=F}
-set linesize 90
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-describe pv*
+set linesize 80
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+describe F209*
 ```
 
 
@@ -207,7 +209,7 @@ knitr::include_graphics("./pics/01_Stata9_bro_Datensatz.png")
 
 Wenn wir nur einige Variablen betrachten möchten, hängen wir diese einfach `browse` an:
 ```{stata browse2, eval = F}
-browse eastwest german sex age mstat
+browse intnr Bula gkpol Stib zpalter 
 ```
 ```{r browse_window2, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
 knitr::include_graphics("./pics/01_Stata9_bro_Datensatz2.png")
@@ -216,7 +218,7 @@ knitr::include_graphics("./pics/01_Stata9_bro_Datensatz2.png")
 Hier bekommen aber immer die gelabelte Ansicht - allerdings stehen dahinter Zahlenwerte. Die Labels helfen uns, deren Bedeutung zu verstehen. Wenn wir aber wie in den nächsten Tagen auch mit den Daten arbeiten wollen, dann beziehen sich diese Operationen immer auf die dahinterstehenden Zahlenwerte. Diese bekommen wir mit der Option `nolabel` (oft auch einfach als `nol` abgekürzt):
 
 ```{stata browse_nol, eval = F}
-browse eastwest german sex age mstat, nol
+browse intnr Bula gkpol Stib zpalter , nolabel
 ```
 ```{r browse_window2_nol, echo = F,out.width = "90%",fig.height= 4.5, fig.align="center"}
 knitr::include_graphics("./pics/01_Stata9_bro_Datensatz2_nol.png")
@@ -224,113 +226,84 @@ knitr::include_graphics("./pics/01_Stata9_bro_Datensatz2_nol.png")
 
 ### `list`
 
-`browse` eignet sich vor allem für größere Übersichten. Wenn wir nur einige wenige Fälle betrachten möchten, dann ist `list` eine gute Alternative, da der Output hier gleich im Ergebnisfenster (2) angezeigt wird. Die Funktionsweise von `list` ähnelt sich im Prinzip der von `browse`. Mit dem Zusatz `in 1/10` können wir die ersten 10 Zeilen anzeigen lassen (ansonsten würden alle 3477 Fälle angezeigt!):
+`browse` eignet sich vor allem für größere Übersichten. Wenn wir nur einige wenige Fälle betrachten möchten, dann ist `list` eine gute Alternative, da der Output hier gleich im Ergebnisfenster (2) angezeigt wird. Die Funktionsweise von `list` ähnelt sich im Prinzip der von `browse`. Mit dem Zusatz `in 1/5` können wir die ersten 5 Zeilen anzeigen lassen (ansonsten würden alle 20012 Fälle angezeigt!):
 
 ```{stata list, eval=FALSE}
-list inc eastwest  mstat in 1/10
+list intnr Bula gkpol Stib zpalter in 1/5
 ```
-
-```{r, eval = F}
-     +--------------------------------------------+
-     |          inc       eastwest          mstat |
-     |--------------------------------------------|
-  1. |         2200   ALTE BUNDESL   VERHEIRAT.ZU |
-  2. |         1500   NEUE BUNDESL   VERHEIRAT.ZU |
-  3. |         1400   ALTE BUNDESL          LEDIG |
-  4. |         3600   NEUE BUNDESL   VERHEIRAT.ZU |
-  5. |         1700   NEUE BUNDESL          LEDIG |
-     |--------------------------------------------|
-  6. |         3450   ALTE BUNDESL   VERH.GETRENN |
-  7. |          854   ALTE BUNDESL   VERHEIRAT.ZU |
-  8. |         1500   ALTE BUNDESL   VERHEIRAT.ZU |
-  9. | KEINE ANGABE   ALTE BUNDESL   VERHEIRAT.ZU |
- 10. |          978   NEUE BUNDESL   VERHEIRAT.ZU |
-     +--------------------------------------------+
+```{stata list1, eval = F, collectcode=F}
+     | intnr     Bula     gkpol       Stib   zpalter |
+     |-----------------------------------------------|
+  1. |   260   Berlin   500.000   Selbstst        41 |
+  2. |   361   Berlin   500.000   Angestel        51 |
+  3. |   491   Berlin   500.000   Arbeiter        49 |
+  4. |   690   Berlin   500.000    Beamter        63 |
+  5. |   919   Berlin   500.000   Angestel        41 |
+     |-----------------------------------------------|
 ```
+ 
+Auch hier können wir wie bei `browse` die Zahlenwerte ohne die Labels anzeigen lassen, indem wir `, nolabel` anhängen:
+ 
+```{stata list2, eval=FALSE}
+list intnr Bula gkpol Stib zpalter in 1/5, nolabel
+```
+```{stata list4, eval = F, collectcode=F}
+     | intnr   Bula   gkpol   Stib   zpalter |
+     |---------------------------------------|
+  1. |   260     11       7      4        41 |
+  2. |   361     11       7      2        51 |
+  3. |   491     11       7      1        49 |
+  4. |   690     11       7      3        63 |
+  5. |   919     11       7      2        41 |
+     |---------------------------------------|
+``` 
+ 
  
 ### `lookfor`
 
 All diese Befehle setzen aber voraus, dass wir wissen, unter welchem Variablennamen die interessierende Information abgelegt wurde. Mit `lookfor "stichwort"` können wir den Datensatz nach einem Stichwort durchsuchen:
 ```{stata lookf, eval = F}
-lookfor "alter"
+lookfor "schicht"
 ```
 ```{stata lookfb, echo = F}
 set linesize 200
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-lookfor "alter"
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+lookfor "schicht"
 ```
 
-
-
-## löschen
-
-Wenn wir einen Datensatz aus dem Speicher löschen wollen, dann können wir dies mit `clear`.
-
-## if Bedingung - nur manche Zeilen ansehen
-
-
-Mit durch Anhängen einer `if`-Bedingung können wir nur bestimmte Zeilen anzeigen lassen. Zum Beispiel können wir uns mit Hilfe einer `if`-Bedingung nur die 20-jährigen Befragten anzeigen lassen:
-```{stata if1, eval = F}
-list eastwest german sex age mstat if age == 20
+Alternativ können wir auch in der Variablenübersicht mit Hilfe des Suchfelds nach Variablen suchen:
+```{r variablen_suche, echo = F,out.width = "100%",fig.height= 2.5, fig.align="center"}
+knitr::include_graphics("./pics/01_Stata8_Datensatz_suche2.PNG")
 ```
-
-...oder Befragte mit einem Einkommen unter 1000 Euro:
-```{stata if2, eval = F}
-list eastwest german sex age mstat if inc < 1000
-```
-
-Wir können auch mehrere Bedingungen setzen. Sollen beide/alle zutreffen, verbinden wir die Bedingungen mit `&` - zB. wenn wir weibliche Befragte mit einem Einkommen unter 1000 Euro auswählen möchten:
-```{stata if3, eval = F}
-list eastwest german sex age mstat if sex == 2 & inc < 1000
-```
-Für "ist gleich" sind immer zwei `==` zu verwenden.
-
-Mit `|` können wir hingegen Fälle auswählen, für welche die ein *oder* die andere Bedingung zutrifft:
-```{stata if4, eval = F}
-browse eastwest german sex age mstat if sex == 2 | inc < 1000
-```
-
-Für `if`-Bedingungen stehen uns die üblichen Operatoren zur Verfügung:
-
-`>`, `<`, `==`, `>=`, `<=`, `!=` (ungleich)
-
-Mit `inrange` können wir Auswahlen bequem auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):
-```{stata browse_if, eval = F}
-bro sex land if age >= 20 & age <= 30
-bro sex land if inrange(age,20,30)
-```
-
 
 
 ## Übungen 1 {#U1}
 
++ Öffnen Sie Stata und öffnen Sie den DoFile Editor
+
 + Führen Sie folgende (oder beliebige andere) Taschenrechneraufgaben mit Stata durch:
   + `2 * 4`
   + `2 / 8`
-  + `2 ^ sqrt(4) + 5`
+  + `2 ^ 2`   (Potenz)
+  + `sqrt(9)` (Wurzel)
 
-+ Laden Sie die Datensätze und Codebücher aus [ILIAS](www.ilias.gesis.org) herunter und legen Sie alle Dateien in einem Ordner Ihrer Wahl! 
-
-+ Lesen Sie den Allbus 2018 in Stata ein.
-  + In welchem Arbeitsverzeichnis befinden Sie sich aktuell?
-  + In welchem Ordner haben Sie die Datensätze aus ILIAS abgelegt? Navigieren Sie Stata mit `cd` in eben diesen Ordner, in dem die Datensätze abgelegt sind!
-  + Nutzen Sie `describe` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
-  + Wie viele Variablen und wie viele Fälle enthält der Datensatz?
-  + Unter welchem Variablennamen ist die Parteipräferenz der Befragten ablegt?
++ Lesen Sie die Erwerbstätigenbefragung 2018 in Stata ein. Folgende Schritte helfen Ihnen dabei:
+  + In welchem Arbeitsverzeichnis befindet sich Stata aktuell? Wo können Sie das erkennen? 
+  + In welchem Ordner haben Sie den Erwerbstätigenbefragung Datensatz abgelegt? 
+  + Navigieren Sie Stata mit `cd` in diesen Ordner, in dem der Datensatz abgelegt ist! 
+  
++ Nutzen Sie `describe` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
++ Wie viele Variablen und wie viele Fälle enthält der Datensatz?
++ Unter welchem Variablennamen ist die Information abgelegt, ob der\*die Befrage  Kinder hat?
   + Lassen Sie sich diese Variable im Datenexplorer mit `browse` anzeigen.
   + Lassen Sie sich diese Variable mit den Zahlencodes anstatt der labels anzeigen.
-  + Welche Information ist in der Variable `respid` abgelegt? 
-  + Wie können Sie sich die Zeile anzeigen lassen, welche den/die Befragte*n mit der `respid` 3469 enthält?
-  + Wie alt ist der/die Befragte mit der `respid` 3469? Welches Geschlecht und welche Wahlabsicht hat die Person angegeben? Tipp: Das Alter ist in `age` ablegt, die Wahlabsicht in `pv01`.
-  
-  
+
 
 ## Profi-Übungen 1
 
 Für alle, die noch etwas mehr machen möchten: 
 
-+ Auf ILIAS finden Sie auch eine SPSS-Version (.sav-Datei) des Allbus 2018. Lesen Sie diese Dateiversion in Stata ein! (Siehe [weitere Anmerkungen](#otherfmts))
-+ Auf ILIAS finden Sie außerdem auch eine csv-Datei des Allbus 2018. Lesen Sie diese Dateiversion in Stata ein! (Siehe [weitere Anmerkungen](#otherfmts))
++ Im zip-Ordner finden Sie auch eine SPSS-Version (.sav-Datei) der Erwerbstätigenbefragung 2018. Lesen Sie diese Dateiversion in Stata ein! (Siehe [weitere Anmerkungen](#otherfmts))
 
 
 
@@ -345,16 +318,8 @@ In Stata gibt es zwei Variablentypen:
  
 + Textvariablen, sog. strings `strXX` - wobei `XX` die Zahl der (maximal) verwendeten Zeichen angibt
   
-Hier einige Beispiele aus dem Allbus 2018:
-```{stata des_var3, eval=FALSE}
-d pv01 version wghtpew xs11 age sex
-```
+In der BIBB/BAuA 2018 sind nur Zahlenvariablen enthalten.
 
-```{stata des_var4, echo = F, collectcode=F}
-set linesize 80
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-d pv01 version wghtpew xs11 age sex
-```
 
 
 ### import anderer Dateiformate {#otherfmts}
@@ -380,17 +345,3 @@ knitr::include_graphics("./pics/01_import_other_copy.png")
 
 Eine zentrale Frage ist u.a., ob die erste Zeile des Datensatzes als Variablennamen übernommen werden soll oder in der ersten Zeile bereits Daten enthalten sind. In diesem Fall vergibt Stata dann Variablennamen (`v1`-`vXX`). Dies wird mit der Option `varnames` angegeben: bei `varnames(1)` wird die erste Zeile als Spaltenname verwendet, `varnames(nonames)` hingegen verwendet alle Zeilen aus dem Datensatz als Fälle und vergibt selbst Variablennamen. So sieht bspw. ein `csv`-Import aus:
 `import delimited "eigene_Datei.csv", varnames(1) clear`
-
-## Befehlsstruktur & Hilfe
-
-Ganz nebenbei haben wir in Kapitel 1 bereits die ersten Stata-Befehle verwendet. Bevor wir jetzt aber tiefer einsteigen nochmal einmal allgemein:
-
-Die grundsätzliche Struktur von Stata-Kommandos ist immer `befehl variable, optionen`. Zunächst geben wir also immer an, was passieren soll - bisher war das eben zum Beispiel eine Beschreibung (`describe`) einer Variable: 
-```{stata commands1, eval = F}
-describe sex
-```
-```{stata commands2, echo = F}
-set linesize 100
-qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Allbus2018.dta", clear
-describe sex
-```

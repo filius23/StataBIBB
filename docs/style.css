@@ -12,3 +12,26 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+div.orbox {
+  padding: 1em;
+  margin: 1em 0;
+  color: #2C3E50;
+  background-color: #FDEBD0;
+  border: dashed 3px #FAD7A0;
+}
+/* -----------div tips------------- */
+
+div.note {
+  padding: 1em;
+  margin: 3em 0;
+  padding-left: 4px;
+  /*background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  */
+  min-height: 10px;
+  color: #1A4773;
+  background-color: #68E0E8;
+  border: solid 1px #D6FFFF;
+}
