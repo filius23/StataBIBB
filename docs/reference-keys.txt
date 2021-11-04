@@ -39,3 +39,4 @@ aufgaben
 befehlsstruktur
 zeilenumbrüche
 kommentare
+if-bedingung---nur-manche-zeilen-ansehen

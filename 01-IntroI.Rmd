@@ -279,22 +279,22 @@ knitr::include_graphics("./pics/01_Stata8_Datensatz_suche2.PNG")
 
 ## Übungen 1 {#U1}
 
-+ Öffnen Sie Stata und öffnen Sie den DoFile Editor
+(@) Öffnen Sie Stata und öffnen Sie den DoFile Editor
 
-+ Führen Sie folgende (oder beliebige andere) Taschenrechneraufgaben mit Stata durch:
+(@) Führen Sie folgende (oder beliebige andere) Taschenrechneraufgaben mit Stata durch:
   + `2 * 4`
   + `2 / 8`
   + `2 ^ 2`   (Potenz)
   + `sqrt(9)` (Wurzel)
 
-+ Lesen Sie die Erwerbstätigenbefragung 2018 in Stata ein. Folgende Schritte helfen Ihnen dabei:
+(@) Lesen Sie die Erwerbstätigenbefragung 2018 in Stata ein. Folgende Schritte helfen Ihnen dabei:
   + In welchem Arbeitsverzeichnis befindet sich Stata aktuell? Wo können Sie das erkennen? 
   + In welchem Ordner haben Sie den Erwerbstätigenbefragung Datensatz abgelegt? 
   + Navigieren Sie Stata mit `cd` in diesen Ordner, in dem der Datensatz abgelegt ist! 
   
-+ Nutzen Sie `describe` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
-+ Wie viele Variablen und wie viele Fälle enthält der Datensatz?
-+ Unter welchem Variablennamen ist die Information abgelegt, ob der\*die Befrage  Kinder hat?
+(@) Nutzen Sie `describe` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
+(@) Wie viele Variablen und wie viele Fälle enthält der Datensatz?
+(@) Unter welchem Variablennamen ist die Information abgelegt, ob der\*die Befrage  Kinder hat?
   + Lassen Sie sich diese Variable im Datenexplorer mit `browse` anzeigen.
   + Lassen Sie sich diese Variable mit den Zahlencodes anstatt der labels anzeigen.
 
@@ -318,7 +318,7 @@ In Stata gibt es zwei Variablentypen:
  
 + Textvariablen, sog. strings `strXX` - wobei `XX` die Zahl der (maximal) verwendeten Zeichen angibt
   
-In der BIBB/BAuA 2018 sind nur Zahlenvariablen enthalten.
+In der BIBB/BAuA Erwerbstätigenbefragung 2018 sind nur Zahlenvariablen enthalten.
 
 
 
@@ -341,7 +341,3 @@ Nach Klick auf das entsprechende Dateiformat öffnet sich ein Dialogfenster, in 
 ```{r import_other2, echo = F,out.width = "40%",fig.height= 3.5, fig.align="center"}
 knitr::include_graphics("./pics/01_import_other_copy.png")
 ```
-
-
-Eine zentrale Frage ist u.a., ob die erste Zeile des Datensatzes als Variablennamen übernommen werden soll oder in der ersten Zeile bereits Daten enthalten sind. In diesem Fall vergibt Stata dann Variablennamen (`v1`-`vXX`). Dies wird mit der Option `varnames` angegeben: bei `varnames(1)` wird die erste Zeile als Spaltenname verwendet, `varnames(nonames)` hingegen verwendet alle Zeilen aus dem Datensatz als Fälle und vergibt selbst Variablennamen. So sieht bspw. ein `csv`-Import aus:
-`import delimited "eigene_Datei.csv", varnames(1) clear`

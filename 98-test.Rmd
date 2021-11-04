@@ -1,0 +1,13 @@
+# Test {-}
+```{r setupt, echo = F, message=F, warning = F}
+.libPaths("D:/R-library4")
+knitr::opts_chunk$set(collapse = F)
+library(Statamarkdown)
+# # options(width = 200) # 157
+# # "C:/Program Files/Stata16/StataSE-64.exe"
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+```
+
+
+list S1 S3 S2_j zpalter in 1/5 , clean table noobs

@@ -165,38 +165,39 @@ Innerhalb der kategorialen Merkmale wird wiederum zwischen nominaler und ordinal
 knitr::include_graphics("./pics/02_Skalenniveau.png")
 ```
 
-Sehen wir uns das einmal für die Variablen Geschlecht (S1), Schulbildung (S3), Geburtsjahr (S2_j) und Einkommen (F518_SUF) an:
+Sehen wir uns das einmal für die Variablen Geschlecht (S1), Schulbildung (S3), Geburtsjahr (S2_j) und Alter (zpalter) an:
 
 ```{stata skal_list, eval = F}
-list S1 S3 S2_j F518_SUF in 1/5, nol
+list S1 S3 S2_j zpalter in 1/5, nol
 ```
 
 ```{stata skal_list2, eval = F}
-     | S1   S3   S2_j   F518_SUF |
-     |---------------------------|
-  1. |  1    8   1976      99999 |
-  2. |  2    5   1966       1200 |
-  3. |  1    7   1968       3500 |
-  4. |  2    8   1954       4500 |
-  5. |  2    7   1976      99999 |
-     +---------------------------+
+     +--------------------------+
+     | S1   S3   S2_j   zpalter |
+     |--------------------------|
+  1. |  1    8   1976        41 |
+  2. |  2    5   1966        51 |
+  3. |  1    7   1968        49 |
+  4. |  2    8   1954        63 |
+  5. |  2    7   1976        41 |
+     +--------------------------+
 ```
 
 
 ```{stata skal_list3, eval = F}
-list S1 S3 S2_j F518_SUF in 1/5
+list S1 S3 S2_j zpalter in 1/5
 ```
 
 ```{stata skal_list4, eval = F}
-     +-------------------------------------------+
-     |       S1         S3   S2_j       F518_SUF |
-     |-------------------------------------------|
-  1. |  männlic   Abitur /   1976   keine Angabe |
-  2. | weiblich   Realschu   1966           1200 |
-  3. |  männlic   Fachhoch   1968           3500 |
-  4. | weiblich   Abitur /   1954           4500 |
-  5. | weiblich   Fachhoch   1976   keine Angabe |
-     +-------------------------------------------+
+     +--------------------------------------+
+     |       S1         S3   S2_j   zpalter |
+     |--------------------------------------|
+  1. |  männlic   Abitur /   1976        41 |
+  2. | weiblich   Realschu   1966        51 |
+  3. |  männlic   Fachhoch   1968        49 |
+  4. | weiblich   Abitur /   1954        63 |
+  5. | weiblich   Fachhoch   1976        41 |
+     +--------------------------------------+
 ```
 
 Literaturtipps:
@@ -290,6 +291,41 @@ Hinweis: welche Angaben als Missing definiert werden sollen, ist teilweise von d
 <!-- *Hinweis:* In diesem Skript werden wir meistens die fehlenden Werte mit `keep` oder `drop` löschen. Dies geht häufig schneller und wir kommen schneller zum Rechnen. In der Praxis empfiehlt es sich aber, die Missings wirklich mit `.` zu kennzeichnen und mit `mdesc` genauer zu betrachten, bevor sie gänzlich aus dem Speicher gelöscht werden. -->
 
 ****
+
+## if Bedingung - nur manche Zeilen ansehen
+
+Bisher haben wir uns immer auf den gesamten Datensatz bezogen.
+Häufig möchten wir aber nur bestimmte Beobachtungen berücksichtigen. 
+Mit durch Anhängen einer `if`-Bedingung können wir nur bestimmte Zeilen anzeigen lassen. Zum Beispiel können wir uns mit Hilfe einer `if`-Bedingung nur die 20-jährigen Befragten anzeigen lassen:
+```{stata if1, eval = F}
+list eastwest german sex age mstat if age == 20
+```
+
+...oder Befragte mit einem Einkommen unter 1000 Euro:
+```{stata if2, eval = F}
+list eastwest german sex age mstat if inc < 1000
+```
+
+Wir können auch mehrere Bedingungen setzen. Sollen beide/alle zutreffen, verbinden wir die Bedingungen mit `&` - zB. wenn wir weibliche Befragte mit einem Einkommen unter 1000 Euro auswählen möchten:
+```{stata if3, eval = F}
+list eastwest german sex age mstat if sex == 2 & inc < 1000
+```
+Für "ist gleich" sind immer zwei `==` zu verwenden.
+
+Mit `|` können wir hingegen Fälle auswählen, für welche die ein *oder* die andere Bedingung zutrifft:
+```{stata if4, eval = F}
+browse eastwest german sex age mstat if sex == 2 | inc < 1000
+```
+
+Für `if`-Bedingungen stehen uns die üblichen Operatoren zur Verfügung:
+
+`>`, `<`, `==`, `>=`, `<=`, `!=` (ungleich)
+
+Mit `inrange` können wir Auswahlen bequem auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):
+```{stata browse_if, eval = F}
+bro sex land if age >= 20 & age <= 30
+bro sex land if inrange(age,20,30)
+```
 
 
 ## keep & drop
@@ -470,7 +506,7 @@ save "BIBBBAuA_2018_suf1.0.dta", replace
 
 (@) Laden Sie den Datensatz `Allbus2018` in Stata. 
       + In welcher Variable ist das Geburtsjahr der Befragten abgelegt?
-      + Nutzen Sie `summarize` für einen Überblick für diese Variable. Hat die Variable zum Geburtsjahr negative Werte, die Sie mit `.` ersetzen sollten?   (Denken Sie `labelbook`)
+      + Nutzen Sie `summarize` für einen Überblick für diese Variable. Hat die Variable zum Geburtsjahr negative Werte, die Sie mit `.` ersetzen sollten?   (Denken Sie an `labelbook`)
       + Überschreiben Sie diese negativen Werte mit `.`, um sie so Stata kenntlich zu machen.
       + Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020! 
       + Lassen Sie sich das Geburtsjahr und die neu erstellte Variable für die ersten 20 Beobachtungen anzeigen - hat alles geklappt wie es soll?
