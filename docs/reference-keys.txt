@@ -40,3 +40,6 @@ befehlsstruktur
 zeilenumbrüche
 kommentare
 if-bedingung---nur-manche-zeilen-ansehen
+if-bedingungen-labels
+keep-drop-fälle-dauerhaft-löschen
+missv

@@ -5,8 +5,8 @@
 knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
 # # options(width = 200) # 157
-# # "C:/Program Files/Stata16/StataSE-64.exe"
 stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```
 
@@ -22,30 +22,24 @@ Ganz nebenbei haben wir in Kapitel 1 bereits die ersten Stata-Befehle verwendet.
 
 Die grundsätzliche Struktur von Stata-Kommandos ist immer `befehl variable, optionen`. Zunächst geben wir also immer an, was passieren soll - bisher war das eben zum Beispiel eine Auflistung (`list`) einiger Variable für einige Zeilen: 
 ```{stata scommand1, eval = F}
-list intnr Bula gkpol Stib zpalter in 11/15
+list intnr Bula gkpol Stib zpalter in 11/12
 ```
 ```{stata scommand2, eval = F}
      | intnr       Bula      gkpol       Stib   zpalter |
      |--------------------------------------------------|
  11. |  1562     Berlin    500.000   Angestel        31 |
  12. |  1955     Berlin    500.000   Angestel        58 |
- 13. |  2495   Schleswi   20.000 b   Angestel        24 |
- 14. |  2781   Schleswi   20.000 b   Angestel        53 |
- 15. |  3101   Schleswi   2.000 bi   Angestel        29 |
 ```
 
 Wie wir schon gesehen hatten, könen wir durch das Anhängen der Option `nolabel` die 'rohen' Zahlenwerte statt der beschrifteten Ausprägungen anfordern:
 ```{stata scommand3, eval = F}
-list intnr Bula gkpol Stib zpalter in 11/15, nolabel
+list intnr Bula gkpol Stib zpalter in 11/12, nolabel
 ```
 ```{stata scommands4, eval = F}
      | intnr   Bula   gkpol   Stib   zpalter |
      |---------------------------------------|
  11. |  1562     11       7      2        31 |
  12. |  1955     11       7      2        58 |
- 13. |  2495      1       4      2        24 |
- 14. |  2781      1       4      2        53 |
- 15. |  3101      1       2      2        29 |
 ```
 
 ### Zeilenumbrüche
@@ -53,7 +47,7 @@ Kommandos in Stata sind zeilenbasiert. D.h. alles was zu einem Kommando gehört,
 Das funktioniert nicht:
 ```{stata rowbased2, eval = F}
 list intnr Bula 
-gkpol Stib zpalter in 11/15 
+gkpol Stib zpalter in 11/12
 ```
 (Hier werden erstmal 20012 Zeilen von `intnr` und `Bula` ausgegeben)  
 <span style="color:red">`command gkpol is unrecognized`</span>  
@@ -62,16 +56,13 @@ gkpol Stib zpalter in 11/15
 Mit `///` können wir Zeilen verknüpfen:
 ```{stata rowbased3, eval = F}
 list intnr Bula ///
-gkpol Stib zpalter in 11/15 
+gkpol Stib zpalter in 11/12 
 ```
 ```{stata rowbased3b, eval = F}
      | intnr   Bula   gkpol   Stib   zpalter |
      |---------------------------------------|
  11. |  1562     11       7      2        31 |
  12. |  1955     11       7      2        58 |
- 13. |  2495      1       4      2        24 |
- 14. |  2781      1       4      2        53 |
- 15. |  3101      1       2      2        29 |
 ```
 
 ### Kommentare
@@ -165,7 +156,7 @@ Innerhalb der kategorialen Merkmale wird wiederum zwischen nominaler und ordinal
 knitr::include_graphics("./pics/02_Skalenniveau.png")
 ```
 
-Sehen wir uns das einmal für die Variablen Geschlecht (S1), Schulbildung (S3), Geburtsjahr (S2_j) und Alter (zpalter) an:
+Sehen wir uns das einmal für die Variablen Geschlecht (`S1`), Schulbildung (`S3`), Geburtsjahr (`S2_j`) und Alter (`zpalter`) an:
 
 ```{stata skal_list, eval = F}
 list S1 S3 S2_j zpalter in 1/5, nol
@@ -200,13 +191,16 @@ list S1 S3 S2_j zpalter in 1/5
      +--------------------------------------+
 ```
 
+**$\Rightarrow$ Skalenniveau bestimmt, ob `tabulate` oder `summarize` die passenden Befehle sind**
+
+
 Literaturtipps:
 
-+ S.18 *ff.* in [Diaz-Bone, R. (2019). Statistik für Soziologen (4. Auflage)](https://www.utb-studi-e-book.de/9783838550718)
-+ S.12 *ff.* in [Bortz, J., & Schuster, C. (2010). Statistik für Human- und Sozialwissenschaftler (7. Auflage)](https://link.springer.com/book/10.1007/978-3-642-12770-0) (ausführliche formale Beschreibung)
++ S.18 *ff.* in [Diaz-Bone, R. (2019). Statistik für Soziologen (4. Auflzpalter)](https://www.utb-studi-e-book.de/9783838550718)
++ S.12 *ff.* in [Bortz, J., & Schuster, C. (2010). Statistik für Human- und Sozialwissenschaftler (7. Auflzpalter)](https://link.springer.com/book/10.1007/978-3-642-12770-0) (ausführliche formale Beschreibung)
 
 
-## Fehlende Werte
+## Fehlende Werte {#missv}
 
 Wenn wir uns nochmal die Variable `zpalter` ansehen, dann fallen unrealistisch hohe negativen Altersangaben ins Auge:
 
@@ -214,12 +208,12 @@ Wenn wir uns nochmal die Variable `zpalter` ansehen, dann fallen unrealistisch h
 summarize zpalter
 ```
 ```{stata miss1b, echo = F}
-set linesize 80
+set linesize 100
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 su zpalter
 ```
 
-Hier kann es sich natürlich nicht um Befragte mit einem Alter 9999 handeln, sondern aufgrund der fehlenden Angaben zum Geburtsdatum lässt sich für manche Befragte das Alter nicht generieren. Wie können wir das herausfinden? Beispielsweise, indem wir mit `describe zpalter` nachsehen, ob ein Label definiert ist und dann mit dem Befehl `labelbook` dieses Label aufrufen: 
+Hier kann es sich natürlich nicht um Befragte mit einem Alter 9999 handeln, sondern aufgrund der fehlenden Angaben zum Geburtsdatum lässt sich für manche Befragte das Alter nicht generieren. Wie können wir das herausfinden? Beispielsweise erfahren wir mit `describe zpalter`, dass `ZPALTER` als Label für die Variable definiert ist und dieses Label mit dem Befehl `labelbook` aufrufen: 
 
 ```{stata mlab1, eval = F}
 describe zpalter
@@ -279,191 +273,207 @@ Anschließend können wir mit `mdesc` die Zahl der missings in `zpalter`, `S2_j`
 ```{stata miss5, eval = F}
 mdesc zpalter S2_j F510 F511_j
 ```
-```{stata miss5b, echo = F}
+```{stata miss5b, echo = F, collectcode=F}
 set linesize 80
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 qui mvdecode zpalter S2_j F510 F511_j, mv(9999)
-mdesc zpalter S2_j F510 F511_j F233
+mdesc zpalter S2_j F510 F511_j 
 ```
 
 Hinweis: welche Angaben als Missing definiert werden sollen, ist teilweise von der Frage ab, die beantwortet werden soll. Bspw. wurden oben alle uneindeutigen Angaben in `F233` zum Bundesland der Betriebsstätte als missing codiert. Je nach Fragestellung ist das eine mehr oder weniger gute Idee.
 
-<!-- *Hinweis:* In diesem Skript werden wir meistens die fehlenden Werte mit `keep` oder `drop` löschen. Dies geht häufig schneller und wir kommen schneller zum Rechnen. In der Praxis empfiehlt es sich aber, die Missings wirklich mit `.` zu kennzeichnen und mit `mdesc` genauer zu betrachten, bevor sie gänzlich aus dem Speicher gelöscht werden. -->
+In `tabulate` können wir mit der Option `, missing` die fehlenden Werte anzeigen lassen:
 
-****
+
+
+<!-- *Hinweis:* In diesem Skript werden wir meistens die fehlenden Werte mit `keep` oder `drop` löschen. Dies geht häufig schneller und wir kommen schneller zum Rechnen. In der Praxis empfiehlt es sich aber, die Missings wirklich mit `.` zu kennzeichnen und mit `mdesc` genauer zu betrachten, bevor sie gänzlich aus dem Speicher gelöscht werden. -->
 
 ## if Bedingung - nur manche Zeilen ansehen
 
 Bisher haben wir uns immer auf den gesamten Datensatz bezogen.
 Häufig möchten wir aber nur bestimmte Beobachtungen berücksichtigen. 
-Mit durch Anhängen einer `if`-Bedingung können wir nur bestimmte Zeilen anzeigen lassen. Zum Beispiel können wir uns mit Hilfe einer `if`-Bedingung nur die 20-jährigen Befragten anzeigen lassen:
+Mit durch Anhängen einer `if`-Bedingung können wir nur bestimmte Zeilen anzeigen lassen. Zum Beispiel können wir uns mit Hilfe einer `if`-Bedingung nur die 81-jährigen Befragten anzeigen lassen:
 ```{stata if1, eval = F}
-list eastwest german sex age mstat if age == 20
+list S1 S3 S2_j zpalter if zpalter == 81
 ```
-
-...oder Befragte mit einem Einkommen unter 1000 Euro:
 ```{stata if2, eval = F}
-list eastwest german sex age mstat if inc < 1000
+       +--------------------------------------+
+       |       S1         S3   S2_j   zpalter |
+       |--------------------------------------|
+ 5114. |  männlic   Abitur /   1936        81 |
+ 5179. |  männlic   Abitur /   1936        81 |
+ 6118. |  männlic   Realschu   1936        81 |
+ 9045. |  männlic   Abitur /   1936        81 |
+10517. | weiblich   Hauptsch   1936        81 |
+       +--------------------------------------+
 ```
-
-Wir können auch mehrere Bedingungen setzen. Sollen beide/alle zutreffen, verbinden wir die Bedingungen mit `&` - zB. wenn wir weibliche Befragte mit einem Einkommen unter 1000 Euro auswählen möchten:
-```{stata if3, eval = F}
-list eastwest german sex age mstat if sex == 2 & inc < 1000
-```
-Für "ist gleich" sind immer zwei `==` zu verwenden.
-
-Mit `|` können wir hingegen Fälle auswählen, für welche die ein *oder* die andere Bedingung zutrifft:
-```{stata if4, eval = F}
-browse eastwest german sex age mstat if sex == 2 | inc < 1000
-```
-
+Wichtig ist hier `==` - ein einfaches `=` wird in Stata für die Zuweisung von Werten verwendet wie wir noch sehen werden.
 Für `if`-Bedingungen stehen uns die üblichen Operatoren zur Verfügung:
-
 `>`, `<`, `==`, `>=`, `<=`, `!=` (ungleich)
 
-Mit `inrange` können wir Auswahlen bequem auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):
-```{stata browse_if, eval = F}
-bro sex land if age >= 20 & age <= 30
-bro sex land if inrange(age,20,30)
+Dementsprechend können wir so Befragte auswählen, die vor 1936 geboren wurden:
+```{stata if3, eval = F}
+list S1 S3 S2_j zpalter if S2_j < 1936
 ```
 
-
-## keep & drop
-
-Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte mit einem Einkommen über 1500 EUR im Datensatz behalten. Dazu können wir `keep` oder `drop` die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:
-```{stata keep, eval = F}
-use Allbus2018.dta
-keep if F518_SUF >= 1500
-d,s
+Das funktioniert auch mit anderen Befehlen, wie z.B. `tabulate` - so können wir beispielsweise auszählen, wie viele 81-jährige Frauen und Männer im Datensatz vorhanden sind:
+```{stata if4, eval = F}
+tab S1 if zpalter == 81
 ```
 
-```{stata keepb, echo = F}
-set linesize 90
+```{stata if5, echo = F, collectcode = F}
+set linesize 80
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-keep if F518_SUF >= 1500
-d,s
+tab S1 if zpalter == 81
+```
+Wir sehen unter anderem an der Fallzahl (Total) in dieser Tabelle, dass hier nicht alle Fälle aus dem Datensatz berücksichtigt werden.
+
+
+Wir können auch mehrere Bedingungen setzen. Sollen beide zutreffen, verbinden wir die Bedingungen mit `&` - zB. wenn wir 81-jährige Befragte mit einem Bruttoverdienst von unter 1000 Euro auswählen möchten:
+```{stata if6, eval = F}
+list S1 if zpalter > 81 & F518_SUF < 1000
 ```
 
-```{stata drop, eval = F}
-use BIBBBAuA_2018_suf1.0.dta
-drop if F518_SUF < 1500
-d,s
+Mit `|` können wir hingegen Fälle auswählen, für welche die ein *oder* die andere Bedingung zutrifft:
+```{stata if7, eval = F}
+tab S1 if zpalter == 81 | inc < 1000 // 81 Jahre alt oder unter 1000EUR Einkommen
 ```
 
-```{stata dropb, echo =F}
-set linesize 90
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-drop if F518_SUF < 1500
-d,s
+Mit `inrange` können wir Auswahlen auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):
+```{stata tabif1, eval = F}
+tab S1 if zpalter >= 20 & zpalter <= 30
+tab S1 if inrange(zpalter,20,30)
 ```
 
-Hinweis: wenn die negativen Werte für `inc` bereits als Missing überschrieben sind, verbleiben diese Fälle im Datensatz! Sie werden als unendlich groß erkannt! - siehe [hier](#miss_if)
+Mit `inlist` können wir spezifische Werte angeben und so lange Folgen von `|` vermeiden:
+```{stata browseif, eval = F}
+browse S1 Bula if zpalter == 15 | zpalter == 79 | zpalter == 80 | zpalter == 82 
+browse S1 Bula if inlist(zpalter,15,79,80,82)
+```
 
 
-## if Bedingungen und fehlende Werte {#miss_if}
+### if Bedingungen und fehlende Werte {#miss_if}
 
-Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu `>`. Fehlende Werte werden nämlich von Stata als "unendlich groß" gewertet! Wenn wir uns Befragte mit einem Alter über 92 ausgeben lassen, dann bekommen wir auch diejenigen ohne Altersangabe ausgegegeben:
+Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu `>`. 
+Fehlende Werte werden nämlich von Stata als "unendlich groß" gewertet! 
+Wenn wir uns Befragte mit einem Alter über 92 ausgeben lassen, dann bekommen wir auch diejenigen ohne Altersangabe ausgegegeben:
 
 ```{stata list_if, eval = F}
-list sex land age if age > 92
+list S1 S3 zpalter if zpalter > 81
 ```
-```{r, eval = F}
-      +---------------------------+
-      |  sex           land   age |
-      |---------------------------|
- 126. | MANN        SACHSEN    94 |
- 322. | FRAU   RHEINLAND-PF     . |
- 353. | MANN   NORDRHEIN-WE    94 |
- 556. | FRAU   NORDRHEIN-WE     . |
-1342. | FRAU   NORDRHEIN-WE     . |
-      |---------------------------|
-2135. | FRAU    BRANDENBURG     . |
-3130. | MANN         HESSEN     . |
-3299. | MANN   RHEINLAND-PF    95 |
-      +---------------------------+
+```{stata list_if2, eval = F}
+       +-------------------------------+
+       |       S1         S3   zpalter |
+       |-------------------------------|
+   39. | weiblich   Abitur /         . |
+  514. | weiblich   Abitur /        83 |
+  657. |  männlic   Hauptsch         . |
+  823. | weiblich   Realschu         . |
+  982. | weiblich   keine An         . |
+       |-------------------------------|
+       |      150 weitere Zeilen       |
 ```
 
 Es gibt zwei Möglichkeiten, dies zu umgehen: 
 
-+ entweder wir verwenden `inrange` - wobei wir hier eine Obergrenze angeben müssen und außerdem die Untergrenze immer mit eingeschlossen wird. Wenn wir also nur Fälle sehen wollen, die *älter* als 92 sind, dann müssen wir einen Wert über 92 angeben:
-```{stata list_if2, eval = F}
-list sex land age if inrange(age,92.1,100)
-```
-```{r, eval = F}
-      +---------------------------+
-      |  sex           land   age |
-      |---------------------------|
- 126. | MANN        SACHSEN    94 |
- 353. | MANN   NORDRHEIN-WE    94 |
-3299. | MANN   RHEINLAND-PF    95 |
-      +---------------------------+
++ entweder wir verwenden `inrange` - wobei wir hier eine Obergrenze angeben müssen und außerdem die Untergrenze immer mit eingeschlossen wird. Wenn wir also nur Fälle sehen wollen, die *älter* als 81 sind, dann müssen wir einen Wert über 81 angeben:
+```{stata list_if3, eval = F}
+list S1 Bula zpalter if inrange(zpalter,81.5,100)
 ```
 
 + oder wir hängen den `missing()`-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines `!` verneinen, bekommen wir nur nicht-fehlende Fälle ausgegeben:
-```{stata list_if3, eval = F}
-list sex land age if age > 92 & !missing(age)
-```
-```{r, eval = F}
-      +---------------------------+
-      |  sex           land   age |
-      |---------------------------|
- 126. | MANN        SACHSEN    94 |
- 353. | MANN   NORDRHEIN-WE    94 |
-3299. | MANN   RHEINLAND-PF    95 |
-      +---------------------------+
+```{stata list_if5, eval = F}
+list S1 Bula zpalter if zpalter > 81 & !missing(zpalter)
 ```
 
+Beide Befehle führen zum gleichen Ergebnis:
+```{stata list_if6, eval = F}
+       +-------------------------------+
+       |       S1       Bula   zpalter |
+       |-------------------------------|
+  514. | weiblich    Hamburg        83 |
+ 6438. |  männlic   Nordrhei        82 |
+11786. |  männlic     Berlin        87 |
+       +-------------------------------+
+```
 
-## Labels und if-Bedingungen 
+### if-Bedingungen & Labels 
 
-Genauso könnten wir auch vorgehen wenn wir nur männliche oder weibliche Befragte im Datensatz behalten möchten. Hier nochmal die Auszählung der Variable `sex`:
+Genauso könnten wir auch vorgehen wenn wir nur männliche oder weibliche Befragte im Datensatz behalten möchten. Hier nochmal die Auszählung der Variable `S1`:
 ```{stata tab3, eval = F}
-tabulate sex
+tabulate S1
 ```
 
-```{stata tab3b, echo = F}
+```{stata tab3b, echo = F, collectcode=F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-tab sex
+tab S1
 ```
 
 Allerdings sind `MANN` und `FRAU` lediglich *Variablenlabels*. D.h. hier wurden Zahlencodes wieder mit Beschreibungen assoziiert. Wir können diese Labels nicht für `if`-Bedingungen verwenden:
 ```{stata if_lab, eval = F}
-keep if sex == "FRAU"
+tab S1 if S1 == "weiblich"
 ```
-`type mismatch
-r(109);
-`
+<span style="color:red">`type mismatch`</span>  
+<span style="color:blue">`r(109);`</span>
 
-Im Hintergrund ist `sex` nämlich eine numerische Variable
+Im Hintergrund ist `S1` nämlich eine numerische Variable
 ```{stata if_lab2, eval = F}
-describe sex
+describe S1
 ```
-```{stata if_lab2b, echo = F}
+```{stata if_lab2b, echo = F, collectcode=F}
 set linesize 90
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-describe sex
+describe S1
 ```
-Unter `value label` sehen wir, dass hier das Label `sex` angefügt wurde.
+Unter `value label` sehen wir, dass hier das Label `S1` angefügt wurde.
 
 Wir können die eigentlichen Werte in `tabulate` mit der Option `,nol` ausblenden: 
 ```{stata if_lab3, eval = F}
 tabulate S1, nol
 ```
-```{stata if_lab3b, echo = F}
+```{stata if_lab3b, echo = F, collectcode=F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-tabulate S1
+tabulate S1,nol
 ```
 Wenn wir also nach Frauen filtern möchten, müssen wir den entsprechenden Zahlencode angeben:
 
 ```{stata keep_l3, eval = F}
-keep if sex == 2
+tab S1 if S1 == 2
 ```
+
+```{stata keep_l4, echo = F, collectcode=F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tabulate S1 if S1 == 2
+```
+
 
 Mehr zu labels [hier](#adva)
 
+## keep & drop: Fälle dauerhaft löschen
+
+Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte, die jünger als 60 Jahre sind, im Datensatz behalten. Dazu können wir `keep` oder `drop` die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:
+```{stata keep, eval = F}
+keep if zpalter < 60
+```
+Alternativ können wir auch mit `drop` alle Befragten aus dem Datensatz löschen, die 60 Jahre oder älter sind:
+```{stata drop, eval = F}
+drop if zpalter >= 60
+```
+
+Mit `describe, short` sehen wir, dass wir jetzt deutlich weniger Fälle im Speicher haben:
+```{stata dropdesc1, eval = F}
+describe, short
+```
+```{stata dropdesc, echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui drop if zpalter >= 60
+describe, short
+```
+
+
 ## Nochmal von vorne: Daten neu laden
 
-Variable gelöscht, die doch nötig ist? Falsch recodiert? Das ist zwar ärgerlich, aber ein riesen Vorteil der DoFile-basierten Datenarbeit mit Stata ist die Reproduzierbarkeit. Wir können einfach nochmal von vorne anfangen. Dazu lesen wir die Original-Daten einfach erneut mit `use` ein. Allerdings ist dann eine Besonderheit zu beachten:
+Fälle gelöscht, die doch nötig ist? Missings falsch codiert? Das ist zwar ärgerlich, aber ein riesen Vorteil der DoFile-basierten Datenarbeit mit Stata ist die Reproduzierbarkeit. Wir können einfach nochmal von vorne anfangen. Dazu lesen wir die Original-Daten einfach erneut mit `use` ein. Allerdings ist dann eine Besonderheit zu beachten:
 
 ```{stata re_use, eval = F}
 use "BIBBBAuA_2018_suf1.0.dta"
@@ -489,8 +499,8 @@ Natürlich können wir unsere Daten auch abspeichern, wenn alles wie gewünscht 
 cd ... 
 save "BIBBBAuA_2018_suf1.0.dta"
 ```
-`file BIBBBAuA_2018_suf1.0.dta already exists`   
-`r(602);`
+<span style="color:red">`file BIBBBAuA_2018_suf1.0.dta already exists`</span>  
+<span style="color:blue">`r(602);`</span>
 
 Wir geben also entweder einen anderen Dateinamen an:
 ```{stata, eval = F}
@@ -504,28 +514,31 @@ save "BIBBBAuA_2018_suf1.0.dta", replace
 
 ## Übungen 2
 
-(@) Laden Sie den Datensatz `Allbus2018` in Stata. 
-      + In welcher Variable ist das Geburtsjahr der Befragten abgelegt?
-      + Nutzen Sie `summarize` für einen Überblick für diese Variable. Hat die Variable zum Geburtsjahr negative Werte, die Sie mit `.` ersetzen sollten?   (Denken Sie an `labelbook`)
-      + Überschreiben Sie diese negativen Werte mit `.`, um sie so Stata kenntlich zu machen.
-      + Erstellen Sie eine neue Variable mit dem Alter der Befragten im Jahr 2020! 
-      + Lassen Sie sich das Geburtsjahr und die neu erstellte Variable für die ersten 20 Beobachtungen anzeigen - hat alles geklappt wie es soll?
-      + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Speicher. (Siehe Kap 1.8)
-      + Wie viele Spalten hat der Datensatz nach dieser Veränderung? Wie viele Zeilen? 
-      + Sind die Befragten mit fehlenden Geburtsjahrangaben noch im Datensatz? Nutzen Sie `mdesc`!
+(@) Laden Sie die Erwerbstätigenbefragung in Stata. 
 
-
-(@)  Laden Sie den Datensatz `Allbus2018.dta` erneut in Stata. 
-      + Lassen Sie sich mit Hilfe von `tabulate` die Variable `gkpol` anzeigen.
-      + Lassen Sie sich die Zahlencodes anstelle der Labels anzeigen.
-      + Überschreiben Sie alle Codes für fehlende Angaben mit `.` (Denken Sie wieder an `labelbook` oder sehen Sie Codebuch nach).
+(@) Die Variable `gkpol` beinhaltet die Größe der Wohngemeinde der Befragten.
+      + Welches Skalenniveau hat die Variable? 
+      + Sollten Sie dementsprechend eher `tabulate` oder `summarize` verwenden, um einen Überblick zu dieser Variable zu bekommen?
+      + Lassen Sie sich die Zahlencodes anstelle der Labels anzeigen (`nolabel`)
+      + Überschreiben Sie alle Codes für fehlende Angaben mit `.` (Denken Sie an [`labelbook`](#missv)).
       + Lassen Sie sich mit `tabulate` die Häufigkeitsauszählung erneut anzeigen. Hat sich die Fallzahl vorhin verändert?
       + Wie können Sie die fehlenden Werte auch in `tabulate` auszählen lassen? Lassen Sie sich diese Auszählung anzeigen!
-      + Löschen Sie alle Beobachtungen von Befragten aus Städten mit 500.000 Einwohnern und mehr aus dem Speicher. Denken Sie an die Unterscheidung zwischen Labels und Zahlenwerten.
-      + Kontrollieren Sie mit einem erneuten `tabulate`-Befehl, ob alle Fälle weg sind. (Denken Sie an die fehlenden Werte!)
+      + Lassen Sie sich eine Auzählung der Wohnortgröße lediglich für die weiblichen Befragten ausgeben (Geschlecht ist Variable `S1` erfasst). Denken Sie an die Unterscheidung zwischen Labels und Zahlenwerten.
+
+(@) Die Variable `F1104` beinhaltet das Jahr des Schulabschlusses.
+      + Welches Skalenniveau hat die Variable? 
+      + Sollten Sie dementsprechend eher `tabulate` oder `summarize` verwenden, um einen Überblick zu dieser Variable zu bekommen?
+      + Hat die Variable `F1104` Werte, die Sie mit `.` ersetzen sollten? (Denken Sie an [`labelbook`](#missv))
+      + Führen Sie ggf. die Umcodierung der problematischen Werte auf `.` durch, um sie so Stata kenntlich zu machen.
+      + Lassen Sie sich `F1104` erneut mit `summarize` oder `tabulate` anzeigen: hat alles geklappt wie es soll?
+      + Für wie viele Befragte liegt kein Schulabschlussjahr vor? Nutzen Sie `mdesc`.
+      + Sie wollen nun die Jahre für den Schulabschluss für ausschließlich die weiblichen Befragten ansehen - nutzen Sie passende `if`-Bedingung! (Geschlecht ist in Variable `S1` abgelegt)
+      
 
 (@) Kommentieren Sie ihre bisherigen Befehle mit `//`! Was haben Sie jeweils gemacht? Probieren Sie auch aus, mit `///` einen Befehl über mehrere Zeilen zu verteilen!
 
+      + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Speicher. (Siehe Kap 1.8)
+      + Wie viele Spalten hat der Datensatz nach dieser Veränderung? Wie viele Zeilen? 
 
 <!-- Filter für fehlende Werte -> yborn Missings? -->
 
