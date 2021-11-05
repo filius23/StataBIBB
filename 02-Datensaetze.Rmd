@@ -31,7 +31,7 @@ list intnr Bula gkpol Stib zpalter in 11/12
  12. |  1955     Berlin    500.000   Angestel        58 |
 ```
 
-Wie wir schon gesehen hatten, könen wir durch das Anhängen der Option `nolabel` die 'rohen' Zahlenwerte statt der beschrifteten Ausprägungen anfordern:
+Mit Hilfe von Optionen können wir die Ausgabe verändern: bspw. hatten wir schong gesehen, dass durch das Anhängen der Option `nolabel` die 'rohen' Zahlenwerte statt der beschrifteten Ausprägungen angezeigt werden:
 ```{stata scommand3, eval = F}
 list intnr Bula gkpol Stib zpalter in 11/12, nolabel
 ```
