@@ -284,8 +284,8 @@ knitr::include_graphics("./pics/01_Stata8_Datensatz_suche2.PNG")
 (@) Führen Sie folgende (oder beliebige andere) Taschenrechneraufgaben mit Stata durch:
   + `2 * 4`
   + `2 / 8`
-  + `2 ^ 2`   (Potenz)
-  + `sqrt(9)` (Wurzel)
+  + `2 ^ 2`   // (Potenz)
+  + `sqrt(9)` // (Wurzel)
 
 (@) Lesen Sie die Erwerbstätigenbefragung 2018 in Stata ein. Folgende Schritte helfen Ihnen dabei:
   + In welchem Arbeitsverzeichnis befindet sich Stata aktuell? Wo können Sie das erkennen? 
@@ -295,8 +295,11 @@ knitr::include_graphics("./pics/01_Stata8_Datensatz_suche2.PNG")
 (@) Nutzen Sie `describe` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
 (@) Wie viele Variablen und wie viele Fälle enthält der Datensatz?
 (@) Unter welchem Variablennamen ist die Information abgelegt, ob der\*die Befrage  Kinder hat?
+  + Nutzen Sie `lookfor` oder die Suchfunktion im Variablenfenster.
+  + Lassen Sie sich die Informationen zur Variable mit `describe` anzeigen.
+  + Wie heißt das angehängte Label? Inspizieren Sie es mit `labelbook`.
   + Lassen Sie sich diese Variable im Datenexplorer mit `browse` anzeigen.
-  + Lassen Sie sich diese Variable mit den Zahlencodes anstatt der labels anzeigen.
+  + Lassen Sie sich diese Variable mit den Zahlencodes (`nolabel`) anstatt der labels anzeigen.
 
 
 ## Profi-Übungen 1
