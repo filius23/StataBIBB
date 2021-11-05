@@ -21,8 +21,11 @@ xt <- baua2 %>% summarise(across(everything(), ~sum(as.numeric(.x) %in% c(9999))
   t(.) %>% data.frame(.) %>% rownames_to_column(.,var = "var") %>% janitor::clean_names() %>% tibble() %>% filter(x)
 
 
-xt %>% left_join(labs, by ="var")
 
 
-baua2 %>% summarise(across(everything(), ~length(unique(.x)  ))  %>% 
-  t(.) %>% data.frame(.) %>% rownames_to_column(.,var = "var") %>% janitor::clean_names() %>% tibble()
+ndis <- 
+  baua2 %>% summarise(across(everything(), ~length(unique(.x)  )) )  %>% 
+  t(.) %>% data.frame(ndis = .) %>% rownames_to_column(.,var = "var") %>% janitor::clean_names() %>% tibble() 
+
+xt %>% left_join(labs, by ="var") %>% left_join(ndis) %>% 
+  arrange(ndis)

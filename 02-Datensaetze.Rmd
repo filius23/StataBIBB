@@ -49,7 +49,8 @@ Das funktioniert nicht:
 list intnr Bula 
 gkpol Stib zpalter in 11/12
 ```
-(Hier werden erstmal 20012 Zeilen von `intnr` und `Bula` ausgegeben)  
+> (Hier werden erstmal 20012 Zeilen von `intnr` und `Bula` ausgegeben)  
+
 <span style="color:red">`command gkpol is unrecognized`</span>  
 <span style="color:blue">`r(199);`</span>
 
@@ -124,15 +125,14 @@ Für metrische Variablen empfiehlt sich daher `summarize` als Überblicksbefehl:
 ```{stata su1, eval = F}
 summarize zpalter
 ```
-`summarize zpalter` kann auch mit `su zpalter` abgekürzt werden.
-
-
-Hier bekommen wir die Anzahl der Beobachtungen (`Obs.`), das arithmetische Mittel (`Mean`), sowie die Minimal- und Maximalwerte ausgegeben (`Min`&`Max`). (zur Standardabweichung `Std. Dev.` kommen wir noch).
 ```{stata su1b, echo = F}
 set linesize 80
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 su zpalter
 ```
+`summarize zpalter` kann auch mit `su zpalter` abgekürzt werden.
+Hier bekommen wir die Anzahl der Beobachtungen (`Obs.`), das arithmetische Mittel (`Mean`), sowie die Minimal- und Maximalwerte ausgegeben (`Min`&`Max`). (zur Standardabweichung `Std. Dev.` kommen wir noch).
+
 `summarize` klappt auch mit mehreren Variablen auf einmal (bei F518_SUF handelt es sich um den monatlichen Bruttoverdienst der Befragten):
 ```{stata su2, eval = F}
 summarize zpalter F518_SUF // klappt auch mit mehreren Variablen
@@ -196,13 +196,13 @@ list S1 S3 S2_j zpalter in 1/5
 
 Literaturtipps:
 
-+ S.18 *ff.* in [Diaz-Bone, R. (2019). Statistik für Soziologen (4. Auflzpalter)](https://www.utb-studi-e-book.de/9783838550718)
-+ S.12 *ff.* in [Bortz, J., & Schuster, C. (2010). Statistik für Human- und Sozialwissenschaftler (7. Auflzpalter)](https://link.springer.com/book/10.1007/978-3-642-12770-0) (ausführliche formale Beschreibung)
++ S.18 *ff.* in [Diaz-Bone, R. (2019). Statistik für Soziologen (4. Auflage)](https://www.utb-studi-e-book.de/9783838550718)
++ S.12 *ff.* in [Bortz, J., & Schuster, C. (2010). Statistik für Human- und Sozialwissenschaftler (7. Auflage)](https://link.springer.com/book/10.1007/978-3-642-12770-0) (ausführliche formale Beschreibung)
 
 
 ## Fehlende Werte {#missv}
 
-Wenn wir uns nochmal die Variable `zpalter` ansehen, dann fallen unrealistisch hohe negativen Altersangaben ins Auge:
+Wenn wir uns nochmal die Variable `zpalter` ansehen, dann fallen unrealistisch hohe Altersangaben ins Auge:
 
 ```{stata miss1, eval = F}
 summarize zpalter
@@ -288,7 +288,7 @@ In `tabulate` können wir mit der Option `, missing` die fehlenden Werte anzeige
 
 <!-- *Hinweis:* In diesem Skript werden wir meistens die fehlenden Werte mit `keep` oder `drop` löschen. Dies geht häufig schneller und wir kommen schneller zum Rechnen. In der Praxis empfiehlt es sich aber, die Missings wirklich mit `.` zu kennzeichnen und mit `mdesc` genauer zu betrachten, bevor sie gänzlich aus dem Speicher gelöscht werden. -->
 
-## if Bedingung - nur manche Zeilen ansehen
+## if-Bedingung - nur manche Zeilen ansehen
 
 Bisher haben wir uns immer auf den gesamten Datensatz bezogen.
 Häufig möchten wir aber nur bestimmte Beobachtungen berücksichtigen. 
@@ -352,7 +352,7 @@ browse S1 Bula if inlist(zpalter,15,79,80,82)
 ```
 
 
-### if Bedingungen und fehlende Werte {#miss_if}
+### if-Bedingungen und fehlende Werte {#miss_if}
 
 Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu `>`. 
 Fehlende Werte werden nämlich von Stata als "unendlich groß" gewertet! 
@@ -451,13 +451,13 @@ Mehr zu labels [hier](#adva)
 
 ## keep & drop: Fälle dauerhaft löschen
 
-Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte, die jünger als 60 Jahre sind, im Datensatz behalten. Dazu können wir `keep` oder `drop` die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:
+Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte, die jünger als 30 Jahre sind, im Datensatz behalten. Dazu können wir `keep` oder `drop` die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:
 ```{stata keep, eval = F}
-keep if zpalter < 60
+keep if zpalter < 30
 ```
 Alternativ können wir auch mit `drop` alle Befragten aus dem Datensatz löschen, die 60 Jahre oder älter sind:
 ```{stata drop, eval = F}
-drop if zpalter >= 60
+drop if zpalter >= 30
 ```
 
 Mit `describe, short` sehen wir, dass wir jetzt deutlich weniger Fälle im Speicher haben:
@@ -466,7 +466,7 @@ describe, short
 ```
 ```{stata dropdesc, echo = F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-qui drop if zpalter >= 60
+qui drop if zpalter >= 30
 describe, short
 ```
 
@@ -516,14 +516,15 @@ save "BIBBBAuA_2018_suf1.0.dta", replace
 
 (@) Laden Sie die Erwerbstätigenbefragung in Stata. 
 
-(@) Die Variable `gkpol` beinhaltet die Größe der Wohngemeinde der Befragten.
+(@) Die Variable `gkpol` beinhaltet die Größenklasse der Wohngemeinde der Befragten in 7 Kategorien (bis 2000 Einwohner, 2000-5000 Einwohner, usw.)
       + Welches Skalenniveau hat die Variable? 
       + Sollten Sie dementsprechend eher `tabulate` oder `summarize` verwenden, um einen Überblick zu dieser Variable zu bekommen?
       + Lassen Sie sich die Zahlencodes anstelle der Labels anzeigen (`nolabel`)
       + Überschreiben Sie alle Codes für fehlende Angaben mit `.` (Denken Sie an [`labelbook`](#missv)).
       + Lassen Sie sich mit `tabulate` die Häufigkeitsauszählung erneut anzeigen. Hat sich die Fallzahl vorhin verändert?
       + Wie können Sie die fehlenden Werte auch in `tabulate` auszählen lassen? Lassen Sie sich diese Auszählung anzeigen!
-      + Lassen Sie sich eine Auzählung der Wohnortgröße lediglich für die weiblichen Befragten ausgeben (Geschlecht ist Variable `S1` erfasst). Denken Sie an die Unterscheidung zwischen Labels und Zahlenwerten.
+      + Lassen Sie sich eine Auszählung der Wohnortgröße lediglich für die weiblichen Befragten ausgeben (Geschlecht ist Variable `S1` erfasst). Denken Sie an die Unterscheidung zwischen Labels und Zahlenwerten.
+      + Lassen Sie sich eine Auszählung der Wohnortgröße lediglich für die Befragte ausgeben, die zwischen 1960 und 1950 geboren sind.
 
 (@) Die Variable `F1104` beinhaltet das Jahr des Schulabschlusses.
       + Welches Skalenniveau hat die Variable? 
@@ -532,7 +533,7 @@ save "BIBBBAuA_2018_suf1.0.dta", replace
       + Führen Sie ggf. die Umcodierung der problematischen Werte auf `.` durch, um sie so Stata kenntlich zu machen.
       + Lassen Sie sich `F1104` erneut mit `summarize` oder `tabulate` anzeigen: hat alles geklappt wie es soll?
       + Für wie viele Befragte liegt kein Schulabschlussjahr vor? Nutzen Sie `mdesc`.
-      + Sie wollen nun die Jahre für den Schulabschluss für ausschließlich die weiblichen Befragten ansehen - nutzen Sie passende `if`-Bedingung! (Geschlecht ist in Variable `S1` abgelegt)
+      + Sie wollen nun die Jahre für den Schulabschluss nur für Befragte ansehen, die aus Wohnorten unter - nutzen Sie passende `if`-Bedingung! (Geschlecht ist in Variable `S1` abgelegt)
       
 
 (@) Kommentieren Sie ihre bisherigen Befehle mit `//`! Was haben Sie jeweils gemacht? Probieren Sie auch aus, mit `///` einen Befehl über mehrere Zeilen zu verteilen!
