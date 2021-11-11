@@ -28,3 +28,14 @@ mvdecode F518_SUF, mv( 99998/ 99999)
 ssc install fastgini
 fastgini F518_SUF
 tabstat F518_SUF, s(mean median var cv)
+
+
+/// ÜBung 3
+mvdecode F518_SUF, mv( 99998/ 99999)
+
+tabstat F518_SUF, s(p50 mean)
+tabstat F518_SUF, s(var sd cv)
+tabstat F518_SUF, s(p50 mean) by(S1)
+tabstat F518_SUF, s(var sd cv) by(S1)
+
+help fastgini

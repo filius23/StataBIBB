@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 if-Bedingungen | Stata Fortbildungen am BIBB</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 if-Bedingungen | Stata Fortbildungen am BIBB" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 if-Bedingungen | Stata Fortbildungen am BIBB" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Andreas Filser" />
+
+
+<meta name="date" content="2021-11-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="desc1.html"/>
+<link rel="next" href="test.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Stata @ BIBB</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> output: bookdown::pdf_document2</a></li>
+<li class="chapter" data-level="2" data-path="stata.html"><a href="stata.html"><i class="fa fa-check"></i><b>2</b> Überblick zu Stata</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="stata.html"><a href="stata.html#taschenrechner"><i class="fa fa-check"></i><b>2.1</b> Taschenrechner</a></li>
+<li class="chapter" data-level="2.2" data-path="stata.html"><a href="stata.html#darstellung-in-diesem-skript"><i class="fa fa-check"></i><b>2.2</b> Darstellung in diesem Skript</a></li>
+<li class="chapter" data-level="2.3" data-path="stata.html"><a href="stata.html#dofile-editor"><i class="fa fa-check"></i><b>2.3</b> DoFile Editor</a></li>
+<li class="chapter" data-level="2.4" data-path="stata.html"><a href="stata.html#datensätze-laden"><i class="fa fa-check"></i><b>2.4</b> Datensätze laden</a></li>
+<li class="chapter" data-level="2.5" data-path="stata.html"><a href="stata.html#daten-codebücher-fragebogen"><i class="fa fa-check"></i><b>2.5</b> Daten, Codebücher, Fragebogen</a></li>
+<li class="chapter" data-level="2.6" data-path="stata.html"><a href="stata.html#überblicksbefehle"><i class="fa fa-check"></i><b>2.6</b> Überblicksbefehle</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="stata.html"><a href="stata.html#describe"><i class="fa fa-check"></i><b>2.6.1</b> <code>describe</code></a></li>
+<li class="chapter" data-level="2.6.2" data-path="stata.html"><a href="stata.html#browse"><i class="fa fa-check"></i><b>2.6.2</b> <code>browse</code></a></li>
+<li class="chapter" data-level="2.6.3" data-path="stata.html"><a href="stata.html#list"><i class="fa fa-check"></i><b>2.6.3</b> <code>list</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="stata.html"><a href="stata.html#lookfor"><i class="fa fa-check"></i><b>2.6.4</b> <code>lookfor</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="stata.html"><a href="stata.html#U1"><i class="fa fa-check"></i><b>2.7</b> Übungen 1</a></li>
+<li class="chapter" data-level="2.8" data-path="stata.html"><a href="stata.html#profi-übungen-1"><i class="fa fa-check"></i><b>2.8</b> Profi-Übungen 1</a></li>
+<li class="chapter" data-level="2.9" data-path="stata.html"><a href="stata.html#anhang-1"><i class="fa fa-check"></i><b>2.9</b> Anhang 1</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="stata.html"><a href="stata.html#var_types"><i class="fa fa-check"></i><b>2.9.1</b> Variablentypen</a></li>
+<li class="chapter" data-level="2.9.2" data-path="stata.html"><a href="stata.html#otherfmts"><i class="fa fa-check"></i><b>2.9.2</b> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>3</b> Arbeiten mit Datensätzen in Stata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Stata2.html"><a href="Stata2.html#befehlsstruktur"><i class="fa fa-check"></i><b>3.1</b> Befehlsstruktur</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Stata2.html"><a href="Stata2.html#zeilenumbrüche"><i class="fa fa-check"></i><b>3.1.1</b> Zeilenumbrüche</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Stata2.html"><a href="Stata2.html#kommentare"><i class="fa fa-check"></i><b>3.1.2</b> Kommentare</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Stata2.html"><a href="Stata2.html#auszählen-überblick-erhalten"><i class="fa fa-check"></i><b>3.2</b> Auszählen &amp; Überblick erhalten</a></li>
+<li class="chapter" data-level="3.3" data-path="Stata2.html"><a href="Stata2.html#missv"><i class="fa fa-check"></i><b>3.3</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="3.4" data-path="Stata2.html"><a href="Stata2.html#zwei-variablen-eine-tabelle-kontingenztabellen"><i class="fa fa-check"></i><b>3.4</b> Zwei Variablen, eine Tabelle: Kontingenztabellen</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="Stata2.html"><a href="Stata2.html#in-prozent-relative-häufigkeiten"><i class="fa fa-check"></i><b>3.4.1</b> In Prozent: Relative Häufigkeiten</a></li>
+<li class="chapter" data-level="3.4.2" data-path="Stata2.html"><a href="Stata2.html#pro-gruppe-1-zeilenprozente"><i class="fa fa-check"></i><b>3.4.2</b> pro Gruppe 1: Zeilenprozente</a></li>
+<li class="chapter" data-level="3.4.3" data-path="Stata2.html"><a href="Stata2.html#pro-gruppe-2-spaltenprozente"><i class="fa fa-check"></i><b>3.4.3</b> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="Stata2.html"><a href="Stata2.html#metrische-variablen"><i class="fa fa-check"></i><b>3.5</b> metrische Variablen</a></li>
+<li class="chapter" data-level="3.6" data-path="Stata2.html"><a href="Stata2.html#skalenn"><i class="fa fa-check"></i><b>3.6</b> Exkurs: Skalenniveau</a></li>
+<li class="chapter" data-level="3.7" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>3.7</b> Nochmal von vorne: Daten neu laden</a></li>
+<li class="chapter" data-level="3.8" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>3.8</b> Speichern</a></li>
+<li class="chapter" data-level="3.9" data-path="Stata2.html"><a href="Stata2.html#übungen-2"><i class="fa fa-check"></i><b>3.9</b> Übungen 2</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="Stata2.html"><a href="Stata2.html#tab2"><i class="fa fa-check"></i><b>3.9.1</b> Übung 2-1</a></li>
+<li class="chapter" data-level="3.9.2" data-path="Stata2.html"><a href="Stata2.html#su2"><i class="fa fa-check"></i><b>3.9.2</b> Übung 2-2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>4</b> Deskriptive Statistik</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="desc1.html"><a href="desc1.html#metrische-variablen-beschreiben"><i class="fa fa-check"></i><b>4.1</b> Metrische Variablen beschreiben</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="desc1.html"><a href="desc1.html#exkurs-klassen-bilden"><i class="fa fa-check"></i><b>4.1.1</b> Exkurs: Klassen bilden</a></li>
+<li class="chapter" data-level="4.1.2" data-path="desc1.html"><a href="desc1.html#lage--und-konzentrationsmaße"><i class="fa fa-check"></i><b>4.1.2</b> Lage- und Konzentrationsmaße</a></li>
+<li class="chapter" data-level="4.1.3" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>4.1.3</b> <code>tabstat</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>4.1.4</b> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li class="chapter" data-level="4.1.5" data-path="desc1.html"><a href="desc1.html#streu"><i class="fa fa-check"></i><b>4.1.5</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li class="chapter" data-level="4.1.6" data-path="desc1.html"><a href="desc1.html#gini"><i class="fa fa-check"></i><b>4.1.6</b> Gini-Koeffizient</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="desc1.html"><a href="desc1.html#übungen-3"><i class="fa fa-check"></i><b>4.2</b> Übungen 3</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="desc1.html"><a href="desc1.html#met"><i class="fa fa-check"></i><b>4.2.1</b> Übung 3-1</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="desc1.html"><a href="desc1.html#anhang-kap-3"><i class="fa fa-check"></i><b>4.3</b> Anhang Kap 3</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="desc1.html"><a href="desc1.html#mean"><i class="fa fa-check"></i><b>4.3.1</b> Arithmetisches Mittel</a></li>
+<li class="chapter" data-level="4.3.2" data-path="desc1.html"><a href="desc1.html#median"><i class="fa fa-check"></i><b>4.3.2</b> Median</a></li>
+<li class="chapter" data-level="4.3.3" data-path="desc1.html"><a href="desc1.html#perc"><i class="fa fa-check"></i><b>4.3.3</b> Perzentile erklärt</a></li>
+<li class="chapter" data-level="4.3.4" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>4.3.4</b> Varianz erklärt</a></li>
+<li class="chapter" data-level="4.3.5" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>4.3.5</b> Schiefe &amp; Wölbung</a></li>
+<li class="chapter" data-level="4.3.6" data-path="desc1.html"><a href="desc1.html#bys_su"><i class="fa fa-check"></i><b>4.3.6</b> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li class="chapter" data-level="4.3.7" data-path="desc1.html"><a href="desc1.html#if_vgl"><i class="fa fa-check"></i><b>4.3.7</b> Kennzahlvergleiche mit <code>if</code></a></li>
+<li class="chapter" data-level="4.3.8" data-path="desc1.html"><a href="desc1.html#kennzahlvergleich-mit-tabulate-und-der-option-summarize"><i class="fa fa-check"></i><b>4.3.8</b> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iflab.html"><a href="iflab.html"><i class="fa fa-check"></i><b>5</b> if-Bedingungen</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="iflab.html"><a href="iflab.html#if-bedingungen---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>5.1</b> if-Bedingungen - nur manche Zeilen ansehen</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="iflab.html"><a href="iflab.html#if-bedingungen-labels"><i class="fa fa-check"></i><b>5.1.1</b> if-Bedingungen &amp; Labels</a></li>
+<li class="chapter" data-level="5.1.2" data-path="iflab.html"><a href="iflab.html#miss_if"><i class="fa fa-check"></i><b>5.1.2</b> if-Bedingungen und fehlende Werte</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="iflab.html"><a href="iflab.html#keep-drop-fälle-dauerhaft-löschen"><i class="fa fa-check"></i><b>5.2</b> keep &amp; drop: Fälle dauerhaft löschen</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i>Test</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Stata Fortbildungen am BIBB</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="iflab" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> if-Bedingungen</h1>
+<div id="if-bedingungen---nur-manche-zeilen-ansehen" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> if-Bedingungen - nur manche Zeilen ansehen</h2>
+<p>Bisher haben wir uns immer auf den gesamten Datensatz bezogen.
+Häufig möchten wir aber nur bestimmte Beobachtungen berücksichtigen.
+Ein Beispiel war gerade eben schon der <code>fastgini</code>-Befehl, der keine <code>by</code>-Option hat. Wir können mit einer <code>if</code>-Bedingung mitteilen, dass wir lediglich die Beobachtungen mit <code>S1==2</code> berücksichtigen möchten (also Frauen):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="iflab.html#cb1-1" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF <span class="kw">if</span> S1 == 2</span></code></pre></div>
+<p>Stata geht dann also alle Zeilen durch und verwendet nur diejenigen mit der entsprechenden Ausprägung.
+Einige Beispiele <code>list</code> zeigen die Möglichkeiten vielleicht etwas besser:
+Mit einer <code>if</code>-Bedingung können wir uns die Variablen <code>S1</code> <code>S3</code> <code>S2_j</code> und <code>zpalter</code> für 81-jährigen Befragten anzeigen lassen:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="iflab.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 S3 S2_j zpalter <span class="kw">if</span> zpalter == 81</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="iflab.html#cb3-1" aria-hidden="true" tabindex="-1"></a>       +--------------------------------------+</span>
+<span id="cb3-2"><a href="iflab.html#cb3-2" aria-hidden="true" tabindex="-1"></a>       |       S1         S3   S2_j   zpalter |</span>
+<span id="cb3-3"><a href="iflab.html#cb3-3" aria-hidden="true" tabindex="-1"></a>       |--------------------------------------|</span>
+<span id="cb3-4"><a href="iflab.html#cb3-4" aria-hidden="true" tabindex="-1"></a> 5114. |  männlic   Abitur /   1936        81 |</span>
+<span id="cb3-5"><a href="iflab.html#cb3-5" aria-hidden="true" tabindex="-1"></a> 5179. |  männlic   Abitur /   1936        81 |</span>
+<span id="cb3-6"><a href="iflab.html#cb3-6" aria-hidden="true" tabindex="-1"></a> 6118. |  männlic   Realschu   1936        81 |</span>
+<span id="cb3-7"><a href="iflab.html#cb3-7" aria-hidden="true" tabindex="-1"></a> 9045. |  männlic   Abitur /   1936        81 |</span>
+<span id="cb3-8"><a href="iflab.html#cb3-8" aria-hidden="true" tabindex="-1"></a>10517. | weiblich   Hauptsch   1936        81 |</span>
+<span id="cb3-9"><a href="iflab.html#cb3-9" aria-hidden="true" tabindex="-1"></a>       +--------------------------------------+</span></code></pre></div>
+<p>Wichtig ist hier <code>==</code> - ein einfaches <code>=</code> wird in Stata für die Zuweisung von Werten verwendet wie wir noch sehen werden.
+Für <code>if</code>-Bedingungen stehen uns die üblichen Operatoren zur Verfügung:
+<code>&gt;</code>, <code>&lt;</code>, <code>==</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>!=</code> (ungleich)</p>
+<p>Dementsprechend können wir so Befragte auswählen, die vor 1936 geboren wurden:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="iflab.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 S3 S2_j zpalter <span class="kw">if</span> S2_j &lt; 1936</span></code></pre></div>
+<p>Das funktioniert auch mit anderen Befehlen, wie z.B. <code>tabulate</code> - so können wir beispielsweise auszählen, wie viele 81-jährige Frauen und Männer im Datensatz vorhanden sind:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="iflab.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 <span class="kw">if</span> zpalter == 81</span></code></pre></div>
+<pre><code> Geschlecht |      Freq.     Percent        Cum.
+------------+-----------------------------------
+  mÃ¤nnlich |          4       80.00       80.00
+   weiblich |          1       20.00      100.00
+------------+-----------------------------------
+      Total |          5      100.00</code></pre>
+<p>Wir sehen unter anderem an der Fallzahl (Total) in dieser Tabelle, dass hier nicht alle Fälle aus dem Datensatz berücksichtigt werden.</p>
+<p>Wir können auch mehrere Bedingungen setzen. Sollen beide zutreffen, verbinden wir die Bedingungen mit <code>&amp;</code> - zB. wenn wir 81-jährige Befragte mit einem Bruttoverdienst von unter 1000 Euro auswählen möchten:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="iflab.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 <span class="kw">if</span> zpalter &gt; 81 &amp; F518_SUF &lt; 1000</span></code></pre></div>
+<p>Mit <code>|</code> können wir hingegen Fälle auswählen, für welche die ein <em>oder</em> die andere Bedingung zutrifft:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="iflab.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 <span class="kw">if</span> zpalter == 81 | inc &lt; 1000 <span class="co">// 81 Jahre alt oder unter 1000EUR Einkommen</span></span></code></pre></div>
+<p>Mit <code>inrange</code> können wir Auswahlen auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="iflab.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 <span class="kw">if</span> zpalter &gt;= 20 &amp; zpalter &lt;= 30</span>
+<span id="cb9-2"><a href="iflab.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 <span class="kw">if</span> <span class="fu">inrange</span>(zpalter,20,30)</span></code></pre></div>
+<p>Mit <code>inlist</code> können wir spezifische Werte angeben und so lange Folgen von <code>|</code> vermeiden:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="iflab.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 <span class="kw">if</span> zpalter == 15 | zpalter == 79 | zpalter == 80 | zpalter == 82 </span>
+<span id="cb10-2"><a href="iflab.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 <span class="kw">if</span> <span class="fu">inlist</span>(zpalter,15,79,80,82)</span></code></pre></div>
+<div id="if-bedingungen-labels" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> if-Bedingungen &amp; Labels</h3>
+<p>Genauso könnten wir auch vorgehen wenn wir nur männliche oder weibliche Befragte im Datensatz behalten möchten. Hier nochmal die Auszählung der Variable <code>S1</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="iflab.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1</span></code></pre></div>
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+
+
+
+ Geschlecht |      Freq.     Percent        Cum.
+------------+-----------------------------------
+  mÃ¤nnlich |     10,074       50.34       50.34
+   weiblich |      9,938       49.66      100.00
+------------+-----------------------------------
+      Total |     20,012      100.00</code></pre>
+<p>Allerdings sind <code>MANN</code> und <code>FRAU</code> lediglich <em>Variablenlabels</em>. D.h. hier wurden Zahlencodes wieder mit Beschreibungen assoziiert. Wir können diese Labels nicht für <code>if</code>-Bedingungen verwenden:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="iflab.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> S1 <span class="kw">if</span> S1 == <span class="st">&quot;weiblich&quot;</span></span></code></pre></div>
+<p><span style="color:red"><code>type mismatch</code></span><br />
+<span style="color:blue"><code>r(109);</code></span></p>
+<p>Im Hintergrund ist <code>S1</code> nämlich eine numerische Variable</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="iflab.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">describe</span> S1</span></code></pre></div>
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+              storage   display    value
+variable name   type    format     label      variable label
+------------------------------------------------------------------------------------------
+S1              byte    %8.0g      S1         Geschlecht</code></pre>
+<p>Unter <code>value label</code> sehen wir, dass hier das Label <code>S1</code> angefügt wurde.</p>
+<p>Wir können die eigentlichen Werte in <code>tabulate</code> mit der Option <code>,nol</code> ausblenden:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="iflab.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1, nol</span></code></pre></div>
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+
+
+
+ Geschlecht |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |     10,074       50.34       50.34
+          2 |      9,938       49.66      100.00
+------------+-----------------------------------
+      Total |     20,012      100.00</code></pre>
+<p>Wenn wir also nach Frauen filtern möchten, müssen wir den entsprechenden Zahlencode angeben:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="iflab.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> S1 <span class="kw">if</span> S1 == 2</span></code></pre></div>
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+
+
+
+ Geschlecht |      Freq.     Percent        Cum.
+------------+-----------------------------------
+   weiblich |      9,938      100.00      100.00
+------------+-----------------------------------
+      Total |      9,938      100.00</code></pre>
+<p>Mehr zu labels <a href="#adva">hier</a></p>
+</div>
+<div id="miss_if" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> if-Bedingungen und fehlende Werte</h3>
+<p>Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu <code>&gt;</code>.
+Fehlende Werte werden nämlich von Stata als “unendlich groß” gewertet!
+Wenn wir uns Befragte mit einem Alter über 92 ausgeben lassen, dann bekommen wir auch diejenigen ohne Altersangabe ausgegegeben:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="iflab.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 S3 zpalter <span class="kw">if</span> zpalter &gt; 81</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="iflab.html#cb21-1" aria-hidden="true" tabindex="-1"></a>       +-------------------------------+</span>
+<span id="cb21-2"><a href="iflab.html#cb21-2" aria-hidden="true" tabindex="-1"></a>       |       S1         S3   zpalter |</span>
+<span id="cb21-3"><a href="iflab.html#cb21-3" aria-hidden="true" tabindex="-1"></a>       |-------------------------------|</span>
+<span id="cb21-4"><a href="iflab.html#cb21-4" aria-hidden="true" tabindex="-1"></a>   39. | weiblich   Abitur /         . |</span>
+<span id="cb21-5"><a href="iflab.html#cb21-5" aria-hidden="true" tabindex="-1"></a>  514. | weiblich   Abitur /        83 |</span>
+<span id="cb21-6"><a href="iflab.html#cb21-6" aria-hidden="true" tabindex="-1"></a>  657. |  männlic   Hauptsch         . |</span>
+<span id="cb21-7"><a href="iflab.html#cb21-7" aria-hidden="true" tabindex="-1"></a>  823. | weiblich   Realschu         . |</span>
+<span id="cb21-8"><a href="iflab.html#cb21-8" aria-hidden="true" tabindex="-1"></a>  982. | weiblich   keine An         . |</span>
+<span id="cb21-9"><a href="iflab.html#cb21-9" aria-hidden="true" tabindex="-1"></a>       |-------------------------------|</span>
+<span id="cb21-10"><a href="iflab.html#cb21-10" aria-hidden="true" tabindex="-1"></a>       |      150 weitere Zeilen       |</span></code></pre></div>
+<p>Es gibt zwei Möglichkeiten, dies zu umgehen:</p>
+<ul>
+<li>entweder wir verwenden <code>inrange</code> - wobei wir hier eine Obergrenze angeben müssen und außerdem die Untergrenze immer mit eingeschlossen wird. Wenn wir also nur Fälle sehen wollen, die <em>älter</em> als 81 sind, dann müssen wir einen Wert über 81 angeben:</li>
+</ul>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="iflab.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 Bula zpalter <span class="kw">if</span> <span class="fu">inrange</span>(zpalter,81.5,100)</span></code></pre></div>
+<ul>
+<li>oder wir hängen den <code>missing()</code>-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines <code>!</code> verneinen, bekommen wir nur nicht-fehlende Fälle ausgegeben:</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="iflab.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 Bula zpalter <span class="kw">if</span> zpalter &gt; 81 &amp; !<span class="fu">missing</span>(zpalter)</span></code></pre></div>
+<p>Beide Befehle führen zum gleichen Ergebnis:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="iflab.html#cb24-1" aria-hidden="true" tabindex="-1"></a>       +-------------------------------+</span>
+<span id="cb24-2"><a href="iflab.html#cb24-2" aria-hidden="true" tabindex="-1"></a>       |       S1       Bula   zpalter |</span>
+<span id="cb24-3"><a href="iflab.html#cb24-3" aria-hidden="true" tabindex="-1"></a>       |-------------------------------|</span>
+<span id="cb24-4"><a href="iflab.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  514. | weiblich    Hamburg        83 |</span>
+<span id="cb24-5"><a href="iflab.html#cb24-5" aria-hidden="true" tabindex="-1"></a> 6438. |  männlic   Nordrhei        82 |</span>
+<span id="cb24-6"><a href="iflab.html#cb24-6" aria-hidden="true" tabindex="-1"></a>11786. |  männlic     Berlin        87 |</span>
+<span id="cb24-7"><a href="iflab.html#cb24-7" aria-hidden="true" tabindex="-1"></a>       +-------------------------------+</span></code></pre></div>
+</div>
+</div>
+<div id="keep-drop-fälle-dauerhaft-löschen" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> keep &amp; drop: Fälle dauerhaft löschen</h2>
+<p>Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte, die jünger als 30 Jahre sind, im Datensatz behalten. Dazu können wir <code>keep</code> oder <code>drop</code> die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="iflab.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">keep</span> <span class="kw">if</span> zpalter &lt; 30</span></code></pre></div>
+<p>Alternativ können wir auch mit <code>drop</code> alle Befragten aus dem Datensatz löschen, die 60 Jahre oder älter sind:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="iflab.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> <span class="kw">if</span> zpalter &gt;= 30</span></code></pre></div>
+<p>Mit <code>describe, short</code> sehen wir, dass wir jetzt deutlich weniger Fälle im Speicher haben:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="iflab.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">describe</span>, <span class="kw">short</span></span></code></pre></div>
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+
+
+
+
+Contains data from D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta
+  obs:         1,639                          
+ vars:           683                          2 Nov 2021 17:34
+ size:     1,411,179                          
+Sorted by:  intnr
+     Note:  dataset has changed since last saved</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="desc1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["StataBIBB1.pdf", "StataBIBB1.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

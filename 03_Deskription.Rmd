@@ -329,12 +329,12 @@ qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 qui mvdecode F518_SUF, mv(99998/99999)
 fastgini F518_SUF if S1 == 2
 ```
-$\Rightarrow$ *Wo sind die Haushaltseinkommen also ungleicher verteilt?*[^033]
+$\Rightarrow$ *Wo sind die Einkommen also ungleicher verteilt?*[^033]
 
-[^033]: Der etwas höhere Wert des Gini-Koeffizienten legt nahe, dass die Haushaltseinkommen in den alten Bundesländern (`eastwest`=1) etwas stärker ungleich verteilt als in den neuen Bundesländern (`eastwest`=2).
+[^033]: Der etwas höhere Wert des Gini-Koeffizienten legt nahe, dass die Einkommen bei Frauen (`S1`=2) etwas stärker ungleich verteilt als bei Männern (`S1`=1).
 
 
-Anmerkung: hier wurden die Missings in `di05` mit `mvdecode di05, mv(-50 -32 -7)` ausgeschlossen.
+Anmerkung: hier wurden die Missings in `F518_SUF` mit `mvdecode F518_SUF, mv(99998/ 99999)` ausgeschlossen.
 
 
 ## Übungen 3
@@ -342,49 +342,21 @@ Anmerkung: hier wurden die Missings in `di05` mit `mvdecode di05, mv(-50 -32 -7)
 ### Übung 3-1 {#met}  
 
 
-(@) Laden Sie den Allbus 2018 (`Allbus2018.dta`). Vergleichen Sie die Einkommensangaben (`inc`) von Frauen und Männern!
-    + Betrachten Sie die HH-Einkommensverteilungen mit `summarize` (Variable `inc`) 
-    + Denken Sie daran, die negativen Werte für `inc` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`, sehen Sie mit `labelbook` oder im Codebuch nach)
-    + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz und den Variationskoeffizienten zunächst für alle Fälle - was sagen Ihnen die Werte jeweils?
-    + Berechnen Sie nun alle Werte getrennt für Männer und Frauen (Variable `sex`) - welche Werte erhalten Sie jeweils für die Kennzahlen?
-    + Vergleichen Sie die Werte!
-    + Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung `fastgini` zu installieren - siehe [hier](#gini))
-    + Vergleichen Sie auch hier jeweils die Werte für Männer und Frauen!
+(@) Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). Analysieren Sie die Einkommensangaben (`F518_SUF`):
+    + Denken Sie daran, die fehlenden Werte für `F518_SUF` mit als Missing zu überschreiben! (bspw. `mvdecode`, sehen Sie mit `labelbook F518` Codebuch nach, welche Werte als fehlende Angaben zu betrachten sind)
+(@) Betrachten Sie die Einkommensangaben mit `summarize`
+    + Für wie viele Beobachtungen haben Sie eine gültige Angabe (nicht-Missing)?
+    + Wo liegt das arith. Mittel für die Einkommensangaben?
+    + Wie können Sie sich den Median mit Hilfe von `summarize` ausgeben lassen?
+    + Bei welchem Wert liegt die 75%-Perzentilsgrenze?
+    + Sind die Einkommensangaben eher rechts- oder linksschief verteilt?
 
-
-+ Sie wollen nun die Jahre für den Schulabschluss nur für Befragte ansehen, die aus Wohnorten unter - nutzen Sie passende `if`-Bedingung! (Geschlecht ist in Variable `S1` abgelegt)
-      + Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Speicher. (Siehe Kap 1.8)
-      + Wie viele Spalten hat der Datensatz nach dieser Veränderung? Wie viele Zeilen? 
-
-## Weitere Übungen 3
-
-
-Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und West!
-
-(@) Laden Sie den **kumulierten** Allbusdatensatz (`Allbus_1980-2018.dta`).
-    + Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von `keep if year == 1994` oder `drop if year != 1994`.
-    + Betrachten Sie die HH-Einkommensverteilungen (Variable `di05`) 
-    + Denken Sie daran, die negativen Werte für `di05` mit `.` zu überschreiben! (Entweder mit `replace` oder `mvdecode`, sehen Sie mit `labelbook` oder im Codebuch nach)
-    + Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?
-    + Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable `eastwest`) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?
-    + Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung `fastgini` zu installieren - siehe [hier](#gini))
-    + Vergleichen Sie auch hier jeweils die Werte für die neuen und alten Bundesländer!
-
-
-(@) Laden Sie den Allbus 2018 (`Allbus2018.dta`). Erstellen Sie eine Kontingenztabelle für `sex` und `educ`. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
-    + Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als  Zeilen- oder Spaltenprozenten. 
-    + Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?
-    + Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?
-    + Welcher Anteil der Frauen hat Abitur (die allgemeine Hochschulreife)?
-    + Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?
-
-(@) Laden Sie den kumulierten Allbusdatensatz (`Allbus_1980-2018.dta`) in Stata und analysieren Sie, wie sich die Anteile der geschiedenen Befragten über die Befragungsjahre verändert haben!
-    + Das Befragungsjahr finden Sie in der Variable `year`, `mstat` ist die Variable für den Familienstand.
-    + Überschreiben Sie die Missings für `mstat`.
-    + In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten? Sie können so eine Variable generieren, welche 1 annimt wenn `mstat` = 4 (geschieden) und 0 für alle andere Familienstände: `gen divorce = (mstat == 4)`
-    + Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?
-    + In welchem Jahr ist der Anteil der geschiedenen Befragten am höchsten?
-
+(@) Verwenden Sie jetzt `tabstat`, um folgende Kennzahlen für `F518_SUF` zu berechnen:
+    + Das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz und den Variationskoeffizienten - was sagen Ihnen die Werte jeweils?
+    + Berechnen Sie nun alle Werte getrennt für Männer und Frauen (Variable `S1`) - welche Werte erhalten Sie jeweils für die Kennzahlen?
+    + Vergleichen Sie die Werte! Wie unterscheiden sich die Einkommensangaben zwischen Männern und Frauen?
+  
+(@) Berechnen Sie den Gini-Koeffizenten für `F518_SUF`! (Denken Sie daran, vor der ersten Verwendung `fastgini` zu installieren - siehe [hier](#gini))
 
 
 ## Anhang Kap 3
@@ -626,25 +598,25 @@ In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.
 Neben der Variante [`bys var:`](#by_vgl) können wir auch mit Hilfe der `if`-Option Kennzahlen miteinander vergleichen:
 
 ```{stata ifF, eval = F}
-summarize age if eastwest == 1
-summarize age if eastwest == 2
+summarize zpalter if eastwest == 1
+summarize zpalter if eastwest == 2
 ```
 ```{stata ifT, echo = F}
 set linesize 80
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 qui mvdecode zpalter, mv(9999)
-su age if eastwest == 1
-su age if eastwest == 2
+su zpalter if eastwest == 1
+su zpalter if eastwest == 2
 ```
 Das führt natürlich im Kern zum gleichen Ergebnis wie die oben gezeigte Variante:
 ```{stata bysu3F, eval = F}
-bys eastwest: summarize age 
+bys eastwest: summarize zpalter 
 ```
 ```{stata bysu3T, echo = F}
 set linesize 80
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 qui mvdecode zpalter, mv(9999)
-bys eastwest: summarize age 
+bys eastwest: summarize zpalter 
 ```
 
 ### Kennzahlvergleich mit `tabulate` und der Option `summarize()` 
@@ -652,16 +624,16 @@ bys eastwest: summarize age
 Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der `summarise`-Option eine einfache Möglichkeit zur Verfügung:
 
 ```{stata tabsuF, eval = F}
-tab sex eastwest, summarize(age)
+tab gkpol S1, summarize(zpalter)
 ```
 ```{stata tabsuT, echo = F}
 set linesize 80
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 qui mvdecode zpalter, mv(9999)
-tab sex eastwest, summarize(age)
+tab gkpol S1, summarize(zpalter)
 ```
 
-Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, die im Durchschnitt 50.5982 alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 18.177659 Jahre. Außerdem wurden 539 Frauen aus den neuen Bundesländern befragt, die im arith. Mittel 54.58256 alt sind und deren Altersangaben eine Standardabweichung 16.720148 aufweisen.
+Wir sehen hier, dass  524 Männer aus Wohnorten unter 2000 Einwohnern befragt wurden, die im Durchschnitt 47.30 Jahre alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 11.895558 Jahre. Außerdem wurden 785 Frauen aus Wohnorten mit  50.000 bis 99.000 Einwohnern befragt, die im arith. Mittel 48.32 Jahre alt sind und deren Altersangaben eine Standardabweichung 10.9279 aufweisen.
 
 Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:
 
@@ -669,7 +641,7 @@ Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtunge
 + `nomeans`              arith. Mittel ausblenden
 + `nostandard`           Standardabw. ausblenden
   
-`tab sex eastwest, summarize(age) nofreq` würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.  
+`tab gkpol S1, summarize(age) nofreq` würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.  
 
 
 

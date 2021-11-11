@@ -74,3 +74,6 @@ lage--und-konzentrationsmaße
 mean
 perc
 median
+iflab
+metrische-variablen-beschreiben-1
+if-bedingungen---nur-manche-zeilen-ansehen

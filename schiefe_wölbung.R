@@ -56,7 +56,6 @@ pkurt1 <-
   sk_df %>% 
   ggplot(aes(x=x,y=y3)) +
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[7]) +
-  coord_cartesian(ylim=c(0,19)) +
   labs(title = paste0("Wölbung = ",kurt1)) +
   theme_minimal(base_size = 11) +
   theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
@@ -64,7 +63,7 @@ pkurt1 <-
         plot.title = element_text(hjust = .5))
 
 kurt2 <- round(sk_df %>% uncount(weights = y4) %>% pull(x) %>% moments::kurtosis(.),2)
-kurt1 <- 
+pkurt2 <- 
   sk_df %>% 
   ggplot(aes(x=x,y=y2)) +
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[8]) +
