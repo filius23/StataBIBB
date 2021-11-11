@@ -1,6 +1,8 @@
 # Test {-}
 ```{r setupt, echo = F, message=F, warning = F}
 .libPaths("D:/R-library4")
+library(tidyverse)
+library(patchwork)
 knitr::opts_chunk$set(collapse = F)
 library(Statamarkdown)
 # # options(width = 200) # 157
@@ -12,4 +14,56 @@ knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```{stata}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 list S1 S3 S2_j zpalter in 1/5 ,  noobs
+```
+
++ <span style="color:#FFA500FF"><b>arithmetisches Mittel</b></span>: der sog. Durchschnitt 
++ <span style="color:#48211A"><b>Median oder 50%-Perzentil</b></span>: 50% der Werte sind kleiner & 50% der Werte sind größer
++ <span style="color:#376597"><b>20%-Perzentil</b></span>: 20% der Werte sind kleiner & 80% der Werte sind größer
+
+```{r percplot1, echo=F, warning=F, message=F, out.height="25%", out.width="100%", fig.align="center"}
+
+sk_df <-  
+  data.frame(x= 1:10) %>%
+  mutate(y1 = round(4/x*4)+ 2,
+         y2 = round(4*x/4)+ 2,
+         y3 = as.numeric(round(20 - abs(scale(x))*9.5)),
+         y4 = 5) %>% 
+  bind_rows(data.frame(x=0,y1=12,y2=2,y3=1,y4=5),
+            data.frame(x=11,y1=2,y2=9,y3=1,y4=5)) 
+
+
+
+skew1 <- 
+  sk_df %>% 
+  ggplot(aes(x=x,y=y2)) +
+  geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[1]) +
+  labs(title = "negative Schiefe (rechtssteil/linksschief)" ) + 
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
+        axis.title = element_blank(), axis.text = element_blank(),
+        plot.title = element_text(hjust = .5, size = rel(.8)))
+skew2 <- 
+  sk_df %>% 
+  ggplot(aes(x=x,y=y3)) +
+  geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[3]) +
+  coord_cartesian(ylim=c(0,19)) +
+  labs(title = paste0("Schiefe = 0")) +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
+        axis.title = element_blank(), axis.text = element_blank(),
+        plot.title = element_text(hjust = .5, size = rel(.8)))
+
+skew3 <- 
+  sk_df %>% 
+  ggplot(aes(x=x,y=y2)) +
+  geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[4]) +
+  labs(title = "positive Schiefe (linkssteil/rechtsschief)") +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
+        axis.title = element_blank(), axis.text = element_blank(),
+        plot.title = element_text(hjust = .5, size = rel(.8)))
+
+  
+  
+skew1 + skew2 + skew3 + plot_layout(ncol = 3)
 ```

@@ -1,3 +1,183 @@
+## if-Bedingung - nur manche Zeilen ansehen
+
+Bisher haben wir uns immer auf den gesamten Datensatz bezogen.
+Häufig möchten wir aber nur bestimmte Beobachtungen berücksichtigen. 
+Mit durch Anhängen einer `if`-Bedingung können wir nur bestimmte Zeilen anzeigen lassen. Zum Beispiel können wir uns mit Hilfe einer `if`-Bedingung nur die 81-jährigen Befragten anzeigen lassen:
+```{stata if1, eval = F}
+list S1 S3 S2_j zpalter if zpalter == 81
+```
+```{stata if2, eval = F}
+       +--------------------------------------+
+       |       S1         S3   S2_j   zpalter |
+       |--------------------------------------|
+ 5114. |  männlic   Abitur /   1936        81 |
+ 5179. |  männlic   Abitur /   1936        81 |
+ 6118. |  männlic   Realschu   1936        81 |
+ 9045. |  männlic   Abitur /   1936        81 |
+10517. | weiblich   Hauptsch   1936        81 |
+       +--------------------------------------+
+```
+Wichtig ist hier `==` - ein einfaches `=` wird in Stata für die Zuweisung von Werten verwendet wie wir noch sehen werden.
+Für `if`-Bedingungen stehen uns die üblichen Operatoren zur Verfügung:
+`>`, `<`, `==`, `>=`, `<=`, `!=` (ungleich)
+
+Dementsprechend können wir so Befragte auswählen, die vor 1936 geboren wurden:
+```{stata if3, eval = F}
+list S1 S3 S2_j zpalter if S2_j < 1936
+```
+
+Das funktioniert auch mit anderen Befehlen, wie z.B. `tabulate` - so können wir beispielsweise auszählen, wie viele 81-jährige Frauen und Männer im Datensatz vorhanden sind:
+```{stata if4, eval = F}
+tab S1 if zpalter == 81
+```
+
+```{stata if5, echo = F, collectcode = F}
+set linesize 80
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tab S1 if zpalter == 81
+```
+Wir sehen unter anderem an der Fallzahl (Total) in dieser Tabelle, dass hier nicht alle Fälle aus dem Datensatz berücksichtigt werden.
+
+
+Wir können auch mehrere Bedingungen setzen. Sollen beide zutreffen, verbinden wir die Bedingungen mit `&` - zB. wenn wir 81-jährige Befragte mit einem Bruttoverdienst von unter 1000 Euro auswählen möchten:
+```{stata if6, eval = F}
+list S1 if zpalter > 81 & F518_SUF < 1000
+```
+
+Mit `|` können wir hingegen Fälle auswählen, für welche die ein *oder* die andere Bedingung zutrifft:
+```{stata if7, eval = F}
+tab S1 if zpalter == 81 | inc < 1000 // 81 Jahre alt oder unter 1000EUR Einkommen
+```
+
+Mit `inrange` können wir Auswahlen auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):
+```{stata tabif1, eval = F}
+tab S1 if zpalter >= 20 & zpalter <= 30
+tab S1 if inrange(zpalter,20,30)
+```
+
+Mit `inlist` können wir spezifische Werte angeben und so lange Folgen von `|` vermeiden:
+```{stata browseif, eval = F}
+browse S1 Bula if zpalter == 15 | zpalter == 79 | zpalter == 80 | zpalter == 82 
+browse S1 Bula if inlist(zpalter,15,79,80,82)
+```
+
+
+### if-Bedingungen und fehlende Werte {#miss_if}
+
+Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu `>`. 
+Fehlende Werte werden nämlich von Stata als "unendlich groß" gewertet! 
+Wenn wir uns Befragte mit einem Alter über 92 ausgeben lassen, dann bekommen wir auch diejenigen ohne Altersangabe ausgegegeben:
+
+```{stata list_if, eval = F}
+list S1 S3 zpalter if zpalter > 81
+```
+```{stata list_if2, eval = F}
+       +-------------------------------+
+       |       S1         S3   zpalter |
+       |-------------------------------|
+   39. | weiblich   Abitur /         . |
+  514. | weiblich   Abitur /        83 |
+  657. |  männlic   Hauptsch         . |
+  823. | weiblich   Realschu         . |
+  982. | weiblich   keine An         . |
+       |-------------------------------|
+       |      150 weitere Zeilen       |
+```
+
+Es gibt zwei Möglichkeiten, dies zu umgehen: 
+
++ entweder wir verwenden `inrange` - wobei wir hier eine Obergrenze angeben müssen und außerdem die Untergrenze immer mit eingeschlossen wird. Wenn wir also nur Fälle sehen wollen, die *älter* als 81 sind, dann müssen wir einen Wert über 81 angeben:
+```{stata list_if3, eval = F}
+list S1 Bula zpalter if inrange(zpalter,81.5,100)
+```
+
++ oder wir hängen den `missing()`-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines `!` verneinen, bekommen wir nur nicht-fehlende Fälle ausgegeben:
+```{stata list_if5, eval = F}
+list S1 Bula zpalter if zpalter > 81 & !missing(zpalter)
+```
+
+Beide Befehle führen zum gleichen Ergebnis:
+```{stata list_if6, eval = F}
+       +-------------------------------+
+       |       S1       Bula   zpalter |
+       |-------------------------------|
+  514. | weiblich    Hamburg        83 |
+ 6438. |  männlic   Nordrhei        82 |
+11786. |  männlic     Berlin        87 |
+       +-------------------------------+
+```
+
+### if-Bedingungen & Labels 
+
+Genauso könnten wir auch vorgehen wenn wir nur männliche oder weibliche Befragte im Datensatz behalten möchten. Hier nochmal die Auszählung der Variable `S1`:
+```{stata tab3, eval = F}
+tabulate S1
+```
+
+```{stata tab3b, echo = F, collectcode=F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tab S1
+```
+
+Allerdings sind `MANN` und `FRAU` lediglich *Variablenlabels*. D.h. hier wurden Zahlencodes wieder mit Beschreibungen assoziiert. Wir können diese Labels nicht für `if`-Bedingungen verwenden:
+```{stata if_lab, eval = F}
+tab S1 if S1 == "weiblich"
+```
+<span style="color:red">`type mismatch`</span>  
+<span style="color:blue">`r(109);`</span>
+
+Im Hintergrund ist `S1` nämlich eine numerische Variable
+```{stata if_lab2, eval = F}
+describe S1
+```
+```{stata if_lab2b, echo = F, collectcode=F}
+set linesize 90
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+describe S1
+```
+Unter `value label` sehen wir, dass hier das Label `S1` angefügt wurde.
+
+Wir können die eigentlichen Werte in `tabulate` mit der Option `,nol` ausblenden: 
+```{stata if_lab3, eval = F}
+tabulate S1, nol
+```
+```{stata if_lab3b, echo = F, collectcode=F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tabulate S1,nol
+```
+Wenn wir also nach Frauen filtern möchten, müssen wir den entsprechenden Zahlencode angeben:
+
+```{stata keep_l3, eval = F}
+tab S1 if S1 == 2
+```
+
+```{stata keep_l4, echo = F, collectcode=F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tabulate S1 if S1 == 2
+```
+
+
+Mehr zu labels [hier](#adva)
+## keep & drop: Fälle dauerhaft löschen
+
+Manchmal möchten wir nur bestimmte Beobachtungen im Datensatz behalten. Beispielsweise möchten wir für eine Analyse nur Befragte, die jünger als 30 Jahre sind, im Datensatz behalten. Dazu können wir `keep` oder `drop` die gewünschten Fälle behalten bzw. die ungewünschten ausschließen:
+```{stata keep, eval = F}
+keep if zpalter < 30
+```
+Alternativ können wir auch mit `drop` alle Befragten aus dem Datensatz löschen, die 60 Jahre oder älter sind:
+```{stata drop, eval = F}
+drop if zpalter >= 30
+```
+
+Mit `describe, short` sehen wir, dass wir jetzt deutlich weniger Fälle im Speicher haben:
+```{stata dropdesc1, eval = F}
+describe, short
+```
+```{stata dropdesc, echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui drop if zpalter >= 30
+describe, short
+```
 
 
 ## Hilfe

@@ -5,9 +5,20 @@ cd "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1"
 cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
 use "BIBBBAuA_2018_suf1.0.dta"
 
+// in einem wissenintensiven Beruf
+tab F100_wib1
+d F100_wib1
+labelbook wib
+mvdecode F100_wib1, mv(-1/-4)
+tab F100_wib1
 
+// 
 // Lassen Sie sich mit Hilfe von `tabulate` die Variable `gkpol` anzeigen.
-tab gkpol
+tab gkpol F100_wib1
+
+tab gkpol F100_wib1, col nofreq
+tab gkpol F100_wib1, row nofreq
+
 	
 	// Lassen Sie sich die Zahlencodes anstelle der Labels anzeigen.
 tab gkpol, nol

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Deskriptive Statistik | Stata Fortbildungen am BIBB</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Deskriptive Statistik | Stata Fortbildungen am BIBB" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Deskriptive Statistik | Stata Fortbildungen am BIBB" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Andreas Filser" />
+
+
+<meta name="date" content="2021-11-11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Stata2.html"/>
+<link rel="next" href="test.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Stata @ BIBB</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> output: bookdown::pdf_document2</a></li>
+<li class="chapter" data-level="2" data-path="stata.html"><a href="stata.html"><i class="fa fa-check"></i><b>2</b> Überblick zu Stata</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="stata.html"><a href="stata.html#taschenrechner"><i class="fa fa-check"></i><b>2.1</b> Taschenrechner</a></li>
+<li class="chapter" data-level="2.2" data-path="stata.html"><a href="stata.html#darstellung-in-diesem-skript"><i class="fa fa-check"></i><b>2.2</b> Darstellung in diesem Skript</a></li>
+<li class="chapter" data-level="2.3" data-path="stata.html"><a href="stata.html#dofile-editor"><i class="fa fa-check"></i><b>2.3</b> DoFile Editor</a></li>
+<li class="chapter" data-level="2.4" data-path="stata.html"><a href="stata.html#datensätze-laden"><i class="fa fa-check"></i><b>2.4</b> Datensätze laden</a></li>
+<li class="chapter" data-level="2.5" data-path="stata.html"><a href="stata.html#daten-codebücher-fragebogen"><i class="fa fa-check"></i><b>2.5</b> Daten, Codebücher, Fragebogen</a></li>
+<li class="chapter" data-level="2.6" data-path="stata.html"><a href="stata.html#überblicksbefehle"><i class="fa fa-check"></i><b>2.6</b> Überblicksbefehle</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="stata.html"><a href="stata.html#describe"><i class="fa fa-check"></i><b>2.6.1</b> <code>describe</code></a></li>
+<li class="chapter" data-level="2.6.2" data-path="stata.html"><a href="stata.html#browse"><i class="fa fa-check"></i><b>2.6.2</b> <code>browse</code></a></li>
+<li class="chapter" data-level="2.6.3" data-path="stata.html"><a href="stata.html#list"><i class="fa fa-check"></i><b>2.6.3</b> <code>list</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="stata.html"><a href="stata.html#lookfor"><i class="fa fa-check"></i><b>2.6.4</b> <code>lookfor</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="stata.html"><a href="stata.html#U1"><i class="fa fa-check"></i><b>2.7</b> Übungen 1</a></li>
+<li class="chapter" data-level="2.8" data-path="stata.html"><a href="stata.html#profi-übungen-1"><i class="fa fa-check"></i><b>2.8</b> Profi-Übungen 1</a></li>
+<li class="chapter" data-level="2.9" data-path="stata.html"><a href="stata.html#anhang-1"><i class="fa fa-check"></i><b>2.9</b> Anhang 1</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="stata.html"><a href="stata.html#var_types"><i class="fa fa-check"></i><b>2.9.1</b> Variablentypen</a></li>
+<li class="chapter" data-level="2.9.2" data-path="stata.html"><a href="stata.html#otherfmts"><i class="fa fa-check"></i><b>2.9.2</b> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>3</b> Arbeiten mit Datensätzen in Stata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Stata2.html"><a href="Stata2.html#befehlsstruktur"><i class="fa fa-check"></i><b>3.1</b> Befehlsstruktur</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Stata2.html"><a href="Stata2.html#zeilenumbrüche"><i class="fa fa-check"></i><b>3.1.1</b> Zeilenumbrüche</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Stata2.html"><a href="Stata2.html#kommentare"><i class="fa fa-check"></i><b>3.1.2</b> Kommentare</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Stata2.html"><a href="Stata2.html#auszählen-überblick-erhalten"><i class="fa fa-check"></i><b>3.2</b> Auszählen &amp; Überblick erhalten</a></li>
+<li class="chapter" data-level="3.3" data-path="Stata2.html"><a href="Stata2.html#missv"><i class="fa fa-check"></i><b>3.3</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="3.4" data-path="Stata2.html"><a href="Stata2.html#zwei-variablen-eine-tabelle-kontingenztabellen"><i class="fa fa-check"></i><b>3.4</b> Zwei Variablen, eine Tabelle: Kontingenztabellen</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="Stata2.html"><a href="Stata2.html#in-prozent-relative-häufigkeiten"><i class="fa fa-check"></i><b>3.4.1</b> In Prozent: Relative Häufigkeiten</a></li>
+<li class="chapter" data-level="3.4.2" data-path="Stata2.html"><a href="Stata2.html#pro-gruppe-1-zeilenprozente"><i class="fa fa-check"></i><b>3.4.2</b> pro Gruppe 1: Zeilenprozente</a></li>
+<li class="chapter" data-level="3.4.3" data-path="Stata2.html"><a href="Stata2.html#pro-gruppe-2-spaltenprozente"><i class="fa fa-check"></i><b>3.4.3</b> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="Stata2.html"><a href="Stata2.html#metrische-variablen"><i class="fa fa-check"></i><b>3.5</b> metrische Variablen</a></li>
+<li class="chapter" data-level="3.6" data-path="Stata2.html"><a href="Stata2.html#skalenn"><i class="fa fa-check"></i><b>3.6</b> Exkurs: Skalenniveau</a></li>
+<li class="chapter" data-level="3.7" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>3.7</b> Nochmal von vorne: Daten neu laden</a></li>
+<li class="chapter" data-level="3.8" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>3.8</b> Speichern</a></li>
+<li class="chapter" data-level="3.9" data-path="Stata2.html"><a href="Stata2.html#übungen-2"><i class="fa fa-check"></i><b>3.9</b> Übungen 2</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="Stata2.html"><a href="Stata2.html#tab2"><i class="fa fa-check"></i><b>3.9.1</b> Übung 2-1</a></li>
+<li class="chapter" data-level="3.9.2" data-path="Stata2.html"><a href="Stata2.html#su2"><i class="fa fa-check"></i><b>3.9.2</b> Übung 2-2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>4</b> Deskriptive Statistik</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="desc1.html"><a href="desc1.html#metrische-variablen-beschreiben"><i class="fa fa-check"></i><b>4.1</b> Metrische Variablen beschreiben</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="desc1.html"><a href="desc1.html#exkurs-klassen-bilden"><i class="fa fa-check"></i><b>4.1.1</b> Exkurs: Klassen bilden</a></li>
+<li class="chapter" data-level="4.1.2" data-path="desc1.html"><a href="desc1.html#lage--und-konzentrationsmaße"><i class="fa fa-check"></i><b>4.1.2</b> Lage- und Konzentrationsmaße</a></li>
+<li class="chapter" data-level="4.1.3" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>4.1.3</b> <code>tabstat</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>4.1.4</b> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li class="chapter" data-level="4.1.5" data-path="desc1.html"><a href="desc1.html#streu"><i class="fa fa-check"></i><b>4.1.5</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li class="chapter" data-level="4.1.6" data-path="desc1.html"><a href="desc1.html#gini"><i class="fa fa-check"></i><b>4.1.6</b> Gini-Koeffizient</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="desc1.html"><a href="desc1.html#übungen-3"><i class="fa fa-check"></i><b>4.2</b> Übungen 3</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="desc1.html"><a href="desc1.html#tab"><i class="fa fa-check"></i><b>4.2.1</b> Übung 3-1</a></li>
+<li class="chapter" data-level="4.2.2" data-path="desc1.html"><a href="desc1.html#met"><i class="fa fa-check"></i><b>4.2.2</b> Übung 3-2</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="desc1.html"><a href="desc1.html#weitere-übungen-3"><i class="fa fa-check"></i><b>4.3</b> Weitere Übungen 3</a></li>
+<li class="chapter" data-level="4.4" data-path="desc1.html"><a href="desc1.html#anhang-kap-3"><i class="fa fa-check"></i><b>4.4</b> Anhang Kap 3</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="desc1.html"><a href="desc1.html#mean"><i class="fa fa-check"></i><b>4.4.1</b> Arithmetisches Mittel</a></li>
+<li class="chapter" data-level="4.4.2" data-path="desc1.html"><a href="desc1.html#median"><i class="fa fa-check"></i><b>4.4.2</b> Median</a></li>
+<li class="chapter" data-level="4.4.3" data-path="desc1.html"><a href="desc1.html#perc"><i class="fa fa-check"></i><b>4.4.3</b> Perzentile erklärt</a></li>
+<li class="chapter" data-level="4.4.4" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>4.4.4</b> Varianz erklärt</a></li>
+<li class="chapter" data-level="4.4.5" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>4.4.5</b> Schiefe &amp; Wölbung</a></li>
+<li class="chapter" data-level="4.4.6" data-path="desc1.html"><a href="desc1.html#bys_su"><i class="fa fa-check"></i><b>4.4.6</b> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li class="chapter" data-level="4.4.7" data-path="desc1.html"><a href="desc1.html#if_vgl"><i class="fa fa-check"></i><b>4.4.7</b> Kennzahlvergleiche mit <code>if</code></a></li>
+<li class="chapter" data-level="4.4.8" data-path="desc1.html"><a href="desc1.html#kennzahlvergleich-mit-tabulate-und-der-option-summarize"><i class="fa fa-check"></i><b>4.4.8</b> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i>Test</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Stata Fortbildungen am BIBB</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="desc1" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Deskriptive Statistik</h1>
+<div id="metrische-variablen-beschreiben" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Metrische Variablen beschreiben</h2>
+<p>Im vorherigen Kapitel bezog sich vor allem kategoriale Variablen (mit einer begrenzten Anzahl an Ausprägungen). Für ein metrisches Merkmal, wie zum Beispiel das Alter (<code>zpalter</code>) macht eine Häufigkeitstabelle wenig Sinn, da das Alter sehr viele Ausprägungen hat und eine Tabelle unübersichtlich wäre (es gibt insgesamt 71!).</p>
+<div id="exkurs-klassen-bilden" class="section level3" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Exkurs: Klassen bilden</h3>
+<p>Um dieses Problem zu umgehen, könnten wir die Informationen in Klassen/Gruppen zusammenzufassen.
+So transformieren eine metrische Variable in eine kategoriale, ordinale Variable:</p>
+<p><img src="pics/03_skalen_transformation.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><em>Hier nur ein ganz kurzes Beispiel, in Kapitel 4 werden wir uns ausführlicher mit der Erstellung von Variablen in Stata beschäftigen.</em>
+Für diese Transformation können wir in Stata den <code>egen</code>-Befehl nutzen.
+Um die Klassen zu bilden, nutzen wir <code>egen</code> zusammen mit der Funktion <code>cut()</code>. In <code>cut</code> geben wir die zu unterteilende Variable an, außerdem legen wir in <code>at()</code> die Grenzen fest. Die so generierten Werte legen wir in einer neuen Variable <code>age_cat</code> ab:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="desc1.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> age_cat = <span class="fu">cut</span>(zpalter), <span class="fu">at</span>(15 18 35 60 100 ) <span class="kw">label</span></span></code></pre></div>
+<pre><code>(176 missing values generated)</code></pre>
+<p>Für die neue, klassierte Variable können wir dann wieder mit <code>tabulate</code> eine Häufigkeitstabelle anfordern:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="desc1.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> age_cat</span></code></pre></div>
+<pre><code>    age_cat |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        15- |         10        0.05        0.05
+        18- |      3,351       16.89       16.94
+        35- |     13,855       69.85       86.79
+        60- |      2,620       13.21      100.00
+------------+-----------------------------------
+      Total |     19,836      100.00</code></pre>
+<p>Bspw. erkennen wir in dieser Tabelle, dass 69.85% der Befragten zwischen 35 und 59 Jahre alt sind (<code>Cum.</code> <span class="math inline">\(\Rightarrow\)</span> 86.79% sind bis zu 59 Jahre alt).
+Allerdings geht uns dadurch sehr viel Information verloren: wir ‘erkaufen’ uns die Übersichtlichkeit durch einen Verlust an Präzision bzgl. der Altersangaben.</p>
+</div>
+<div id="lage--und-konzentrationsmaße" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Lage- und Konzentrationsmaße</h3>
+<p>Allerdings können metrische Variablen auch direkt Hilfe von Lage- und Konzentrationsmaßen beschrieben werden.
+Klassische Lagemaße zur Beschreibung von metrischen Variablen sind bspw. Minimum und Maximum, das arithm. Mittel sowie der Median und Quantile. Auch hier haben wir bereits den wichtigsten Befehl kennen gelernt: <code>summarize</code> gibt uns einen ersten Überblick zur Verteilung einer metrischen Variable:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="desc1.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">summarize</span> zpalter</span></code></pre></div>
+<pre><code>    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+     zpalter |     19836    47.19228    11.33762         15         87</code></pre>
+<p>Wir erfahren also, dass die Befragten im Mittel 47.19228 Jahre alt sind, die jüngsten Befragten 15 Jahre alt und ältesten Befragten sind 87 Jahre alt.</p>
+<p>Mit der Option <code>,detail</code> bekommen wir eine deutlich umfangreichere Auskunft:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="desc1.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">summarize</span> zpalter, <span class="kw">detail</span></span></code></pre></div>
+<pre><code>                    Alter der Zielperson
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%           21             15
+ 5%           27             16
+10%           31             16       Obs               19836
+25%           38             16       Sum of Wgt.       19836
+
+50%           49                      Mean           47.19228
+                        Largest       Std. Dev.      11.33762
+75%           56             81
+90%           61             82       Variance       128.5417
+95%           63             83       Skewness      -.3866576
+99%           68             87       Kurtosis       2.377842</code></pre>
+<p>Hier wird eine ganze Menge auf einmal angezeigt - die Kennzahlen sind dabei in drei Spalten organisiert:</p>
+<ul>
+<li><p>Aus der ersten Spalte erfahren wir die Quantile (<code>Percentiles</code>). Ein Quantil einer Verteilung trennt die Daten so in zwei Teile, dass <code>x</code>% der Daten darunter und 100-<code>x</code>% darüber liegen. Hier können wir zB ablesen, dass 25% der Befragten 38 Jahre oder jünger sind. 95% der Befragten sind &lt;= 63 Jahre alt. Dementsprechend sind 5% der Befragten 63 Jahre oder älter. Die 50%-Grenze für das Alter (<em>der Median</em>) liegt bei 49 Jahren.<a href="desc1.html#perc">Mehr zu Perzentilen</a></p></li>
+<li><p>die zweite Spalte gibt uns jeweils die 4 kleinsten und größten Werte für das Alter aus: die 4 kleinsten Alterswerte sind jeweils 15,16,16,16 die größten Werte sind 81,82,83 und 87.</p></li>
+<li><p>in der dritten Spalte bekommen wir eine Reihe weiterer Informationen:</p>
+<ul>
+<li>die Zahl der Beobachtungen (<code>Obs</code>) und das arithmetische Mittel (<code>Mean</code>) <a href="desc1.html#mean">mehr zum arithm. Mittel</a></li>
+<li>die Streuung anhand der Standardabweichung (<code>Std. Dev.</code>) und Varianz (<code>Variance</code>) <a href="desc1.html#variance">mehr dazu</a></li>
+<li>sowie die Schiefe (<code>Skewness</code>) und Wölbung (<code>Kurtosis</code>) <a href="desc1.html#sk_kur">mehr dazu</a></li>
+</ul></li>
+</ul>
+</div>
+<div id="tabstat" class="section level3" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> <code>tabstat</code></h3>
+<p>Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist <code>tabstat</code> eine gute Lösung. Mit <code>tabstat</code> können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei das folgende Format: <code>tabstat zpalter, s(*kennzahl*)</code></p>
+Hier eine Übersicht der Kennzahlen:
+<table class="table table-condensed" style="font-size: 8px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Option
+</th>
+<th style="text-align:left;">
+Kennzahl
+</th>
+<th style="text-align:left;">
+Kommentar
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+mean
+</td>
+<td style="text-align:left;">
+arithm. Mittel
+</td>
+<td style="text-align:left;">
+“Durchschnitt” <a href="desc1.html#mean">mehr</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+median
+</td>
+<td style="text-align:left;">
+Median
+</td>
+<td style="text-align:left;">
+50% Grenze <a href="desc1.html#perc">mehr</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+count
+</td>
+<td style="text-align:left;">
+Anzahl der Beobachtungen ohne Missings
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+n
+</td>
+<td style="text-align:left;">
+entspricht count
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+sum
+</td>
+<td style="text-align:left;">
+Summe der Ausprägungen
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+max
+</td>
+<td style="text-align:left;">
+Maximum
+</td>
+<td style="text-align:left;">
+Höchster Wert
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+min
+</td>
+<td style="text-align:left;">
+Minimum
+</td>
+<td style="text-align:left;">
+Niedrigster Wert
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+range
+</td>
+<td style="text-align:left;">
+Spannweite = max - min
+</td>
+<td style="text-align:left;">
+Wie groß ist der Abstand zwischen kleinstem und größtem Wert?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+variance
+</td>
+<td style="text-align:left;">
+Varianz
+</td>
+<td style="text-align:left;">
+siehe <a href="desc1.html#variance">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+sd
+</td>
+<td style="text-align:left;">
+Standardabweichung
+</td>
+<td style="text-align:left;">
+siehe <a href="desc1.html#variance">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+cv
+</td>
+<td style="text-align:left;">
+Variationskoefficient (sd/mean)
+</td>
+<td style="text-align:left;">
+siehe <a href="desc1.html#variance">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+skewness
+</td>
+<td style="text-align:left;">
+Schiefe
+</td>
+<td style="text-align:left;">
+siehe <a href="desc1.html#sk_kur">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+kurtosis
+</td>
+<td style="text-align:left;">
+Wölbung
+</td>
+<td style="text-align:left;">
+siehe <a href="desc1.html#sk_kur">hier</a>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+pX
+</td>
+<td style="text-align:left;">
+X. Perzentil (5,10,25,50,75,90,95,99)
+</td>
+<td style="text-align:left;">
+zb. p5 <span class="math inline">\(\rightarrow\)</span> Grenze, unterhalb welcher X% der Beobachtungen liegen
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+iqr
+</td>
+<td style="text-align:left;">
+Interquartilsdistanz = p75 - p25
+</td>
+<td style="text-align:left;">
+Wie groß ist der Abstand zwischen der 25% und 75%-Grenze?
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+q
+</td>
+<td style="text-align:left;">
+Entspricht p25 p50 p75
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
+<p>Hier ein Bespielbefehl für die Berechnung des arith. Mittels, des Medians, der Varianz und des Varianzkoeffizienten mit <code>tabstat</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="desc1.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv)</span></code></pre></div>
+<pre><code>    variable |      mean       p50  variance        cv
+-------------+----------------------------------------
+     zpalter |  47.19228        49  128.5417  .2402432
+------------------------------------------------------</code></pre>
+<p>Allerdings lassen sich mit <code>tabstat</code> nicht beliebige Quantil-Grenzen (nur für 5,10,25,50,75,90,95,99) berechnen, dafür können wir <code>centile</code> nutzen:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="desc1.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">centile</span> age, <span class="kw">centile</span>(35)</span></code></pre></div>
+<pre><code>                                                       -- Binom. Interp. --
+    Variable |     Obs  Percentile      Centile        [95% Conf. Interval]
+-------------+-------------------------------------------------------------
+     zpalter |   19836         35            44              43          44</code></pre>
+<p>Aus den Angaben unter <code>Centile</code> erfahren wir, dass 35% der Befragten im Datensatz sind 44 Jahre alt oder jünger sind. Dementsprechend sind 65% der Befragten 44 Jahre oder älter.</p>
+</div>
+<div id="by_vgl" class="section level3" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> Kennzahlen vergleichen mit <code>tabstat</code></h3>
+<p>Interessant sind diese Kennzahlen auch wieder erst im Vergleich zwischen Gruppen. Hierfür steht uns die <code>by()</code>-Option von <code>tabstat</code> zur Verfügung. Bspw. können wir die Altersangaben von Männern und Frauen vergleichen, indem wir in <code>tabstat</code> die Option <code>by(S1)</code> verwenden:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="desc1.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(<span class="kw">mean</span> <span class="kw">median</span> <span class="kw">var</span> cv) <span class="kw">by</span>(S1)</span></code></pre></div>
+<pre><code>Summary for variables: zpalter
+     by categories of: S1 (Geschlecht)
+
+       S1 |      mean       p50  variance        cv
+----------+----------------------------------------
+mÃ¤nnlich |  46.49079        49  141.0736  .2554795
+ weiblich |  47.90402        50  114.8336  .2236982
+----------+----------------------------------------
+    Total |  47.19228        49  128.5417  .2402432
+---------------------------------------------------</code></pre>
+<p>Wir sehen hier also, dass sowohl das arith. Mittel als auch der Median des Befragtenalters bei Frauen höher ist als bei Männern. Außerdem ist die Streuung bei Männern höher als bei Frauen.</p>
+<p>Eine andere Option ist es, auf den <code>if</code>-Befehl zurückzugreifen - siehe <a href="desc1.html#if_vgl">hier</a></p>
+</div>
+<div id="streu" class="section level3" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</h3>
+<p>Streuungsmaße helfen uns zu beurteilen, wie groß die Unterschiede in unseren Daten sind. Je größer das Streuungsmaß, desto mehr Unterschiede gibt es zwischen den beobachteten Werten.</p>
+<p>Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die <strong>Varianz</strong>. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span><br />
+<a href="desc1.html#variance">Was bedeutet diese Formel?</a></p>
+<p>Wir können die Varianz mit <code>tabstat , s(var)</code> berechnen:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="desc1.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(<span class="kw">var</span>)</span></code></pre></div>
+<pre><code>    variable |  variance
+-------------+----------
+     zpalter |  128.5417
+------------------------</code></pre>
+<p>In unseren Datensatz beträgt der Varianz des Alters also 128,5417 Jahre². Auf der Varianz beruhen noch zwei weitere Streuungsmaße. Die <strong>Standardabweichung</strong> entspricht der Wurzel der Varianz und hat somit die gleiche Maßeinheit wie die Variable (hier also Jahre):</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="desc1.html#cb17-1" aria-hidden="true" tabindex="-1"></a>dis <span class="fu">sqrt</span>(128.5417)</span></code></pre></div>
+<p>Wir können die Standardabweichung auch mit <code>tabstat , s(sd)</code> berechnen:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="desc1.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(<span class="fu">sd</span>)</span></code></pre></div>
+<pre><code>    variable |        sd
+-------------+----------
+     zpalter |  11.33762
+------------------------</code></pre>
+<p>Der <strong>Variationskoeffizient</strong> entspricht <code>sd</code>/<code>mean</code> und dient dem Vergleich verschiedener Streuungen relativ zum jeweiligen Mittelwert, <code>tabstat , s(cv)</code> übernimmt die Berechnung für uns:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="desc1.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(cv)</span></code></pre></div>
+<pre><code>    variable |        cv
+-------------+----------
+     zpalter |  .2402432
+------------------------</code></pre>
+<p>Somit können wir bspw. mit Hilfe von <code>,by(S1)</code> die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="desc1.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(cv) <span class="kw">by</span>(S1)</span></code></pre></div>
+<pre><code>Summary for variables: zpalter
+     by categories of: S1 (Geschlecht)
+
+       S1 |        cv
+----------+----------
+mÃ¤nnlich |  .2554795
+ weiblich |  .2236982
+----------+----------
+    Total |  .2402432
+---------------------</code></pre>
+<hr />
+<blockquote>
+<p><span class="math inline">\(\Rightarrow\)</span> Für welches Geschlecht ist die Streuung also größer?<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</blockquote>
+<hr />
+</div>
+<div id="gini" class="section level3" number="4.1.6">
+<h3><span class="header-section-number">4.1.6</span> Gini-Koeffizient</h3>
+<p>Zur Beschreibung der (Ungleich-)Verteilung von metrischen Variablen, insbesondere bei Einkommens- und Vermögensdaten wird häufig der Gini-Koeffizient verwendet. Der Gini-Koeffizient beruht auf der Fläche zwischen der Lorenzkurve und der Gleichverteilung. Auf der x-Achse werden die kumulierten Perzentile der Befragten abgetragen, auf der y-Achse die Perzentile des HH-Einkommens:</p>
+<p><img src="StataBIBB1_files/figure-html/gini_plot1-1.png" width="75%" height="75%" style="display: block; margin: auto;" /></p>
+<p><img src="StataBIBB1_files/figure-html/gini_plot-1.png" width="75%" height="75%" style="display: block; margin: auto;" />
+Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdings müssen wir diesen Befehl erst (einmalig) installieren:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="desc1.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install fastgini</span>
+<span id="cb24-2"><a href="desc1.html#cb24-2" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF</span></code></pre></div>
+<pre><code>Gini coefficient = 0.3543509</code></pre>
+<p>Leider funktioniert <code>by(S1)</code> bei <code>fastgini</code> nicht, wir müssen hier auf die Variante mit <a href="desc1.html#if_vgl"><code>if</code></a> zurückgreifen:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="desc1.html#cb26-1" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF <span class="kw">if</span> S1 == 1</span></code></pre></div>
+<pre><code>Gini coefficient = 0.3361488</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="desc1.html#cb28-1" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF <span class="kw">if</span> S1 == 2</span></code></pre></div>
+<pre><code>Gini coefficient = 0.3403522</code></pre>
+<p><span class="math inline">\(\Rightarrow\)</span> <em>Wo sind die Haushaltseinkommen also ungleicher verteilt?</em><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Anmerkung: hier wurden die Missings in <code>di05</code> mit <code>mvdecode di05, mv(-50 -32 -7)</code> ausgeschlossen.</p>
+</div>
+</div>
+<div id="übungen-3" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Übungen 3</h2>
+<div id="tab" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Übung 3-1</h3>
+<ol class="example" style="list-style-type: decimal">
+<li>Wir interessieren uns für die Variable <code>gkpol</code>.</li>
+</ol>
+<p>Laden Sie den Allbusdatensatz für 2018 <code>Allbus2018.dta</code> in Stata:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="desc1.html#cb30-1" aria-hidden="true" tabindex="-1"></a>cd <span class="st">&quot;...&quot;</span>  <span class="co">// wo liegt der Datensatz?</span></span>
+<span id="cb30-2"><a href="desc1.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> Allbus2018.dta</span></code></pre></div>
+<pre><code>+ Lassen Sie sich eine Tabelle für `gkpol` anzeigen. Welche ist die häufigste Ausprägung?
++ Hat die Variable fehlende Werte, die Sie ausschließen sollten? Falls ja, ersetzen Sie diese Werte mit `mvdecode`. Tipp: Verwenden Sie `labelbook` oder sehen Sie im Codebuch nach.
++ Lassen Sie sich die Tabelle erneut ausgeben. Sind die fehlenden Angaben noch in der Tabelle?
++ Lassen Sie sich die Tabelle *inklusive der Missings* ausgeben. 
++ Beantworten Sie die folgenden Fragen auf Basis der Tabelle ohne Missings:
++ Welcher Anteil der Befragten leben in einem Ort mit höchstens 49.999 Einwohnern?
++ Wie groß ist der Anteil der Befragten, die in einem Ort mit mindestens 100.000 Einwohnern leben?
++ Erstellen Sie nun eine Kontigenztabelle mit `gkpol` und `sex` (Anm.: `sex` hat keine Missings). Welche Merkmalskombination ist die häufigste? 
++ Welcher Anteil der Befragten aus Städten mit über 500.000 Einwohnern ist weiblich?
++ Wie hoch ist der Anteil der Männer an Befragten, die in Orten mit unter 2.000 Einwohnern leben?
++ Welcher Anteil der Frauen lebt in Städten mit 50.000 bis 99.999 Einwohnern?
++ Wie hoch ist der Anteil der Bewohner von Städten mit 20.000 bis 49.999 Einwohnern an allen befragten Männern?</code></pre>
+<ul>
+<li>Lassen Sie sich eine Auszählung der Wohnortgröße lediglich für die Befragte ausgeben, die zwischen 1960 und 1950 geboren sind.</li>
+</ul>
+</div>
+<div id="met" class="section level3" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Übung 3-2</h3>
+<ol start="2" class="example" style="list-style-type: decimal">
+<li>Laden Sie den Allbus 2018 (<code>Allbus2018.dta</code>). Vergleichen Sie die Einkommensangaben (<code>inc</code>) von Frauen und Männern!
+<ul>
+<li>Betrachten Sie die HH-Einkommensverteilungen mit <code>summarize</code> (Variable <code>inc</code>)</li>
+<li>Denken Sie daran, die negativen Werte für <code>inc</code> mit <code>.</code> zu überschreiben! (Entweder mit <code>replace</code> oder <code>mvdecode</code>, sehen Sie mit <code>labelbook</code> oder im Codebuch nach)</li>
+<li>Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz und den Variationskoeffizienten zunächst für alle Fälle - was sagen Ihnen die Werte jeweils?</li>
+<li>Berechnen Sie nun alle Werte getrennt für Männer und Frauen (Variable <code>sex</code>) - welche Werte erhalten Sie jeweils für die Kennzahlen?</li>
+<li>Vergleichen Sie die Werte!</li>
+<li>Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung <code>fastgini</code> zu installieren - siehe <a href="desc1.html#gini">hier</a>)</li>
+<li>Vergleichen Sie auch hier jeweils die Werte für Männer und Frauen!</li>
+</ul></li>
+</ol>
+<ul>
+<li>Sie wollen nun die Jahre für den Schulabschluss nur für Befragte ansehen, die aus Wohnorten unter - nutzen Sie passende <code>if</code>-Bedingung! (Geschlecht ist in Variable <code>S1</code> abgelegt)
++ Wählen Sie alle Befragten aus, die nach 1960 geboren wurden und löschen Sie alle anderen aus dem Speicher. (Siehe Kap 1.8)
++ Wie viele Spalten hat der Datensatz nach dieser Veränderung? Wie viele Zeilen?</li>
+</ul>
+</div>
+</div>
+<div id="weitere-übungen-3" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Weitere Übungen 3</h2>
+<p>Forschungsfrage: Vergleichen Sie die Haushaltseinkommensverteilung in Ost und West!</p>
+<ol start="3" class="example" style="list-style-type: decimal">
+<li>Laden Sie den <strong>kumulierten</strong> Allbusdatensatz (<code>Allbus_1980-2018.dta</code>).
+<ul>
+<li>Fokussieren Sie zunächst auf das Befragungsjahr 1994 mit Hilfe von <code>keep if year == 1994</code> oder <code>drop if year != 1994</code>.</li>
+<li>Betrachten Sie die HH-Einkommensverteilungen (Variable <code>di05</code>)</li>
+<li>Denken Sie daran, die negativen Werte für <code>di05</code> mit <code>.</code> zu überschreiben! (Entweder mit <code>replace</code> oder <code>mvdecode</code>, sehen Sie mit <code>labelbook</code> oder im Codebuch nach)</li>
+<li>Berechnen Sie das arithm. Mittel, den Median, das 25%- und 75%-Quartil sowie die Varianz zunächst für alle Fälle aus dem Jahr 1994 - was sagen Ihnen die Werte jeweils?</li>
+<li>Berechnen Sie nun alle Werte getrennt nach Ost und West (Variable <code>eastwest</code>) - welche Werte erhalten Sie jeweils für die Kennzahlen in Ost und West?</li>
+<li>Berechnen Sie den Gini-Koeffizenten! (Denken Sie daran, vor der ersten Verwendung <code>fastgini</code> zu installieren - siehe <a href="desc1.html#gini">hier</a>)</li>
+<li>Vergleichen Sie auch hier jeweils die Werte für die neuen und alten Bundesländer!</li>
+</ul></li>
+<li>Laden Sie den Allbus 2018 (<code>Allbus2018.dta</code>). Erstellen Sie eine Kontingenztabelle für <code>sex</code> und <code>educ</code>. Welche Merkmalskombination ist die häufigste? Denken Sie daran, fehlende Werte auszuschließen.
+<ul>
+<li>Erstellen Sie für die folgenden Fragen jeweils die passende Variante der Kontingenztabelle mit relativen Häufigkeiten als Zeilen- oder Spaltenprozenten.</li>
+<li>Welcher Anteil der Befragten mit Fachhochschulreife ist männlich?</li>
+<li>Wie hoch ist der Anteil der Frauen an Befragten mit Hauptschulabschluss?</li>
+<li>Welcher Anteil der Frauen hat Abitur (die allgemeine Hochschulreife)?</li>
+<li>Wie hoch ist der Anteil der Realschulabsolventen an allen befragten Männern?</li>
+</ul></li>
+<li>Laden Sie den kumulierten Allbusdatensatz (<code>Allbus_1980-2018.dta</code>) in Stata und analysieren Sie, wie sich die Anteile der geschiedenen Befragten über die Befragungsjahre verändert haben!
+<ul>
+<li>Das Befragungsjahr finden Sie in der Variable <code>year</code>, <code>mstat</code> ist die Variable für den Familienstand.</li>
+<li>Überschreiben Sie die Missings für <code>mstat</code>.</li>
+<li>In welchem Jahr gab es den höchsten Anteil an geschiedenen Befragten? Sie können so eine Variable generieren, welche 1 annimt wenn <code>mstat</code> = 4 (geschieden) und 0 für alle andere Familienstände: <code>gen divorce = (mstat == 4)</code></li>
+<li>Aus welchem Jahr stammen die Angaben der meisten geschiedenen Befragten?</li>
+<li>In welchem Jahr ist der Anteil der geschiedenen Befragten am höchsten?</li>
+</ul></li>
+</ol>
+</div>
+<div id="anhang-kap-3" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Anhang Kap 3</h2>
+<div id="mean" class="section level3" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Arithmetisches Mittel</h3>
+<p>Das arithmetische Mittel wird häufig auch einfach als Durchschnitt bezeichnet:</p>
+<p><span class="math display">\[\bar{x} = \frac{\sum_{i=1}^{n}{x_i}}{n}\]</span></p>
+<p>Setzt metrische Daten (also mind. Intervallskalenniveau) voraus: wir interpretieren die Abstände zwischen den Werten.</p>
+</div>
+<div id="median" class="section level3" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Median</h3>
+<ul>
+<li>Anordnung aller Werte einer Variable nach Größe</li>
+<li><em>Da Rangfolge nötig: mindestens Ordinalskalenniveau</em></li>
+<li>Median ist mittlerer Wert dieser geordneten Variable (zentraler Wert)</li>
+<li>50% der Werte sind niedriger, 50% der Werte sind höher</li>
+</ul>
+</div>
+<div id="perc" class="section level3" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Perzentile erklärt</h3>
+<p>Verallgemeinerung des Konzepts des Medians (auch: Quantile)
+Ein p-Quantil, p∈[0,1], teilt die Daten in zwei Teile, so dass mindestens ein Anteil p der Daten kleiner/ gleich und ein Anteil 1–p grösser/ gleich dem p-Quantils-Wert xp ist.
+Die Ermittlung von p-Quantilen erfolgt analog zur Bestimmung des Medians (der Median entspricht dem 50%-Quantil).
+Häufig verwendete Quantilsarten: Quartile, Quintile, Dezile</p>
+<ul>
+<li>Datensatz 1: 1,2,3,4,5
+<ul>
+<li>Mean: 3</li>
+<li>Median: 3</li>
+<li>20%-Perzentil: 1</li>
+</ul></li>
+<li>Datensatz 2: 1,2,3,4,10
+<ul>
+<li>Mean: 4</li>
+<li>Median: 3</li>
+<li>20%-Perzentil: 2</li>
+</ul></li>
+</ul>
+<p><img src="StataBIBB1_files/figure-html/percplot1-1.png" width="100%" height="38%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="variance" class="section level3" number="4.4.4">
+<h3><span class="header-section-number">4.4.4</span> Varianz erklärt</h3>
+<p>Die häufigste Kennzahl zur Beschreibung von Streuung ist aber die <strong>Varianz</strong>. Die Varianz ist definiert als die durchschnittliche quadrierte Abweichung vom arith. Mittel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span></p>
+<p>Schauen wir erst in den Zähler des Bruchs: <span class="math inline">\((x_{i}-\bar{x})^2\)</span>
+Es geht also um die Abstände der einzelnen Datenpunkte (<span class="math inline">\(x_{i}\)</span>) zum arithmetischen Mittel (<span class="math inline">\(\bar{x}\)</span>) - mathematisch die Differenz zwischen den einzelnen Datenpunkten <span class="math inline">\(x_{i}-\bar{x}\)</span> - hier eingezeichnet als gestrichelte Linien:
+<img src="StataBIBB1_files/figure-html/var_graph-1.png" width="70%" height="70%" style="display: block; margin: auto;" />
+Für Punkte, die über dem arith. Mittel liegen, erhalten wir für die Differenz einen positiven Wert (wir ziehen ja jeweils das arith. Mittel vom Wert für den Datenpunkt ab). Für Punkte mit Werten, die kleiner als das arith. Mittel sind, erhalten wir einen negativen Wert.<br />
+Würden wir die Abstände (gestrichelten Linien) einfach aufsummieren, erhielten wir als Ergebnis immer Null! Das arithmetische Mittel liegt ja per Definition immer genau “in der Mitte”: die Abstände nach oben sind in der Summe genauso groß wie die Abstände nach unten. Daher wird zunächst jeder Abstand quadriert: <span class="math inline">\((\bar{x} - x_{i})^2\)</span><br />
+Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert (<span class="math inline">\(\sum_{i=1}^{n}\)</span>) und dann durch die Anzahl der Beobachtungen geteilt werden (<span class="math inline">\(\frac{}{n}\)</span>)- zusammengefasst hier nochmal die Formel: <span class="math display">\[var(x) = \frac{\sum_{i=1}^{n} (x_{i}-\bar{x})^2}{n}\]</span></p>
+<p><a href="desc1.html#streu">Zurück zu Streuungsmaße</a></p>
+</div>
+<div id="sk_kur" class="section level3" number="4.4.5">
+<h3><span class="header-section-number">4.4.5</span> Schiefe &amp; Wölbung</h3>
+<p>Die Schiefe (skewness) ist ein Maß für die Asymmetrie einer Verteilung. Bei einer symmetrischen Verteilung beträgt die Schiefe 0. Ein negativer Wert für die Schiefe deutet darauf hin, dass Median &gt; Mean und Verteilung wird als links-schief/rechts-steil bezeichnet. Bei einem positiven Wert der Schiefe ist Median &lt; Mean und die Verteilung ist rechts-schief/links-steil.</p>
+<p><img src="StataBIBB1_files/figure-html/skewplot1-1.png" width="100%" height="25%" style="display: block; margin: auto;" /></p>
+<p>Die Wölbung (Kurtosis) ist ein Maß für die Steilheit bzw. “Spitzigkeit” einer Verteilung. Je kleiner der Wert der Kurtosis, desto desto flacher die Verteilung. Bspw. hat die Normalverteilung hat eine Kurtosis von 3.
+<img src="StataBIBB1_files/figure-html/kurtplot-1.png" width="100%" height="25%" style="display: block; margin: auto;" /></p>
+<p>In Stata bekommen wir die Schiefe und Wölbung einer Verteilung mit <code>summary varname,detail</code> oder mit <code>tabstat varname, s(skewness kurtosis)</code> angezeigt.</p>
+</div>
+<div id="bys_su" class="section level3" number="4.4.6">
+<h3><span class="header-section-number">4.4.6</span> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</h3>
+<p>Bspw. können wir die Altersangaben aus den alten (<code>eastwest</code>=1) und neuen Bundesländern (<code>eastwest</code>=2) vergleichen, indem wir das Befehls-Präfix <code>bys varX:</code> verwenden. <code>bys</code> steht für “by sort” und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für <code>varX</code> ausgeführt werden soll. Wenn wir also <code>summarize</code> für beide Ausprägungen von <code>eastwest</code> berechnen möchten, gehen wir wir folgt vor:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb32-1"><a href="desc1.html#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
+<pre><code>variable eastwest not found
+r(111);
+
+end of do-file
+r(111);</code></pre>
+<p>In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = 3.2399 Jahre älter.</p>
+</div>
+<div id="if_vgl" class="section level3" number="4.4.7">
+<h3><span class="header-section-number">4.4.7</span> Kennzahlvergleiche mit <code>if</code></h3>
+<p>Neben der Variante <a href="desc1.html#by_vgl"><code>bys var:</code></a> können wir auch mit Hilfe der <code>if</code>-Option Kennzahlen miteinander vergleichen:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb34-1"><a href="desc1.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 1</span>
+<span id="cb34-2"><a href="desc1.html#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="kw">summarize</span> age <span class="kw">if</span> eastwest == 2</span></code></pre></div>
+<pre><code>variable age not found
+r(111);
+
+end of do-file
+r(111);</code></pre>
+<p>Das führt natürlich im Kern zum gleichen Ergebnis wie die oben gezeigte Variante:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb36-1"><a href="desc1.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="kw">bys</span> eastwest: <span class="kw">summarize</span> age </span></code></pre></div>
+<pre><code>variable eastwest not found
+r(111);
+
+end of do-file
+r(111);</code></pre>
+</div>
+<div id="kennzahlvergleich-mit-tabulate-und-der-option-summarize" class="section level3" number="4.4.8">
+<h3><span class="header-section-number">4.4.8</span> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></h3>
+<p>Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der <code>summarise</code>-Option eine einfache Möglichkeit zur Verfügung:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb38-1"><a href="desc1.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> sex eastwest, <span class="kw">summarize</span>(age)</span></code></pre></div>
+<pre><code>variable sex not found
+r(111);
+
+end of do-file
+r(111);</code></pre>
+<p>Wir sehen hier, dass 1222 Männer aus den alten Bundesländern befragt wurden, die im Durchschnitt 50.5982 alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 18.177659 Jahre. Außerdem wurden 539 Frauen aus den neuen Bundesländern befragt, die im arith. Mittel 54.58256 alt sind und deren Altersangaben eine Standardabweichung 16.720148 aufweisen.</p>
+<p>Je nach Präferenz können wir eine der drei Kennzahlen (Anzahl der Beobachtungen, arith. Mittel und Standardabw.) ausblenden in dem wir die entsprechende Option verwenden:</p>
+<ul>
+<li><code>nofreq</code> Häufigkeiten ausblenden</li>
+<li><code>nomeans</code> arith. Mittel ausblenden</li>
+<li><code>nostandard</code> Standardabw. ausblenden</li>
+</ul>
+<p><code>tab sex eastwest, summarize(age) nofreq</code> würde uns also nur die arith. Mittel und Standardabweichungen ausgeben.</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Da der Variationskoeffizient für Männer mit <code>0.2554795</code> etwas größer ist als für Frauen (<code>0.2236982</code>), ist die Streuung bei den Männern etwas größer.<a href="desc1.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>Der etwas höhere Wert des Gini-Koeffizienten legt nahe, dass die Haushaltseinkommen in den alten Bundesländern (<code>eastwest</code>=1) etwas stärker ungleich verteilt als in den neuen Bundesländern (<code>eastwest</code>=2).<a href="desc1.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Stata2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["StataBIBB1.pdf", "StataBIBB1.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
