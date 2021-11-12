@@ -20,7 +20,7 @@ list S1 S3 S2_j zpalter in 1/5 ,  noobs
 + <span style="color:#48211A"><b>Median oder 50%-Perzentil</b></span>: 50% der Werte sind kleiner & 50% der Werte sind größer
 + <span style="color:#376597"><b>20%-Perzentil</b></span>: 20% der Werte sind kleiner & 80% der Werte sind größer
 
-```{r percplot1, echo=F, warning=F, message=F, out.height="25%", out.width="100%", fig.align="center"}
+```{r percplot4, echo=F, warning=F, message=F, out.height="25%", out.width="100%", fig.align="center"}
 
 sk_df <-  
   data.frame(x= 1:10) %>%

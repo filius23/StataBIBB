@@ -1,15 +1,16 @@
 # if-Bedingungen {#iflab} 
 
-```{r setup3, echo = F, message=F, warning = F}
+```{r setup4, echo = F, message=F, warning = F}
 .libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(dpi=800)
 library(Statamarkdown)
 library(tidyverse)
 library(kableExtra)
-stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
-baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F)
+# baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F)
 ```
 
 ## if-Bedingungen - nur manche Zeilen ansehen
@@ -163,7 +164,7 @@ Es gibt zwei Möglichkeiten, dies zu umgehen:
 list S1 Bula zpalter if inrange(zpalter,81.5,100)
 ```
 
-+ oder wir hängen den `missing()`-Operator an die Bedingung an. Wenn wir diesen mit Hilfe eines `!` verneinen, bekommen wir nur nicht-fehlende Fälle ausgegeben:
++ oder wir hängen den `missing()`-Operator an die Bedingung an. Mit `missing(zpalter)` können wir alle Zeilen auswählen, für die `zpalter` *missing* ist. Wenn wir diesen mit Hilfe eines `!` verneinen, können wir die fehlende Fällen ausschließen:
 ```{stata list_if5, eval = F}
 list S1 Bula zpalter if zpalter > 81 & !missing(zpalter)
 ```
@@ -216,4 +217,8 @@ describe, short
   + Befragte, die jünger als 30 Jahre alt sind oder älter als 60 Jahre alt sind  
   + Befragte, die zwischen 30 und 60 Jahre alt sind
   
+(@) Lassen Sie sich die Wohngröße (`gkpol`) für alle Befragte mit fehlender Altersangabe ausgeben.
+  
 (@) Löschen Sie alle Beobachtungen von Befragten aus Städten mit 500.000 Einwohnern und mehr aus dem Speicher. Denken Sie an die Unterscheidung zwischen Labels und Zahlenwerten.
+
+

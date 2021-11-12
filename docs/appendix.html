@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Test | Stata Fortbildungen am BIBB</title>
+  <title>6 Anhang - fortgeschrittene Themen | Stata Fortbildungen am BIBB</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Test | Stata Fortbildungen am BIBB" />
+  <meta property="og:title" content="6 Anhang - fortgeschrittene Themen | Stata Fortbildungen am BIBB" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Test | Stata Fortbildungen am BIBB" />
+  <meta name="twitter:title" content="6 Anhang - fortgeschrittene Themen | Stata Fortbildungen am BIBB" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="appendix.html"/>
-
+<link rel="prev" href="gen.html"/>
+<link rel="next" href="test.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -265,48 +265,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="test" class="section level1 unnumbered">
-<h1>Test</h1>
-<div class="sourceCode" id="cb172"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb172-1"><a href="test.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="kw">qui</span> <span class="kw">use</span> <span class="st">&quot;D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb172-2"><a href="test.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 S3 S2_j zpalter <span class="kw">in</span> 1/5 ,  <span class="kw">noobs</span></span></code></pre></div>
-<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
-unrecognized command:  | invalid command name
-r(199);
-
-
-
-
-  +--------------------------------------+
-  |       S1         S3   S2_j   zpalter |
-  |--------------------------------------|
-  | mÃ¤nnlic   Abitur /   1976        41 |
-  | weiblich   Realschu   1966        51 |
-  | mÃ¤nnlic   Fachhoch   1968        49 |
-  | weiblich   Abitur /   1954        63 |
-  | weiblich   Fachhoch   1976        41 |
-  +--------------------------------------+</code></pre>
-<ul>
-<li><span style="color:#FFA500FF"><b>arithmetisches Mittel</b></span>: der sog. Durchschnitt</li>
-<li><span style="color:#48211A"><b>Median oder 50%-Perzentil</b></span>: 50% der Werte sind kleiner &amp; 50% der Werte sind größer</li>
-<li><span style="color:#376597"><b>20%-Perzentil</b></span>: 20% der Werte sind kleiner &amp; 80% der Werte sind größer</li>
-</ul>
-<p><img src="StataBIBB1_files/figure-html/percplot4-1.png" width="100%" height="25%" style="display: block; margin: auto;" /></p>
+<div id="appendix" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Anhang - fortgeschrittene Themen</h1>
+<div id="index-bilden" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Index bilden</h2>
+<p>In Kapitel 5 hatten wir mit <a href="gen.html#recode"><code>recode</code></a> eine Möglichkeit kennen gelernt, wie Codierungen verändert werden können.
+Ein typischer Fall ist das “Umdrehen” von Skalen in einer Item-Batterie, sodass in beiden/allen Variablen höhere Werte auch inhaltlich das gleiche bedeuten.
+In der BIBB/BAuA 2018 könnten wir bspw. einen Index für die Autonomie/Einbindung am Arbeitsplatz erstellen, indem wir die Antworten aus den folgenden beiden Fragen addieren:
++ <code>F700_02</code>: Wie häufig kommt es vor, dass Sie Ihre eigene Arbeit selbst planen und einteilen können?
++ <code>F700_08</code>: Wie oft kommt es vor, dass Sie nicht rechtzeitig über einschneidende Entscheidungen, Veränderungen oder Pläne für die Zukunft informiert werden?</p>
+<p>Hier wäre es also so, dass der niedrigste Wert (1 = Häufig) jeweils etwas anderes bedeutet. Im Fall von <code>F700_08</code>
+Variable betrachten, sehen wir</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb169-1"><a href="appendix.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> F700_02 (4=1) (3=2) (2=3) (1=4), into(F700_02_rev)</span></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb170-1"><a href="appendix.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="fu">index</span> = (F700_02_rev + F700_10)/2</span></code></pre></div>
+<blockquote>
+<p><span style="color:#FFA500FF"><i>Inhaltlich ist das sicher nicht 100% überzeugend - hier geht’s um die technische Umsetzung</i></span></p>
+</blockquote>
+<hr />
+<p><strong>Tipp</strong></p>
+<p>Man kann in diesem speziellen Fall einer “umgedrehten” Skala können wir auch einfach “höchster Wert + 1 minus Variablenwert rechnen.” Im Fall von <code>F700_02</code> ist der höchste Wert 4, also würden wir 4-<code>F700_02</code> rechnen:</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb171-1"><a href="appendix.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F700_02_rev2 = 5 - F700_02 </span></code></pre></div>
+<hr />
 
 </div>
-
-
-
-
-
-
-
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="appendix.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="gen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="test.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

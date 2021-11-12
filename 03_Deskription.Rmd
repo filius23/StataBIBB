@@ -4,10 +4,12 @@
 .libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(dpi=800)
+# knitr::opts_chunk$set(collectcode = T)
 library(Statamarkdown)
 library(tidyverse)
 library(kableExtra)
-stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F)
 ```
@@ -16,7 +18,7 @@ baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0
 
 Im vorherigen Kapitel bezog sich vor allem kategoriale Variablen (mit einer begrenzten Anzahl an Ausprägungen). Für ein metrisches Merkmal, wie zum Beispiel das Alter (`zpalter`) macht eine Häufigkeitstabelle wenig Sinn, da das Alter sehr viele Ausprägungen hat und eine Tabelle unübersichtlich wäre (es gibt insgesamt 71!).
 
-### Exkurs: Klassen bilden
+### Exkurs: Klassen bilden {#cut}
 Um dieses Problem zu umgehen, könnten wir die Informationen in Klassen/Gruppen zusammenzufassen.
 So transformieren eine metrische Variable in eine kategoriale, ordinale Variable:
 
@@ -104,7 +106,7 @@ opts <- options(knitr.kable.NA = "")
 
 readxl::read_xlsx("03_tabstat.xlsx",sheet = 1) %>% 
   kable() %>% 
-  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 9) %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 10) %>% 
   column_spec(1,monospace = TRUE)
 ```
 
@@ -178,7 +180,7 @@ In unseren Datensatz beträgt der Varianz des Alters also `r format(var,big.mark
 dis sqrt(128.5417)
 ```
 Wir können die Standardabweichung auch mit `tabstat , s(sd)` berechnen:
-```{stata stdF, eval = F}
+```{stata stdF, echo = F}
 tabstat zpalter, s(sd)
 ```
 ```{stata stdT, echo = F}
@@ -386,12 +388,12 @@ Setzt metrische Daten (also mind. Intervallskalenniveau) voraus: wir interpretie
 + Die Ermittlung von p-Quantilen erfolgt analog zur Bestimmung des Medians (der Median entspricht dem 50%-Quantil).
 + Häufig verwendete Quantilsarten: Quartile (25%-, 50%-, 75%-Grenzen), Quintile (20%-, 40%-, 60%-, 80%-Grenzen), Dezile (10%,20%,30%,...)
 
-+ Datensatz 1:  1,2,3,4,5
++ Datensatz 1:  1, 2, 3, 4, 5
   + Mean: `r mean(1:5)`
   + Median: `r median(1:5)`
-  + 20%-Perzentil: `r quantile(1:5,probs = .2,type = 1)` 
+  + 20%-Perzentil: 2
   
-+ Datensatz 2:  1,2,3,4,10
++ Datensatz 2:  1, 2, 3, 4, *10*
   + Mean: `r mean( c(1:4,10))`
   + Median: `r median(c(1:4,10))`
   + 20%-Perzentil: 2
@@ -416,9 +418,9 @@ pp1 <-
                aes(xend=y2,x=y1,yend=2,y=2), color = "#376597") + #20% linie
   geom_label(data= data.frame(lab1="20% Perzentil"),size = 3,
              aes(y=1.65,x=3.5,label=lab1),fill= "#376597",color="grey96",label.size = 0,hjust=0,label.padding = unit(.3,"lines")) + # 20% label
-  scale_fill_manual(values = paletteer::palettes_d$dutchmasters$milkmaid[6:13]) +
+  scale_fill_manual(values = paletteer::palettes_d$dutchmasters$milkmaid[c(12,6:13)]) +
   scale_x_continuous(breaks = 1:5, labels = c("kleinster","2.kleinster","3","zweitgrößter","größter")) +
-  labs(y = "Ausprägungwert", x = "Sortierte Beobachtungen", title = "") +
+  labs(y = "Ausprägungwert", x = "Sortierte Beobachtungen", title = "Datensatz 1") +
   guides(fill = "none", color = "none") +
   theme_minimal(base_size = 11) +
   coord_cartesian(ylim = c(0,10))+
@@ -445,9 +447,9 @@ pp2 <-
     geom_label(data= data.frame(lab1="20% Perzentil"),size = 3,
                aes(y=1.65,x=3.5,label=lab1),fill= "#376597",color="grey96",
                label.size = 0,hjust=0,label.padding = unit(.3,"lines")) + # 20% label
-    scale_fill_manual(values = paletteer::palettes_d$dutchmasters$milkmaid[6:13]) +
+    scale_fill_manual(values = paletteer::palettes_d$dutchmasters$milkmaid[c(11,6:13)]) +
     scale_x_continuous(breaks = 1:5, labels = c("kleinster","2.kleinster","3","zweitgrößter","größter")) +
-    labs(y = "Ausprägungwert", x = "Sortierte Beobachtungen") +
+    labs(y = "Ausprägungwert", x = "Sortierte Beobachtungen", title = "Datensatz 2") +
     guides(fill = "none", color = "none") +
     theme_minimal(base_size = 11) +
     theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
@@ -508,9 +510,9 @@ sk_df <-
   mutate(y1 = round(4/x*4)+ 2,
          y2 = round(4*x/4)+ 2,
          y3 = as.numeric(round(20 - abs(scale(x))*9.5)),
-         y4 = 5) %>% 
-  bind_rows(data.frame(x=0,y1=12,y2=2,y3=1,y4=5),
-            data.frame(x=11,y1=2,y2=9,y3=1,y4=5)) 
+         y4 = ifelse(x %in% 5:6, 10,1) ) %>% 
+  bind_rows(data.frame(x=0,y1=12,y2=2,y3=1,y4=1),
+            data.frame(x=11,y1=2,y2=9,y3=1,y4=1)) 
 
 skew1 <- 
   sk_df %>% 
@@ -518,7 +520,7 @@ skew1 <-
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[1]) +
   labs(title = "negative Schiefe (rechtssteil/linksschief)" ) + 
   theme_minimal(base_size = 11) +
-  theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
+  theme(panel.grid= element_blank(),
         axis.title = element_blank(), axis.text = element_blank(),
         plot.title = element_text(hjust = .5, size = rel(.8)))
 skew2 <- 
@@ -528,7 +530,7 @@ skew2 <-
   coord_cartesian(ylim=c(0,19)) +
   labs(title = paste0("Schiefe = 0")) +
   theme_minimal(base_size = 11) +
-  theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
+  theme(panel.grid= element_blank(),
         axis.title = element_blank(), axis.text = element_blank(),
         plot.title = element_text(hjust = .5, size = rel(.8)))
 
@@ -538,7 +540,7 @@ skew3 <-
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[4]) +
   labs(title = "positive Schiefe (linkssteil/rechtsschief)") +
   theme_minimal(base_size = 11) +
-  theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
+  theme(panel.grid= element_blank(),
         axis.title = element_blank(), axis.text = element_blank(),
         plot.title = element_text(hjust = .5, size = rel(.8)))
 
@@ -549,24 +551,32 @@ skew1 + skew2 + skew3 + plot_layout(ncol = 3)
 
 Die Wölbung (Kurtosis) ist ein Maß für die Steilheit bzw. "Spitzigkeit" einer Verteilung. Je kleiner der Wert der Kurtosis, desto desto flacher die Verteilung. Bspw. hat die Normalverteilung hat eine Kurtosis von 3.
 ```{r kurtplot, echo=F, warning=F, message=F, out.height="25%", out.width="100%", fig.align="center"}
-kurt1 <- round(sk_df %>% uncount(weights = y3) %>% pull(x) %>% moments::kurtosis(.),2)
+kurt_df <-  
+  data.frame(x= 1:10) %>%
+  mutate(y3 = 30,
+         y4 = round(dt(1:10 - 5.5,df=2) * 100)) %>% 
+  bind_rows(data.frame(x=0 ,y3=1,y4=0),
+            data.frame(x=11,y3=1,y4=0)) 
+
+kurt1 <- round(kurt_df %>% uncount(weights = y3) %>% pull(x) %>% moments::kurtosis(.),2)
 pkurt1 <- 
-  sk_df %>% 
+  kurt_df %>% 
   ggplot(aes(x=x,y=y3)) +
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[7]) +
   labs(title = paste0("Wölbung = ",kurt1)) +
+  coord_cartesian(ylim = c(0,30.5)) + 
   theme_minimal(base_size = 11) +
   theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
         axis.title = element_blank(), 
         plot.title = element_text(hjust = .5))
 
-kurt2 <- round(sk_df %>% uncount(weights = y4) %>% pull(x) %>% moments::kurtosis(.),2)
+kurt2 <- round(kurt_df %>% uncount(weights = y4) %>% pull(x) %>% moments::kurtosis(.),2)
 pkurt2 <- 
-  sk_df %>% 
+  kurt_df %>% 
   ggplot(aes(x=x,y=y4)) +
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[8]) +
   labs(title = paste0("Wölbung = ",kurt2)) +
-  coord_cartesian(ylim = c(0,10)) + 
+  coord_cartesian(ylim = c(0,30.5)) + 
   theme_minimal(base_size = 11) +
   theme(panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank(),
         axis.title = element_blank(), 
@@ -577,47 +587,21 @@ pkurt1 + pkurt2 + plot_layout(ncol = 2)
 
 In Stata bekommen wir die Schiefe und Wölbung einer Verteilung mit `summary varname,detail` oder mit `tabstat varname, s(skewness kurtosis)` angezeigt.
 
-Mit `hist variablenname` bekommen wir ein Histogramm ausgegeben,
+Mit `hist variablenname` bekommen wir ein Histogramm ausgegeben, welches einen Überblick wie die oben gezeigten Darstellungen bietet.
 
 ### Kombination von `summarize` mit dem `by`-Präfix {#bys_su}
 
-Bspw. können wir die Altersangaben aus den alten (`eastwest`=1) und neuen Bundesländern (`eastwest`=2) vergleichen, indem wir das Befehls-Präfix `bys varX:` verwenden. `bys` steht für "by sort" und damit sagen wir Stata, dass die folgende Berechnung getrennt nach den Werten für `varX` ausgeführt werden soll. Wenn wir also `summarize` für beide Ausprägungen von `eastwest` berechnen möchten, gehen wir wir folgt vor:
+Bspw. können wir die Altersangaben für Männer (`S1`=1) und Frauen (`S1`=2) vergleichen, indem wir das Befehls-Präfix `bys varX:` verwenden. `bys` steht für "by sort". Stata sortiert also den Datensatz entsprechend der angegebenen Variable und die folgende Berechnung wird getrennt nach den Werten für `varX` ausgeführt. Wenn wir also `summarize` für beide Ausprägungen von `S1` berechnen möchten, gehen wir wir folgt vor:
 ```{stata bysuF, eval = F}
-bys eastwest: summarize age 
+bys S1: summarize age 
 ```
 ```{stata bysuT, echo = F}
 set linesize 80
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 qui mvdecode zpalter, mv(9999)
-bys eastwest: summarize age 
+bys S1: summarize age 
 ```
 In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = `r 53.90083 - 50.66093` Jahre älter.
-
-### Kennzahlvergleiche mit `if` {#if_vgl}
-
-Neben der Variante [`bys var:`](#by_vgl) können wir auch mit Hilfe der `if`-Option Kennzahlen miteinander vergleichen:
-
-```{stata ifF, eval = F}
-summarize zpalter if eastwest == 1
-summarize zpalter if eastwest == 2
-```
-```{stata ifT, echo = F}
-set linesize 80
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-qui mvdecode zpalter, mv(9999)
-su zpalter if eastwest == 1
-su zpalter if eastwest == 2
-```
-Das führt natürlich im Kern zum gleichen Ergebnis wie die oben gezeigte Variante:
-```{stata bysu3F, eval = F}
-bys eastwest: summarize zpalter 
-```
-```{stata bysu3T, echo = F}
-set linesize 80
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-qui mvdecode zpalter, mv(9999)
-bys eastwest: summarize zpalter 
-```
 
 ### Kennzahlvergleich mit `tabulate` und der Option `summarize()` 
 
@@ -632,6 +616,7 @@ qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 qui mvdecode zpalter, mv(9999)
 tab gkpol S1, summarize(zpalter)
 ```
+> <span style="color:#FFA500FF"><i>Leider funktioniert die Darstellung hier nicht richtig - in Stata werden die Label richtig angezeigt</i></span>
 
 Wir sehen hier, dass  524 Männer aus Wohnorten unter 2000 Einwohnern befragt wurden, die im Durchschnitt 47.30 Jahre alt sind. Die Standardabweichung des Alters in dieser Gruppe beträgt 11.895558 Jahre. Außerdem wurden 785 Frauen aus Wohnorten mit  50.000 bis 99.000 Einwohnern befragt, die im arith. Mittel 48.32 Jahre alt sind und deren Altersangaben eine Standardabweichung 10.9279 aufweisen.
 

@@ -1,0 +1,68 @@
+# Variablen erstellen (2), Hilfe verwenden {#egen} 
+
+```{r setup6, echo = F, message=F, warning = F}
+.libPaths("D:/R-library4")
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(dpi=800)
+library(Statamarkdown)
+library(tidyverse)
+library(kableExtra)
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+# baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F)
+```
+
+## `gen` mit `if`
+
+Die Kombination aus `gen` und `if` hilft uns, wenn wir eine Variable nur für einige Zeilen erstellen wollen. Das hilft insbesondere, wenn wir bestimmte Beobachtungen markieren wollen. Beispielsweise Frauen (`S1` = 1), die einer Nebentätigkeit (`nt` = 1) nachgehen:
+
+```{stata genif, eval = F}
+gen nt_frauen = 1 if S1 == 1 & nt == 1
+```
+```{stata genifb,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+gen nt_frauen = 1 if S1 == 1 & nt == 1
+```
+
+Nur wenn beide Bedingungen zutreffen, wird unter `nt_frauen` eine 1 abgelegt:
+```{stata genif2, eval = F}
+list S1 nt nt_frauen in 19671/19675, clean noobs abb(12) 
+```
+```{stata genifb,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui gen nt_frauen = 1 if S1 == 1 & nt == 1
+list S1 nt nt_frauen in 19671/19675, clean noobs abb(12) 
+```
+
+In der alltäglichen Arbeit hilft das manchmal, wenn man spezielle Fälle immer wieder aufrufen möchte und nicht immer die "ausgeschriebenen" `if`-Bedingungen verwenden möchte.
+
+## `egen`
+
+Mit `egen`, den "Extensions to generate", stehen eine ganze Menge an Funktionen zur Verfügung. In [Kapitel](#cut) hatten wir schon die Option `cut` zur Einteilung in Gruppen (`cut`) kennengelernt:
+```{stata age_cut4, eval = F}
+egen age_cat = cut(zpalter), at(15 18 35 60 100 ) label
+tab age_cat
+```
+
+```{stata age_cut5, echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui mvdecode zpalter, mv(9999)
+egen age_cat = cut(zpalter), at(15 18 35 60 100 )  label
+tab age_cat
+```
+
+So könnten wir bspw. eine Variable `age_mean` mit dem Mittelwert für `age` erstellen:
+```{stata egenmean1, eval = F}
+egen age_mean = mean(age)
+```
+
+
+Eine Liste aller Optionen für `egen` findet sich unter `help egen`.
+
+
+
+## Übungen 5 {#genue}
+
+(@) Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
+

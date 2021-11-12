@@ -1,0 +1,47 @@
+# Anhang - fortgeschrittene Themen {#appendix} 
+
+```{r setup10, echo = F, message=F, warning = F}
+.libPaths("D:/R-library4")
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(dpi=800)
+library(Statamarkdown)
+library(tidyverse)
+library(kableExtra)
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+# baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F)
+```
+
+
+## Index bilden
+
+In Kapitel 5 hatten wir mit [`recode`](#recode) eine Möglichkeit kennen gelernt, wie Codierungen verändert werden können.
+Ein typischer Fall ist das "Umdrehen" von Skalen in einer Item-Batterie, sodass in beiden/allen Variablen höhere Werte auch inhaltlich das gleiche bedeuten.
+In der BIBB/BAuA 2018 könnten wir bspw. einen Index für die Autonomie/Einbindung am Arbeitsplatz erstellen, indem wir die Antworten aus den folgenden beiden Fragen addieren:
+ + `F700_02`: Wie häufig kommt es vor, dass Sie Ihre eigene Arbeit selbst planen und einteilen können?
+ + `F700_08`: Wie oft kommt es vor, dass Sie nicht rechtzeitig über einschneidende Entscheidungen, Veränderungen oder Pläne für die Zukunft informiert werden?
+
+Hier wäre es also so, dass der niedrigste Wert (1 = Häufig) jeweils etwas anderes bedeutet. Im Fall von `F700_08`
+Variable betrachten, sehen wir
+```{stata recode10, eval = F}
+recode F700_02 (4=1) (3=2) (2=3) (1=4), into(F700_02_rev)
+```
+
+
+```{stata recode10a, eval = F}
+gen index = (F700_02_rev + F700_10)/2
+```
+
+> <span style="color:#FFA500FF"><i>Inhaltlich ist das sicher nicht 100% überzeugend - hier geht's um die technische Umsetzung</i></span>
+
+***
+
+**Tipp**
+
+Man kann in diesem speziellen Fall einer "umgedrehten" Skala können wir auch einfach "höchster Wert + 1 minus Variablenwert rechnen". Im Fall von `F700_02` ist der höchste Wert 4, also würden wir 4-`F700_02` rechnen:
+```{stata revert, eval =F}
+gen F700_02_rev2 = 5 - F700_02 
+```
+
+***
