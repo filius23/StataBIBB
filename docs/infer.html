@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Inferenzstatistik | Stata Fortbildungen am BIBB</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Inferenzstatistik | Stata Fortbildungen am BIBB" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Inferenzstatistik | Stata Fortbildungen am BIBB" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Andreas Filser" />
+
+
+<meta name="date" content="2021-11-15" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="egen.html"/>
+<link rel="next" href="appendix.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Stata @ BIBB</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> output: bookdown::pdf_document2</a></li>
+<li class="chapter" data-level="2" data-path="stata.html"><a href="stata.html"><i class="fa fa-check"></i><b>2</b> Überblick zu Stata</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="stata.html"><a href="stata.html#taschenrechner"><i class="fa fa-check"></i><b>2.1</b> Taschenrechner</a></li>
+<li class="chapter" data-level="2.2" data-path="stata.html"><a href="stata.html#darstellung-in-diesem-skript"><i class="fa fa-check"></i><b>2.2</b> Darstellung in diesem Skript</a></li>
+<li class="chapter" data-level="2.3" data-path="stata.html"><a href="stata.html#dofile-editor"><i class="fa fa-check"></i><b>2.3</b> DoFile Editor</a></li>
+<li class="chapter" data-level="2.4" data-path="stata.html"><a href="stata.html#datensätze-laden"><i class="fa fa-check"></i><b>2.4</b> Datensätze laden</a></li>
+<li class="chapter" data-level="2.5" data-path="stata.html"><a href="stata.html#daten-codebücher-fragebogen"><i class="fa fa-check"></i><b>2.5</b> Daten, Codebücher, Fragebogen</a></li>
+<li class="chapter" data-level="2.6" data-path="stata.html"><a href="stata.html#überblicksbefehle"><i class="fa fa-check"></i><b>2.6</b> Überblicksbefehle</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="stata.html"><a href="stata.html#describe"><i class="fa fa-check"></i><b>2.6.1</b> <code>describe</code></a></li>
+<li class="chapter" data-level="2.6.2" data-path="stata.html"><a href="stata.html#browse"><i class="fa fa-check"></i><b>2.6.2</b> <code>browse</code></a></li>
+<li class="chapter" data-level="2.6.3" data-path="stata.html"><a href="stata.html#list"><i class="fa fa-check"></i><b>2.6.3</b> <code>list</code></a></li>
+<li class="chapter" data-level="2.6.4" data-path="stata.html"><a href="stata.html#lookfor"><i class="fa fa-check"></i><b>2.6.4</b> <code>lookfor</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="stata.html"><a href="stata.html#U1"><i class="fa fa-check"></i><b>2.7</b> Übungen 1</a></li>
+<li class="chapter" data-level="2.8" data-path="stata.html"><a href="stata.html#profi-übungen-1"><i class="fa fa-check"></i><b>2.8</b> Profi-Übungen 1</a></li>
+<li class="chapter" data-level="2.9" data-path="stata.html"><a href="stata.html#anhang-1"><i class="fa fa-check"></i><b>2.9</b> Anhang 1</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="stata.html"><a href="stata.html#var_types"><i class="fa fa-check"></i><b>2.9.1</b> Variablentypen</a></li>
+<li class="chapter" data-level="2.9.2" data-path="stata.html"><a href="stata.html#otherfmts"><i class="fa fa-check"></i><b>2.9.2</b> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>3</b> Arbeiten mit Datensätzen in Stata</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Stata2.html"><a href="Stata2.html#befehlsstruktur"><i class="fa fa-check"></i><b>3.1</b> Befehlsstruktur</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="Stata2.html"><a href="Stata2.html#zeilenumbrüche"><i class="fa fa-check"></i><b>3.1.1</b> Zeilenumbrüche</a></li>
+<li class="chapter" data-level="3.1.2" data-path="Stata2.html"><a href="Stata2.html#kommentare"><i class="fa fa-check"></i><b>3.1.2</b> Kommentare</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="Stata2.html"><a href="Stata2.html#auszählen-überblick-erhalten"><i class="fa fa-check"></i><b>3.2</b> Auszählen &amp; Überblick erhalten</a></li>
+<li class="chapter" data-level="3.3" data-path="Stata2.html"><a href="Stata2.html#missv"><i class="fa fa-check"></i><b>3.3</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="3.4" data-path="Stata2.html"><a href="Stata2.html#zwei-variablen-eine-tabelle-kontingenztabellen"><i class="fa fa-check"></i><b>3.4</b> Zwei Variablen, eine Tabelle: Kontingenztabellen</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="Stata2.html"><a href="Stata2.html#in-prozent-relative-häufigkeiten"><i class="fa fa-check"></i><b>3.4.1</b> In Prozent: Relative Häufigkeiten</a></li>
+<li class="chapter" data-level="3.4.2" data-path="Stata2.html"><a href="Stata2.html#pro-gruppe-1-zeilenprozente"><i class="fa fa-check"></i><b>3.4.2</b> pro Gruppe 1: Zeilenprozente</a></li>
+<li class="chapter" data-level="3.4.3" data-path="Stata2.html"><a href="Stata2.html#pro-gruppe-2-spaltenprozente"><i class="fa fa-check"></i><b>3.4.3</b> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="Stata2.html"><a href="Stata2.html#metrische-variablen"><i class="fa fa-check"></i><b>3.5</b> metrische Variablen</a></li>
+<li class="chapter" data-level="3.6" data-path="Stata2.html"><a href="Stata2.html#skalenn"><i class="fa fa-check"></i><b>3.6</b> Exkurs: Skalenniveau</a></li>
+<li class="chapter" data-level="3.7" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>3.7</b> Nochmal von vorne: Daten neu laden</a></li>
+<li class="chapter" data-level="3.8" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>3.8</b> Speichern</a></li>
+<li class="chapter" data-level="3.9" data-path="Stata2.html"><a href="Stata2.html#übungen-2"><i class="fa fa-check"></i><b>3.9</b> Übungen 2</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="Stata2.html"><a href="Stata2.html#tab2"><i class="fa fa-check"></i><b>3.9.1</b> Übung 2-1</a></li>
+<li class="chapter" data-level="3.9.2" data-path="Stata2.html"><a href="Stata2.html#su2"><i class="fa fa-check"></i><b>3.9.2</b> Übung 2-2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>4</b> Deskriptive Statistik</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="desc1.html"><a href="desc1.html#metrische-variablen-beschreiben"><i class="fa fa-check"></i><b>4.1</b> Metrische Variablen beschreiben</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="desc1.html"><a href="desc1.html#cut"><i class="fa fa-check"></i><b>4.1.1</b> Exkurs: Klassen bilden</a></li>
+<li class="chapter" data-level="4.1.2" data-path="desc1.html"><a href="desc1.html#lage--und-konzentrationsmaße"><i class="fa fa-check"></i><b>4.1.2</b> Lage- und Konzentrationsmaße</a></li>
+<li class="chapter" data-level="4.1.3" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>4.1.3</b> <code>tabstat</code></a></li>
+<li class="chapter" data-level="4.1.4" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>4.1.4</b> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li class="chapter" data-level="4.1.5" data-path="desc1.html"><a href="desc1.html#streu"><i class="fa fa-check"></i><b>4.1.5</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li class="chapter" data-level="4.1.6" data-path="desc1.html"><a href="desc1.html#gini"><i class="fa fa-check"></i><b>4.1.6</b> Gini-Koeffizient</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="desc1.html"><a href="desc1.html#übungen-3"><i class="fa fa-check"></i><b>4.2</b> Übungen 3</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="desc1.html"><a href="desc1.html#met"><i class="fa fa-check"></i><b>4.2.1</b> Übung 3-1</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="desc1.html"><a href="desc1.html#anhang-kap-3"><i class="fa fa-check"></i><b>4.3</b> Anhang Kap 3</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="desc1.html"><a href="desc1.html#mean"><i class="fa fa-check"></i><b>4.3.1</b> Arithmetisches Mittel</a></li>
+<li class="chapter" data-level="4.3.2" data-path="desc1.html"><a href="desc1.html#median"><i class="fa fa-check"></i><b>4.3.2</b> Median</a></li>
+<li class="chapter" data-level="4.3.3" data-path="desc1.html"><a href="desc1.html#perc"><i class="fa fa-check"></i><b>4.3.3</b> Perzentile erklärt</a></li>
+<li class="chapter" data-level="4.3.4" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>4.3.4</b> Varianz erklärt</a></li>
+<li class="chapter" data-level="4.3.5" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>4.3.5</b> Schiefe &amp; Wölbung</a></li>
+<li class="chapter" data-level="4.3.6" data-path="desc1.html"><a href="desc1.html#bys_su"><i class="fa fa-check"></i><b>4.3.6</b> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li class="chapter" data-level="4.3.7" data-path="desc1.html"><a href="desc1.html#kennzahlvergleich-mit-tabulate-und-der-option-summarize"><i class="fa fa-check"></i><b>4.3.7</b> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iflab.html"><a href="iflab.html"><i class="fa fa-check"></i><b>5</b> if-Bedingungen</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="iflab.html"><a href="iflab.html#if-bedingungen---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>5.1</b> if-Bedingungen - nur manche Zeilen ansehen</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="iflab.html"><a href="iflab.html#labels"><i class="fa fa-check"></i><b>5.1.1</b> Labels</a></li>
+<li class="chapter" data-level="5.1.2" data-path="iflab.html"><a href="iflab.html#miss_if"><i class="fa fa-check"></i><b>5.1.2</b> Fehlende Werte</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="iflab.html"><a href="iflab.html#keep-drop-fälle-dauerhaft-löschen"><i class="fa fa-check"></i><b>5.2</b> keep &amp; drop: Fälle dauerhaft löschen</a></li>
+<li class="chapter" data-level="5.3" data-path="iflab.html"><a href="iflab.html#ifue"><i class="fa fa-check"></i><b>5.3</b> Übungen 4</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="gen.html"><a href="gen.html"><i class="fa fa-check"></i><b>6</b> Variablen erstellen und verändern</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="gen.html"><a href="gen.html#gen-ist-gut-kontrolle-ist-besser"><i class="fa fa-check"></i><b>6.1</b> gen ist gut, Kontrolle ist besser</a></li>
+<li class="chapter" data-level="6.2" data-path="gen.html"><a href="gen.html#dummyvar"><i class="fa fa-check"></i><b>6.2</b> Dummy-Variablen erstellen</a></li>
+<li class="chapter" data-level="6.3" data-path="gen.html"><a href="gen.html#label"><i class="fa fa-check"></i><b>6.3</b> Neue Variablen labeln</a></li>
+<li class="chapter" data-level="6.4" data-path="gen.html"><a href="gen.html#bestehende-variablen-verändern"><i class="fa fa-check"></i><b>6.4</b> Bestehende Variablen verändern</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="gen.html"><a href="gen.html#recode"><i class="fa fa-check"></i><b>6.4.1</b> <code>recode</code></a></li>
+<li class="chapter" data-level="6.4.2" data-path="gen.html"><a href="gen.html#replace-informationen-aus-mehreren-variablen-in-einer-variable-zusammenführen"><i class="fa fa-check"></i><b>6.4.2</b> <code>replace</code>: Informationen aus mehreren Variablen in einer Variable zusammenführen</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="gen.html"><a href="gen.html#genue"><i class="fa fa-check"></i><b>6.5</b> Übungen 5</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="gen.html"><a href="gen.html#ue51"><i class="fa fa-check"></i><b>6.5.1</b> Übung 5-1</a></li>
+<li class="chapter" data-level="6.5.2" data-path="gen.html"><a href="gen.html#ue52"><i class="fa fa-check"></i><b>6.5.2</b> Übung 5-2</a></li>
+<li class="chapter" data-level="6.5.3" data-path="gen.html"><a href="gen.html#ue53"><i class="fa fa-check"></i><b>6.5.3</b> Übung 5-3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="egen.html"><a href="egen.html"><i class="fa fa-check"></i><b>7</b> Variablen erstellen (2), Hilfe verwenden</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="egen.html"><a href="egen.html#egen-1"><i class="fa fa-check"></i><b>7.1</b> <code>egen</code></a></li>
+<li class="chapter" data-level="7.2" data-path="egen.html"><a href="egen.html#erklärungen-für-help-und-stata-begriffe"><i class="fa fa-check"></i><b>7.2</b> Erklärungen für <code>help</code> und Stata-Begriffe</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="egen.html"><a href="egen.html#numlist-varlist-varname"><i class="fa fa-check"></i><b>7.2.1</b> numlist, varlist, varname</a></li>
+<li class="chapter" data-level="7.2.2" data-path="egen.html"><a href="egen.html#beispielsyntax-in-den-help-dateien"><i class="fa fa-check"></i><b>7.2.2</b> Beispielsyntax in den <code>help</code> Dateien</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="egen.html"><a href="egen.html#egenue"><i class="fa fa-check"></i><b>7.3</b> Übungen 6</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="infer.html"><a href="infer.html"><i class="fa fa-check"></i><b>8</b> Inferenzstatistik</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="infer.html"><a href="infer.html#inferenz-von-der-stichprobe-zur-allgemeinen-aussage"><i class="fa fa-check"></i><b>8.1</b> Inferenz: von der Stichprobe zur allgemeinen Aussage</a></li>
+<li class="chapter" data-level="8.2" data-path="infer.html"><a href="infer.html#ttest"><i class="fa fa-check"></i><b>8.2</b> Hypothesentests</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="infer.html"><a href="infer.html#ttest1"><i class="fa fa-check"></i><b>8.2.1</b> beiseitiger t-Test</a></li>
+<li class="chapter" data-level="8.2.2" data-path="infer.html"><a href="infer.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>8.2.2</b> linksseitiger t-Test</a></li>
+<li class="chapter" data-level="8.2.3" data-path="infer.html"><a href="infer.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>8.2.3</b> rechtsseitiger t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="infer.html"><a href="infer.html#mittelwertttest"><i class="fa fa-check"></i><b>8.3</b> Mittelwertvergleiche mit dem t-Test</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="infer.html"><a href="infer.html#unverbundener-t-test"><i class="fa fa-check"></i><b>8.3.1</b> Unverbundener t-Test</a></li>
+<li class="chapter" data-level="8.3.2" data-path="infer.html"><a href="infer.html#verbundener-t-test"><i class="fa fa-check"></i><b>8.3.2</b> Verbundener t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="infer.html"><a href="infer.html#übersicht-zu-varianten-für-ttest"><i class="fa fa-check"></i><b>8.4</b> Übersicht zu Varianten für <code>ttest</code></a></li>
+<li class="chapter" data-level="8.5" data-path="infer.html"><a href="infer.html#gewichtung-in-stata"><i class="fa fa-check"></i><b>8.5</b> Gewichtung in Stata</a></li>
+<li class="chapter" data-level="8.6" data-path="infer.html"><a href="infer.html#infue"><i class="fa fa-check"></i><b>8.6</b> Übungen 6</a></li>
+<li class="chapter" data-level="8.7" data-path="infer.html"><a href="infer.html#anhang"><i class="fa fa-check"></i><b>8.7</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="8.7.1" data-path="infer.html"><a href="infer.html#distr"><i class="fa fa-check"></i><b>8.7.1</b> Student-t vs. Normalverteilung</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>9</b> Anhang - fortgeschrittene Themen</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>9.1</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
+<li class="chapter" data-level="9.2" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>9.2</b> Index bilden</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i>Test</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Stata Fortbildungen am BIBB</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="infer" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Inferenzstatistik</h1>
+<div id="inferenz-von-der-stichprobe-zur-allgemeinen-aussage" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Inferenz: von der Stichprobe zur allgemeinen Aussage</h2>
+<p>Bisher haben wir die Angaben aus unserem Datensatz immer als fix angesehen.
+Ziel einer statistischen Auswertung ist aber meistens, Aussagen über die <em>Grundgesamtheit</em> oder <em>Population</em> zu treffen.
+Im Fall der ETB 2018 wären das also alle Erwerbstätigen in Deutschland.
+In der ETB 2018 wurde eine Zufallsstichprobe erhoben, um eine repräsentative Datengrundlage zu schaffen.
+Das heißt, es wurde ein Verfahren gewählt, das potenziell allen Erwerbstätigen die gleiche Chance gibt, in der Befragung zu landen.
+Damit ist unser Datensatz eine “verkleinerter Ausschnitt” aus der großen Gesamtpopulation, die wir dann für Aussagen über eben diese Gesamtpopulation verwenden können.</p>
+<p>Wenn wir uns jetzt beispielsweise das Durchschnittsalter in der Erwerbstätigenbefragung ansehen:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="infer.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">summarize</span> zpalter</span></code></pre></div>
+<pre><code>    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+     zpalter |     19,836    47.19228    11.33762         15         87</code></pre>
+<p>Natürlich ist relativ intuitiv, dass das Durchschnittsalter <em>aller Erwerbstätigen in Deutschland</em> nicht exakt <code>47.19228</code> betragen wird. Wir wären uns aber relativ sicher, dass es nicht 30 oder 60 sein wird.
+Bei 47.4 ist das aber nicht ganz so klar.
+Vielleicht haben wir ja nur etwas “Pech gehabt” und liegen mit unserer Stichprobe eben etwas neben dem wahren Wert.
+Das Problem ist aber natürlich, dass wir den wahren Wert nicht kennen - wir kennen das Alter für alle Erwerbstätigen in Deutschland schlicht nicht.</p>
+<p>Da wir nun aber davon ausgehen müssen, dass wir mit unserer Stichprobe den exakten wahren Wert wohl nicht getroffen haben, geben wir ein Intervall innerhalb dessen wir den wahren Wert mit einigem Selbstbewusstsein verorten können.
+Dieses Intervall wird in der Regel als Konfidenzintervall bezeichnet.
+Aber wie bestimmen wir die Grenzen für dieses Intervall?</p>
+<p>Um die Grenzen sinnvoll zu bestimmen, benötigen wir eine Annahme wie sich der Stichprobenwert zum wahren Wert in der Grundgesamtheit verhält.
+&gt; Übrigens: Stichprobenmittelwerte werden häufig mit <span class="math inline">\(\bar{x}\)</span> bezeichnet, wohingegen der wahre Mittelwert in der Grundgesamtheit mit <span class="math inline">\(\mu\)</span> bezeichnet wird.
+&gt; Also: lateinischer Buchstabe für die Stichprobe, griechischer für die Grundgesamtheit.
+&gt; Für eine Schätzung von <span class="math inline">\(\mu\)</span> auf Basis eines Stichprobenwerts wird <span class="math inline">\(\hat{x}\)</span> verwendet (“Dach”).</p>
+<p>Wie kommen wir also von <span class="math inline">\(\bar{x}\)</span> zu <span class="math inline">\(\mu\)</span> oder zumindest zu <span class="math inline">\(\hat{x}\)</span>?
+Wie viel Schwankungsbreite sollten wir ansetzen?
+Dabei hilft uns die Streuung in der Stichprobe: wenn die Werte in der Stichprobe alle sehr nahe beieinander liegen, dann liegt es nahe, dass auch die Streuung in der Grundgesamtheit eher gering ist.
+Dementsprechend kann das Intervall um unsere Schätzung eher eng sein.
+Sollten wir beispielsweise im Extremfall 22000 identische Angaben im Datensatz haben, dann ist unser Selbstbewusstsein natürlich sehr viel kleiner als für Werte, die sehr weit auseinander liegen (= mit einer großen Varianz).
+Außerdem sind wir bei einer größeren Stichprobe vielleicht etwas sicherer als bei einer kleineren Datenbasis.
+Die Fallzahl sollte also auch berücksichtigt werden.</p>
+<p>Diese Überlegungen sind in folgender Formel eingebaut:</p>
+<p><span class="math display">\[\bar{x}\,\pm\,t\times\frac{s}{\sqrt{n}}\]</span>
+Wir bestimmen also auf Basis einer Stichprobe das Konfidenzintervall einer Schätzung, indem wir um den Punktschätzer (den Stichproben-Mittelwert, also die <code>47.19228 Jahre</code>) mit Hilfe des eines geeigneten <span class="math inline">\(t\)</span>-Werts und des Standardfehlers (<span class="math inline">\(\frac{s}{\sqrt{n}}\)</span><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>) einen Wertebereich um den Mittelwert <span class="math inline">\(\bar{x}\)</span> konstruieren.</p>
+<p>Das <span class="math inline">\(t\)</span> kommt dabei aus der Student-t-Verteilung bzw. als <span class="math inline">\(z\)</span>-Wert aus der Standard-Normalverteilung (<a href="infer.html#distr">Illustration</a>). <span class="math inline">\(t\)</span> wählen wir dabei so, dass bei wiederholter Stichprobenziehung 95% der resultierenden KI den wahren Wert aus der Grundgesamtheit beinhalten würden:
+<img src="StataBIBB1_files/figure-html/unnamed-chunk-1-1.png" width="100%" height="35%" style="display: block; margin: auto;" /></p>
+<p>Die t-Werte sind allerdings nicht fix, sondern hängen von der Stichprobengröße ab, mit <code>invttail( n-1,  .025)</code> bekommen wir bspw. den t-Wert für das 95%-Konfidenzintervall:</p>
+<ul>
+<li><span class="math inline">\(n = 3\)</span><br />
+<code>display invttail( 3-1,  .025)</code> = 4.3026527</li>
+<li><span class="math inline">\(n = 30\)</span><br />
+<code>display invttail( 30-1,  .025)</code> = 2.0452296</li>
+<li><span class="math inline">\(n = 300\)</span><br />
+<code>display invttail( 300-1,  .025)</code> = 1.9679297</li>
+<li><span class="math inline">\(n = 3000\)</span><br />
+<code>display invttail( 3000-1,  .025)</code> = 1.9607553</li>
+<li><span class="math inline">\(n = 19836\)</span><br />
+<code>display invttail( 19836-1,  .025)</code> = 1.9600836</li>
+</ul>
+<p>Also würden für das 95%-Konfidenzintervall folgendes einsetzen - zur Erinnerung die Formel:
+<span class="math display">\[\bar{x}\,\pm\,t\times\frac{s}{\sqrt{n}}\]</span></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="infer.html#cb3-1" aria-hidden="true" tabindex="-1"></a>dis 47.19228 + 1.960084* 11.33762 / <span class="fu">sqrt</span>(19836) <span class="co">// obere Grenze</span></span></code></pre></div>
+<pre><code>47.350066</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="infer.html#cb5-1" aria-hidden="true" tabindex="-1"></a>dis 47.19228 - 1.960084* 11.33762 / <span class="fu">sqrt</span>(19836) <span class="co">// untere Grenze</span></span></code></pre></div>
+<pre><code>47.034494</code></pre>
+<p>Aber nicht erschrecken - das macht alles Stata für uns:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="infer.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mean</span> zpalter</span></code></pre></div>
+<pre><code>Mean estimation                   Number of obs   =     19,836
+
+--------------------------------------------------------------
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+     zpalter |   47.19228   .0804998      47.03449    47.35006
+--------------------------------------------------------------</code></pre>
+</div>
+<div id="ttest" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Hypothesentests</h2>
+<p>Vergangene Session hatten wir aus Stichproben Aussagen über Parameter in einer Grundgesamtheit getroffen. Eigentliches Ziel statistischer Auswertungen ist aber häufig, Entscheidungen über allgemeine Hypothesen zu treffen.</p>
+<p>Ausgangsszenario: wir betrachten ein Merkmal und möchten durch eine Stichprobe überprüfen, ob der Mittelwert mit unserer Vermutung übereinstimmt bzw. größer/kleiner ist. Testen wir auf Übereinstimmung, verwenden wir einen sog. beidseitigen Test, bei einem einseitigen Test testen wir ob der Stichprobenwert signifikant größer bzw. kleiner als der vermutete Populationswert ist.
+Auch hier bleiben wir beim Durchschnittsalter der Erwerbstätigen - mit welcher Sicherheit können wir ausschließen, dass das Durchschnittsalter 47.4 Jahre ist?</p>
+<p>Wie wir eben gesehen haben, sollten wir uns nicht allein auf den Punktschätzer verlassen, sondern auch die Streuung in der Stichprobe mitberücksichtigen.
+Dies leisten die Hypothesentests.
+Dabei werden immer zwei sich widersprechende Hypothesen formuliert, die sog. <span class="math inline">\(H_0\)</span> - die Nullhypothese und die <span class="math inline">\(H_A\)</span> - die Alternativhypothese.
+Die <span class="math inline">\(H_0\)</span> beschreibt dabei immer den bisherigen Kenntnisstand und die <span class="math inline">\(H_A\)</span> formuliert die zu testende Aussage. Die Hypothesen unterscheiden sich dann je nachdem ob wir einen gerichteten oder einen ungerichteten Test durchführen:</p>
+<p>Zunächst müssen wir uns entscheiden ob wir eine gerichtete oder ungerichtete Hypothese testen möchten:</p>
+<ul>
+<li>ungerichtete Hypothese: “das wahre Durchschnittsalter der Erwerbstätigen in D ist ungleich 47.4 Jahre”</li>
+<li>gerichtete Hypothese: “das wahre Durchschnittsalter der Erwerbstätigen in D ist <strong>kleiner</strong>/<strong>größer</strong> als 47.4 Jahre”</li>
+</ul>
+<p>Formal werden die Hypothesen dann wie folgt festgehalten:</p>
+<ul>
+<li>ungerichtete Hypothesen: <span class="math inline">\(H_0: \mu = 47.4 Jahre\)</span> und <span class="math inline">\(H_A: \mu \neq 47.4 Jahre\)</span><br />
+</li>
+<li>gerichtete Hypothesen:
+<ul>
+<li>rechtsseitig <span class="math inline">\(H_0: \mu \leqslant 47.4 Jahre\)</span> und <span class="math inline">\(H_A: \mu &gt; 47.4 Jahre\)</span><br />
+<span class="math inline">\(\Rightarrow\)</span> die <span class="math inline">\(H_A\)</span> hält fest, dass der wahre Wert <strong>größer</strong> als der Wert aus der <span class="math inline">\(H_0\)</span> ist</li>
+<li>linksseitig <span class="math inline">\(H_0: \mu \geqslant 47.4 Jahre\)</span> und <span class="math inline">\(H_A: \mu &lt; 47.4 Jahre\)</span><br />
+<span class="math inline">\(\Rightarrow\)</span> die <span class="math inline">\(H_A\)</span> hält fest, dass der wahre Wert <strong>kleiner</strong> als der Wert aus der <span class="math inline">\(H_0\)</span> ist</li>
+</ul></li>
+</ul>
+<p>Die grundlegende Idee des Hypothesentests ist, dass wir uns nur dann für die Alternativhypothese entscheiden, wenn wir eine ausreichend große Abweichung von dem in der <span class="math inline">\(H_0\)</span> postulierten Wert feststellen. Dazu berechnen wir den <span class="math inline">\(t\)</span>-Wert für den SP-Mittelwert entsprechend dieser Formel:</p>
+<p><span class="math display">\[t = \frac{\bar{x}-\mu_{0}}{\frac{\sigma}{\sqrt{n}}} = \frac{\bar{x}-\mu_{0}}{\frac{s_{x}}{\sqrt{n}}}\]</span></p>
+<p>Wir berechnen also, mit welcher Irrtumswahrscheinlichkeit wir die <span class="math inline">\(H_0\)</span> verwerfen können. Anders formuliert: wie wahrscheinlich ist es, das <span class="math inline">\(\bar{x}\)</span> in einer Stichprobe zu erhalten obwohl <span class="math inline">\(\mu_0\)</span> in der Grundgesamtheit richtig ist?</p>
+<p>In der Wissenschaft hat sich als Konvention etabliert, von einem signifikanten Unterschied zu sprechen wenn die Irrtumswahrscheinlichkeit unter 5% liegt. Das bedeutet:</p>
+<blockquote>
+<p><em>Assuming that the null hypothesis is true and the study is repeated an infinite number times by drawing random samples from the same populations(s), less than 5% of these results will be more extreme than the current result.</em><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+</blockquote>
+<div id="ttest1" class="section level3" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> beiseitiger t-Test</h3>
+<p>Ein <strong>beid</strong>seitiger Test testet die <span class="math inline">\(H_0\)</span> im Vergleich zur folgenden Aussage der <span class="math inline">\(H_A\)</span>: “die wahren Mietausgaben der Studierenden in Oldenburg sind <em>ungleich</em> 47.4 Jahre.” Dazu formalisieren wir zunächst die <span class="math inline">\(H_0\)</span> und <span class="math inline">\(H_A\)</span>:</p>
+<p><span class="math inline">\(H_0: \mu = 47.4 Jahre \qquad H_A: \mu \neq 47.4 Jahre\)</span></p>
+<p>Für die Berechnung können wir in Stata die Funktion <code>ttest</code> nutzen.
+Neben den zu testenden Werten geben wir mit <code>mu</code> den in der Nullhypothese festgehaltenen Mittelwert an:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="infer.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> zpalter==47.4</span></code></pre></div>
+<pre><code>One-sample t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+ zpalter |  19,836    47.19228    .0804998    11.33762    47.03449    47.35006
+------------------------------------------------------------------------------
+    mean = mean(zpalter)                                          t =  -2.5804
+Ho: mean = 47.4                                  degrees of freedom =    19835
+
+   Ha: mean &lt; 47.4             Ha: mean != 47.4               Ha: mean &gt; 47.4
+ Pr(T &lt; t) = 0.0049         Pr(|T| &gt; |t|) = 0.0099          Pr(T &gt; t) = 0.9951</code></pre>
+<p><img src="StataBIBB1_files/figure-html/ttest_bsp_beid_illu-1.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+<p>Das Ergebnis liegt also deutlich unter 0,05. Wir würden also die <span class="math inline">\(H_0\)</span> verwerfen <span class="math inline">\(\Rightarrow\)</span> die Aussage “das wahre Durchschnittsalter der Erwerbstätigen in D ist gleich 47.4 Jahre” kann als (vorläufig) widerlegt gelten.</p>
+<p>Außerdem werden auch gleich die Ergebnisse für den linksseitigen und rechtsseitigen Test angezeigt. Diese sehen uns noch genauer an:</p>
+</div>
+<div id="linksseitiger-t-test" class="section level3" number="8.2.2">
+<h3><span class="header-section-number">8.2.2</span> linksseitiger t-Test</h3>
+<p>Ein <strong>links</strong>seitiger Test testet die <span class="math inline">\(H_0\)</span> im Vergleich zu folgender Aussage: “das wahre Durchschnittsalter der Erwerbstätigen in D ist <em>kleiner</em> als 47.4 Jahre.” Formal sehen die <span class="math inline">\(H_0\)</span> und <span class="math inline">\(H_A\)</span> so aus:</p>
+<p><span class="math inline">\(H_0:\, \mu \geqslant 47.4 Jahre \qquad H_A:\, \mu &lt; 47.4 Jahre\)</span></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="infer.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> zpalter==47.4</span></code></pre></div>
+<pre><code>One-sample t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+ zpalter |  19,836    47.19228    .0804998    11.33762    47.03449    47.35006
+------------------------------------------------------------------------------
+    mean = mean(zpalter)                                          t =  -2.5804
+Ho: mean = 47.4                                  degrees of freedom =    19835
+
+   Ha: mean &lt; 47.4             Ha: mean != 47.4               Ha: mean &gt; 47.4
+ Pr(T &lt; t) = 0.0049         Pr(|T| &gt; |t|) = 0.0099          Pr(T &gt; t) = 0.9951</code></pre>
+<p>Der Wert unter <code>mean &lt; 47.4</code> ist mit 0.0049 kleiner als 0,05, dementsprechend würden wir auf Basis eines linksseitigen Hypothesentests die <span class="math inline">\(H_0\)</span> verwerfen.</p>
+<p><img src="StataBIBB1_files/figure-html/ttest_bsp_links_illu-1.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="rechtsseitiger-t-test" class="section level3" number="8.2.3">
+<h3><span class="header-section-number">8.2.3</span> rechtsseitiger t-Test</h3>
+<p>Ein <strong>rechts</strong>seitiger Test testet die <span class="math inline">\(H_0\)</span> im Vergleich zu folgender Aussage: “das wahre Durchschnittsalter der Erwerbstätigen in ist <em>größer</em> als 47.4 Jahre.” Formal sehen die <span class="math inline">\(H_0\)</span> und <span class="math inline">\(H_A\)</span> so aus:</p>
+<p><span class="math inline">\(H_0: \mu \leqslant 47.4 Jahre \qquad H_A: \mu &gt; 47.4 Jahre\)</span></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="infer.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> zpalter==47.4</span></code></pre></div>
+<pre><code>One-sample t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+ zpalter |  19,836    47.19228    .0804998    11.33762    47.03449    47.35006
+------------------------------------------------------------------------------
+    mean = mean(zpalter)                                          t =  -2.5804
+Ho: mean = 47.4                                  degrees of freedom =    19835
+
+   Ha: mean &lt; 47.4             Ha: mean != 47.4               Ha: mean &gt; 47.4
+ Pr(T &lt; t) = 0.0049         Pr(|T| &gt; |t|) = 0.0099          Pr(T &gt; t) = 0.9951</code></pre>
+<p>Wir sehen unter <code>mean &gt; 47.4</code> dass der Wert <code>1-pt(q = -z_wert, df = 19836)=</code>0.9951 deutlich größer als 0,05 ist - dementsprechend würden wir auf Basis eines rechtsseitigen Hypothesentests die <span class="math inline">\(H_0\)</span> <strong>nicht</strong> verwerfen.</p>
+<p><img src="StataBIBB1_files/figure-html/ttest_bsp_rechts_illu-1.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+<p>All das haben wir eben auch schon in <code>ttest</code> gesehen:</p>
+<hr />
+<p><a href="#tvsmu">Übung 1</a></p>
+<hr />
+</div>
+</div>
+<div id="mittelwertttest" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Mittelwertvergleiche mit dem t-Test</h2>
+<p>Diese Testlogik können wir auch dazu verwenden, Kennzahlen für verschiedene Gruppen zu vergleichen.</p>
+<div id="unverbundener-t-test" class="section level3" number="8.3.1">
+<h3><span class="header-section-number">8.3.1</span> Unverbundener t-Test</h3>
+<p>Eine häufige Frage zielt darauf ab zu analysieren, ob sich die Durchschnittswerte eines Merkmals zwischen zwei Gruppen unterscheiden.
+Beispielsweise könnten wir das Durchschnittsalter zwischen erwerbstätigen Männern und Frauen vergleichen.</p>
+<p>Auch für Gruppenvergleich müssen zunächst Hypothesen aufgestellt werden.</p>
+<ul>
+<li><p>Für einen beidseitigen Test ist die Alternativhypothese, dass es einen Gruppenunterschied gibt:</p>
+<p><span class="math inline">\(H_0: \mu_1 - \mu_2 = 0 \qquad H_A: \mu_1 - \mu_2 \neq 0\)</span></p></li>
+<li><p>Ein linksseitiger Test hätte entsprechend die Alternativhypothese, dass der Gruppenunterschied <em>kleiner</em> als 0 ist:</p>
+<p><span class="math inline">\(H_0: \mu_1 - \mu_2 \geqslant 0 \qquad H_A: \mu_1 - \mu_2 &lt; 0\)</span></p></li>
+<li><p>Ein rechtssseitiger Test hätte entsprechend die Alternativhypothese, dass der Gruppenunterschied <em>größer</em> als 0 ist:</p>
+<p><span class="math inline">\(H_0: \mu_1 - \mu_2 \leqslant 0 \qquad H_A: \mu_1 - \mu_2 &gt; 0\)</span></p></li>
+</ul>
+<p>Für den Altersvergleich zwischen Frauen und Männern ergeben sich folgende Hypothesen:</p>
+<ul>
+<li>ungerichtete Hypothese: <span class="math inline">\(H_0: Alter_{m} - Alter_{f} = 0 \qquad H_A: Alter_{m} - Alter_{f} \neq 0\)</span></li>
+<li>linksseitige Hypothese: <span class="math inline">\(H_0: Alter_{m} - Alter_{f} \geqslant 0 \qquad H_A: Alter_{m} - Alter_{f} &lt; 0\)</span></li>
+<li>rechtsseitige Hypothese: <span class="math inline">\(H_0: Alter_{m} - Alter_{f} \leqslant 0 \qquad H_A: Alter_{m} - Alter_{f} &gt; 0\)</span></li>
+</ul>
+<p>Wenn wir nun die beiden Mittelwerte für Männer und Frauen vergleichen, bezieht sich das natürlich wieder nur auf die <em>Punkt</em>schätzer für die Stichprobe:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="infer.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter,<span class="fu">s</span>(<span class="kw">mean</span>) <span class="kw">by</span>(S1) </span></code></pre></div>
+<pre><code>Summary for variables: zpalter
+     by categories of: S1 (Geschlecht)
+
+      S1 |      mean
+---------+----------
+mÃ¤nnlich |  46.49079
+weiblich |  47.90402
+---------+----------
+   Total |  47.19228
+--------------------</code></pre>
+<p>Aber ist diese, in der Stichprobe festgestellte Differenz auch bezogen auf die <strong>Grundgesamtheit</strong> von Bedeutung? Dazu greifen wieder auf den <code>ttest</code> zurück, aber hier geben wir anstelle von <code>== XYZ</code> mit <code>by(sex)</code> die Gruppenvariable an:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="infer.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> zpalter, <span class="kw">by</span>(S1) unequal</span></code></pre></div>
+<pre><code>Two-sample t test with unequal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+mÃ¤nnlich |   9,990    46.49079    .1188339    11.87744    46.25785    46.72373
+weiblich |   9,846    47.90402    .1079952    10.71604    47.69233    48.11571
+---------+--------------------------------------------------------------------
+combined |  19,836    47.19228    .0804998    11.33762    47.03449    47.35006
+---------+--------------------------------------------------------------------
+    diff |           -1.413231    .1605754               -1.727972    -1.09849
+------------------------------------------------------------------------------
+    diff = mean(mÃ¤nnlich) - mean(weiblich)                        t =  -8.8010
+Ho: diff = 0                     Satterthwaite&#39;s degrees of freedom =  19681.3
+
+    Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
+ Pr(T &lt; t) = 0.0000         Pr(|T| &gt; |t|) = 0.0000          Pr(T &gt; t) = 1.0000</code></pre>
+<blockquote>
+<p>Da der p-Wert für den beiseitigen Test (unter <code>Ha: diff != 0</code>) deutlich unter 0,05 liegt, können wir hier die <span class="math inline">\(H_0\)</span> verwerfen und gehen von signifikanten Größenunterschieden aus.<br />
+Für einen rechtsseitigen Test achten wir auf <code>Ha: diff &gt; 0</code>- Männer sind also signifikant <em>größer</em> als Frauen.
+Für einen linksseitigen Test ist hingegen <code>Ha: diff &lt; 0</code> ausschlaggebend: Männer sind also nicht signifikant <em>kleiner</em> als Frauen.</p>
+</blockquote>
+<hr />
+<p><a href="#tgroup">Übung2</a></p>
+<hr />
+</div>
+<div id="verbundener-t-test" class="section level3" number="8.3.2">
+<h3><span class="header-section-number">8.3.2</span> Verbundener t-Test</h3>
+<p>Möchten wir Werte vergleichen, welche in einer Verbindung zueinander stehen, ist der verbundene t-Test die richtige Wahl. Beispiele für verbundene Stichproben sind beispielsweise experimentelle Untersuchungen, welche Daten vor und nach einer Maßnahme/Treatment/Intervention messen. Anschließend soll anhand des Vergleichs der Ergebnisse und die Wirkung der Maßnahme evaluiert werden. Hier sind die Messwerte aus den beiden Gruppen (“vorher” und “nachher”) miteinander <em>verbunden</em> - bspw. wird eine Person mit Bluthochdruck auch nach der Maßnahme in der Tendenz einen höheren Blutdruck haben als eine Person, welche bereits zuvor einen niedrigeren Blutdruck hatte.</p>
+<p>Ein fiktionales Beispiel:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="infer.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">webuse</span> bpwide</span>
+<span id="cb19-2"><a href="infer.html#cb19-2" aria-hidden="true" tabindex="-1"></a>browse bp_before bp_after </span></code></pre></div>
+<pre><code>Error in knitr::include_graphics(&quot;08_bpwide.png&quot;): Cannot find the file(s): &quot;08_bpwide.png&quot;</code></pre>
+<p>Diese vorher/nachher Werte können wir jetzt mit einem verbundenen t-Test vergleichen:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="infer.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> bp_before==bp_after</span></code></pre></div>
+<pre><code>Paired t test
+------------------------------------------------------------------------------
+Variable |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+bp_bef~e |     120      156.45    1.039746    11.38985    154.3912    158.5088
+bp_after |     120    151.3583    1.294234    14.17762    148.7956     153.921
+---------+--------------------------------------------------------------------
+    diff |     120    5.091667    1.525736     16.7136    2.070557    8.112776
+------------------------------------------------------------------------------
+     mean(diff) = mean(bp_before - bp_after)                      t =   3.3372
+ Ho: mean(diff) = 0                              degrees of freedom =      119
+
+ Ha: mean(diff) &lt; 0           Ha: mean(diff) != 0           Ha: mean(diff) &gt; 0
+ Pr(T &lt; t) = 0.9994         Pr(|T| &gt; |t|) = 0.0011          Pr(T &gt; t) = 0.0006</code></pre>
+<p>Auch hier sehen wir wieder die Ergebnisse für einen links- (<code>Ha: mean(diff) &lt; 0</code>) beid- (<code>Ha: mean(diff) != 0</code>) und rechtsseitigen (<code>Ha: mean(diff) &gt; 0</code>) Test. Wir erkennen aus den Ergebnissen, dass der Blutdruck der Patient*innen:</p>
+<ul>
+<li>nach dem Treatment nicht signifikant höher ist - linksseitiger Test (<em>bp_before &lt; bp_after</em>), linke Spalte</li>
+<li>sich vor und nach dem Treatment signifikant unterscheidet - beiseitiger Test (<em>bp_before != bp_after</em>), mittlere Spalte</li>
+<li>nach dem Treatment signifikant niedriger ist - rechtsseitiger Test (<em>bp_before &gt; bp_after</em>), rechte Spalte</li>
+</ul>
+<hr />
+<p><a href="#tpaired">Übung3</a></p>
+<hr />
+</div>
+</div>
+<div id="übersicht-zu-varianten-für-ttest" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Übersicht zu Varianten für <code>ttest</code></h2>
+<p>Für alle <code>ttest</code>-Varianten können wir mit <code>, level(..)</code> auch ein anderes Signifikanzniveau wählen. Standardmäßig wird <span class="math inline">\(\alpha=0,05\%\)</span> verwendet.</p>
+<ul>
+<li>Vergleich zu einem Referenzwert: <code>ttest testvariable == referenzwert</code></li>
+</ul>
+<p>Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tests unterscheiden:</p>
+<ul>
+<li>Die Varianz der Messwerte in den verglichenen Gruppen ist …
+<ul>
+<li>gleich: <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable)</code></li>
+<li>verschieden: <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable) unequal</code> (wie oben)</li>
+</ul></li>
+<li>Verbundene oder unverbundene Stichprobe?
+<ul>
+<li>Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen <span class="math inline">\(\Rightarrow\)</span> <code>ttest testvariable, by(gruppenvariable)</code> für eine unverbundene Stichprobe (mit ggf. <code>unequal</code>)</li>
+<li>Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen <span class="math inline">\(\Rightarrow\)</span> Werte für beide Variablen sollten “nebeneinander” abgelegt sein (<em>wide</em>-Format), dann kann mit <code>ttest vorher==nachher</code> ein verbundener <code>ttest</code> durchgeführt werden.</li>
+</ul></li>
+</ul>
+</div>
+<div id="gewichtung-in-stata" class="section level2" number="8.5">
+<h2><span class="header-section-number">8.5</span> Gewichtung in Stata</h2>
+<p>Wir können Gewichtungen in Stata auf zwei Weisen anwenden:</p>
+<p>Zum einen können die Daten mit dem Befehl <code>svyset</code> als Surveydaten definiert werden. Hierbei können Variablen spezifiziert werden, die Informationen über das Survey-Design enthalten, wie die Stratifizierung und die anzuwendende Gewichtungsvariable. Anschließende Analyseverfahren werden mit dem Befehlspräfix <code>svy</code> durchgeführt. In diesem Beispiel:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="infer.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 <span class="co">// ungewichtet</span></span></code></pre></div>
+<pre><code> Geschlecht |      Freq.     Percent        Cum.
+------------+-----------------------------------
+   mÃ¤nnlich |     10,074       50.34       50.34
+   weiblich |      9,938       49.66      100.00
+------------+-----------------------------------
+      Total |     20,012      100.00</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="infer.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">svyset</span> <span class="dt">_n</span> [<span class="kw">pweight</span>=gew2018]</span>
+<span id="cb25-2"><a href="infer.html#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="kw">svy</span>: <span class="kw">tabulate</span> S1 , col <span class="fu">count</span></span></code></pre></div>
+<pre><code>      pweight: gew2018
+          VCE: linearized
+  Single unit: missing
+     Strata 1: &lt;one&gt;
+         SU 1: &lt;observations&gt;
+        FPC 1: &lt;zero&gt;
+
+(running tabulate on estimation sample)
+
+Number of strata   =         1                  Number of obs     =     20,012
+Number of PSUs     =    20,012                  Population size   = 20,012.017
+                                                Design df         =     20,011
+
+----------------------------------
+Geschlech |
+t         |      count      column
+----------+-----------------------
+ mÃ¤nnlich |    1.1e+04       .5468
+ weiblich |       9070       .4532
+          | 
+    Total |    2.0e+04           1
+----------------------------------
+  Key:  count     =  weighted count
+        column    =  column proportion</code></pre>
+<p>Allerdings steht das <code>svy</code>-Präfix nicht für jeden Befehl zur Verfügung.
+Außerdem können kein weiteren Präfixe neben <code>svy</code> verwendet werden - beispielsweise <a href="#by"><code>by</code></a>.
+Daher steht auch eine Alternative zur Verfügung, bei der wir die Gewichtung bei jedem Auswertungsschritt einzeln angeben.
+In unserem Beispiel also</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="infer.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 [<span class="kw">weight</span>=gew2018]</span></code></pre></div>
+<p><span style="color:red"><code>may not use noninteger frequency weights</code></span><br />
+<span style="color:blue"><code>r(401);</code></span></p>
+<p>Allerdings akzeptiert Stata bei einigen Gewichtungsverfahren (z.B. Häufigkeitsgewichten “frequency weights”), keine Gewichtungswerte mit Nachkommastellen.
+Leider führt ein einfaches Auf- oder Abrunden führt aber häufig zu falschen Ergebnissen:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="infer.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 [<span class="kw">weight</span>=<span class="fu">round</span>(gew2018)] <span class="co">// runden führt zu Abweichung - Vergleich mit svy: Ergebnis</span></span></code></pre></div>
+<pre><code>(frequency weights assumed)
+
+ Geschlecht |      Freq.     Percent        Cum.
+------------+-----------------------------------
+   mÃ¤nnlich |     10,524       55.44       55.44
+   weiblich |      8,458       44.56      100.00
+------------+-----------------------------------
+      Total |     18,982      100.00</code></pre>
+<p>Eine mögliche Lösung dieser Problematik ist es, zunächst die Gewichtungsvariable mit einer hohen Zahl (bspw.100 000) zu multiplizieren
+und anschließend auf ganze Werte zu runden:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="infer.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabulate</span> S1 [<span class="kw">weight</span>=<span class="fu">round</span>(gew2018*100 000)]</span></code></pre></div>
+<p>Verteilungen sollten anschließend korrekt berechnet werden. Beim Bericht der Ergebnisse ist jedoch zu beachten,
+dass die zu Grunde liegende Fallzahl anschließend wieder korrigiert werden muss (also in diesem Beispiel durch
+100 000 geteilt werden muss).</p>
+</div>
+<div id="infue" class="section level2" number="8.6">
+<h2><span class="header-section-number">8.6</span> Übungen 6</h2>
+<ol class="example" style="list-style-type: decimal">
+<li><p>Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (<code>BIBBBAuA_2018_suf1.dta</code>).</p></li>
+<li></li>
+</ol>
+</div>
+<div id="anhang" class="section level2" number="8.7">
+<h2><span class="header-section-number">8.7</span> Anhang</h2>
+<div id="distr" class="section level3" number="8.7.1">
+<h3><span class="header-section-number">8.7.1</span> Student-t vs. Normalverteilung</h3>
+<p><img src="StataBIBB1_files/figure-html/unnamed-chunk-5-1.png" width="60%" height="60%" style="display: block; margin: auto;" /></p>
+<p><span class="math display">\[\text{Normalverteilung:}\;\mathcal{N}(\mu,\sigma)\]</span></p>
+<p><span class="math display">\[\text{Student-t-Verteilung:}\;\;\; t_n=\frac{\mathcal{N}(0,1)}{\sqrt{\frac{\chi^{2}_{n}}{n}}}\]</span></p>
+<p>Der wesentlich Punkt ist, dass die Normalverteilung voraussetzt, dass wir <span class="math inline">\(\sigma^2\)</span> kennen - die Varianz (Streuung) der Altersangaben in der Grundgesamtheit.
+Aber wir kennen <span class="math inline">\(\sigma^2\)</span> genauso wenig wie <span class="math inline">\(\mu\)</span>, sondern nur die Stichprobenmittelwerte <span class="math inline">\(\bar{x}\)</span> und -varianz <span class="math inline">\(s^2\)</span>.
+Daher halten wir uns an die Student-t-Verteilung, die quasi eine etwas lockerere Normalverteilung ist bei unbekannter Populationsvarianz.</p>
+<p>Die Bedeutung der Normalverteilung ergibt sich daraus, dass wichtige statistische Maßzahlen, die man aus Stichproben berechnen kann, unter bestimmten Bedingungen normalverteilt sind.</p>
+<p>Literaturtipps:
++ S.133 <em>ff.</em>, Kapitel 6 “Zufallsstichproben und Schätzen” in <a href="https://www.utb-studi-e-book.de/9783838550718">Diaz-Bone, R. (2019). Statistik für Soziologen (4. Auflage)</a>
++ S.79 <em>ff.</em> Kapitel 6 “Stichprobe und Grundgesamtheit” in <a href="https://link.springer.com/book/10.1007/978-3-642-12770-0">Bortz, J., &amp; Schuster, C. (2010). Statistik für Human- und Sozialwissenschaftler (7. Auflage)</a> (ausführliche formale Beschreibung)</p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Also die Standardabweichung (<span class="math inline">\(s\)</span>) dividiert durch die Wurzel der Stichprobengröße (<span class="math inline">\(n\)</span>)<a href="infer.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://doi.org/10.1177/2515245919858072">Failing Grade: 89% of Introduction-to-Psychology Textbooks That Define or Explain Statistical Significance Do So Incorrectly. Advances in Methods and Practices in Psychological Science, 2515245919858072.</a><a href="infer.html#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="egen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["StataBIBB1.pdf", "StataBIBB1.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

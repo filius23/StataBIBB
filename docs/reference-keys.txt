@@ -78,3 +78,17 @@ erklärungen-für-help-und-stata-begriffe
 numlist-varlist-varname
 beispielsyntax-in-den-help-dateien
 egenue
+infer
+inferenz-von-der-stichprobe-zur-allgemeinen-aussage
+gewichtung-in-stata
+anhang
+distr
+infue
+ttest
+ttest1
+linksseitiger-t-test
+rechtsseitiger-t-test
+mittelwertttest
+unverbundener-t-test
+verbundener-t-test
+übersicht-zu-varianten-für-ttest
