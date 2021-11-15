@@ -14,6 +14,31 @@ knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```
 
 
+## Beobachtungen markieren mit `gen` & `if`
+
+Die Kombination aus `gen` und `if` hilft uns, wenn wir eine Variable nur für einige Zeilen erstellen wollen. Das hilft insbesondere, wenn wir bestimmte Beobachtungen markieren wollen. Beispielsweise Frauen (`S1` = 1), die einer Nebentätigkeit (`nt` = 1) nachgehen:
+
+```{stata genif, eval = F}
+gen nt_frauen = 1 if S1 == 1 & nt == 1
+```
+```{stata genifb,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+gen nt_frauen = 1 if S1 == 1 & nt == 1
+```
+
+Nur wenn beide Bedingungen zutreffen, wird unter `nt_frauen` eine 1 abgelegt:
+```{stata genif2, eval = F}
+list S1 nt nt_frauen in 19671/19675, clean noobs abb(12) 
+```
+```{stata genifb,echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui gen nt_frauen = 1 if S1 == 1 & nt == 1
+list S1 nt nt_frauen in 19671/19675, clean noobs abb(12) 
+```
+
+In der alltäglichen Arbeit hilft das manchmal, wenn man spezielle Fälle immer wieder aufrufen möchte und nicht immer die "ausgeschriebenen" `if`-Bedingungen verwenden möchte.
+
+
 ## Index bilden
 
 In Kapitel 5 hatten wir mit [`recode`](#recode) eine Möglichkeit kennen gelernt, wie Codierungen verändert werden können.

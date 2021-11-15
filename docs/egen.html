@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Stata Fortbildungen am BIBB</title>
+  <title>7 Variablen erstellen (2), Hilfe verwenden | Stata Fortbildungen am BIBB</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Stata Fortbildungen am BIBB" />
+  <meta property="og:title" content="7 Variablen erstellen (2), Hilfe verwenden | Stata Fortbildungen am BIBB" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Stata Fortbildungen am BIBB" />
+  <meta name="twitter:title" content="7 Variablen erstellen (2), Hilfe verwenden | Stata Fortbildungen am BIBB" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="gen.html"/>
+<link rel="next" href="appendix.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -274,19 +274,98 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="egen" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Variablen erstellen (2), Hilfe verwenden</h1>
+<div id="egen-1" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> <code>egen</code></h2>
+<p>Mit <code>egen</code>, den “Extensions to generate,” stehen eine ganze Menge an Funktionen zur Verfügung. In <a href="desc1.html#cut">Kapitel 4</a> hatten wir schon die Option <code>cut</code> zur Einteilung in Gruppen (<code>cut</code>) kennengelernt:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="egen.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> age_cat = <span class="fu">cut</span>(zpalter), <span class="fu">at</span>(15 18 35 60 100 ) <span class="kw">label</span></span>
+<span id="cb1-2"><a href="egen.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> age_cat</span></code></pre></div>
+<pre><code>(176 missing values generated)
+
+    age_cat |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        15- |         10        0.05        0.05
+        18- |      3,351       16.89       16.94
+        35- |     13,855       69.85       86.79
+        60- |      2,620       13.21      100.00
+------------+-----------------------------------
+      Total |     19,836      100.00</code></pre>
+<p>Außerdem könnten wir bspw. eine Variable <code>durchschnittsalter</code> mit dem Mittelwert für <code>zpalter</code> erstellen:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="egen.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> durchschnittsalter = <span class="kw">mean</span>(zpalter)</span></code></pre></div>
+<p>Oder wir könnten den Vergleich des Wohn- und Arbeitsbundeslandes aus <a href="gen.html#dummyvar">Kapitel 5</a> mit <code>diff()</code> durchführen:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="egen.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ao_wo =  Bula ==  F233 <span class="kw">if</span> !<span class="fu">missing</span>(F233)</span>
+<span id="cb4-2"><a href="egen.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> ao_wo2 = <span class="fu">diff</span>( Bula F233_Bula) <span class="kw">if</span> !<span class="fu">missing</span>(F233) </span></code></pre></div>
+<p>Das führt zum gleichen Ergebnis, allerdings könnten wir in <code>diff()</code> noch weitere Variablen für einen Abgleich einfügen (bspw. weitere Arbeitsorte).</p>
+<p>Eine Liste aller Optionen für <code>egen</code> findet sich unter <code>help egen</code>:</p>
+<p><img src="pics/06_egen_help.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="erklärungen-für-help-und-stata-begriffe" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Erklärungen für <code>help</code> und Stata-Begriffe</h2>
+<div id="numlist-varlist-varname" class="section level3" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> numlist, varlist, varname</h3>
+<p>Eine <code>numlist</code> ist eine Liste von Zahlen, die je nach Anwendungsfall durch Leerzeichen oder Kommas getrennt sind. Es gibt eine ganze Reihe von Möglichkeiten, eine <code>numlist</code> zu erzeugen. Im <code>cut</code>-Beispiel oben haben wir einfach in <code>at()</code> direkt die Zahlen angegeben und so eine <code>numlist</code> mit den Werten <code>15 18 35 60 100</code> erstellt. Wir können aber mit <code>(start(intervall)stop)</code> auch eine Zahlenreihe anlegen, bspw. mit <code>(0(2)8)</code> die Zahlenreihe 0, 2, 4, 6, 8. Eine <code>numlist</code> kann auch einer Reihe und einem Wert bestehen: <code>0(1)5 8</code> führt zu 0, 1, 2, 3, 4, 5, 8. Mehr Tricks unter <code>help numlist</code>.</p>
+<p>Eine <code>varlist</code> ist hingegen eine Liste an Variablennamen. Wenn wir eine solche aufrufen, werden die Namen mit den im Datensatz vorhandenen Variablen abgeglichen (und ggf. eine Fehlermeldung ausgegeben). Wir können <code>varlist</code>en einfach direkt angeben, bspw. wie in <code>diff(bula F233)</code>, wir können aber auch Verallgemeinerungen, sog. ‘wild cards’ für die Auswahl von Variablen verwenden:</p>
+<table>
+<colgroup>
+<col width="19%" />
+<col width="80%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">myvar</td>
+<td align="left">nur Variable <code>myvar</code></td>
+</tr>
+<tr class="even">
+<td align="left">myvar*</td>
+<td align="left">Variablen, deren Name mit <code>myvar</code> beginnt, alsp bspw. auch <code>myvar2</code> oder <code>myvariable</code></td>
+</tr>
+<tr class="odd">
+<td align="left">*var</td>
+<td align="left">Variablen, deren Name mit <code>var</code> endet, alsp bspw. auch <code>yourvar</code></td>
+</tr>
+<tr class="even">
+<td align="left">my*var</td>
+<td align="left">Variablen deren Name mit <code>my</code> beginnt und mit <code>var</code> endet - mit einer beliebigen Zahl an Zeichen dazwischen</td>
+</tr>
+<tr class="odd">
+<td align="left">my?var</td>
+<td align="left">Variablen deren Name mit <code>my</code> beginnt und mit <code>var</code> endet - mit nur einem Zeichen dazwischen</td>
+</tr>
+<tr class="even">
+<td align="left">myvar1-myvar6</td>
+<td align="left">myvar1, myvar2, …, myvar6 (je nachdem, welche Variablen vorhanden sind - in der Reihenfolge aus dem Variablenexplorer)</td>
+</tr>
+</tbody>
+</table>
+<p>Weiteres unter <code>help varlist</code></p>
+<p><code>#</code> steht in den Hilfe-Dateien immer für eine Zahl.</p>
+</div>
+<div id="beispielsyntax-in-den-help-dateien" class="section level3" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Beispielsyntax in den <code>help</code> Dateien</h3>
+<p>Ganz unten finden sich in den Hilfen immer Beispiele:</p>
+<p><img src="pics/06_egen_help2.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Diese beruhen auf Datensätzen, die lokal vorhanden sind (<code>sysuse ...</code>) oder direkt aus dem Internet geladen werden können (<code>webuse</code>). Die Beispiele</p>
+</div>
+</div>
+<div id="egenue" class="section level2" number="7.3">
+<h2><span class="header-section-number">7.3</span> Übungen 6</h2>
+<ol class="example" style="list-style-type: decimal">
+<li><p>Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (<code>BIBBBAuA_2018_suf1.dta</code>).</p></li>
+<li><p>Bilden Sie mit Hilfe von <code>egen</code> verschiedene Einkommensklassen (bspw. ab 0EUR in 500EUR-Schritten bis 72000EUR). Nutzen Sie die <code>numlist</code>-Funktion mit <code>(start(intervall)stop)</code>. Verändern Sie Labels.</p></li>
+<li><p>Öffnen Sie die Hilfe für <code>egen</code> und lassen Sie ein Beispiel Schritt für Schritt durchlaufen - beobachten Sie was passiert, indem Sie mit <code>browse</code> den Datensatz betrachten.</p></li>
+<li><p>Welche Variablen bekommen Sie mit <code>describe</code> angezeigt, wenn Sie entweder <code>describe F21</code>, <code>describe F21*</code>, <code>describe F21?</code>, <code>describe F2*4</code> oder <code>describe F2?4</code> verwenden?</p></li>
+</ol>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="gen.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

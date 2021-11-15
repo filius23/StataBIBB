@@ -192,7 +192,7 @@ tab ao_wo
 
 *** 
 
-[Übung 5-1](#ue51)
+[**Übung 5-1**](#ue51)
 
 *** 
 
@@ -266,7 +266,7 @@ recode gkpol (1/3=1 "Klein") (4/5=2 "Mittel") (6/7=3 "Groß"), into(gkpol2)
 
 *** 
 
-[Übung 5-2](#ue52)
+[**Übung 5-2**](#ue52)
 
 *** 
 
@@ -295,7 +295,7 @@ tab erw_hh
 
 *** 
 
-[Übung 5-3](#ue53)
+[**Übung 5-3**](#ue53)
 
 *** 
 
@@ -359,9 +359,10 @@ tab erw_hh
 
 
 ****
-    > 1 zwischen 7-19 Uhr & keine Sonntagsarbeit              (`F209` == 1, `F223` == 2)       
-    > 2 nicht zwischen 7-19 Uhr, aber keine Sonntagsarbeit    (`F209` == 2, `F223` == 2)
-    > 3 zwischen 7-19 Uhr aber Sonntagsarbeit                 (`F209` == 1, `F223` == 1)
-    > 4 nicht zwischen 7-19 Uhr und Sonntagsarbeit            (`F209` == 2, `F223` == 1)
+
+    F209 == 1 & F223 == 2  // 1 zwischen 7-19 Uhr & keine Sonntagsarbeit              
+    F209 == 2 & F223 == 2  // 2 nicht zwischen 7-19 Uhr, aber keine Sonntagsarbeit    
+    F209 == 1 & F223 == 1  // 3 zwischen 7-19 Uhr aber Sonntagsarbeit                 
+    F209 == 2 & F223 == 1  // 4 nicht zwischen 7-19 Uhr und Sonntagsarbeit            
   
   

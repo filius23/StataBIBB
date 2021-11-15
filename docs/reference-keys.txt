@@ -70,3 +70,11 @@ ue52
 ue53
 appendix
 index-bilden
+output-bookdownpdf_document2
+beobachtungen-markieren-mit-gen-if
+egen
+egen-1
+erklärungen-für-help-und-stata-begriffe
+numlist-varlist-varname
+beispielsyntax-in-den-help-dateien
+egenue

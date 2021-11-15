@@ -10,36 +10,13 @@ library(kableExtra)
 # stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
-# baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F)
+# baua <- readstata13::readhttp://127.0.0.1:8264/rmd_output/0/appendix.html#.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F)
 ```
 
-## `gen` mit `if`
-
-Die Kombination aus `gen` und `if` hilft uns, wenn wir eine Variable nur für einige Zeilen erstellen wollen. Das hilft insbesondere, wenn wir bestimmte Beobachtungen markieren wollen. Beispielsweise Frauen (`S1` = 1), die einer Nebentätigkeit (`nt` = 1) nachgehen:
-
-```{stata genif, eval = F}
-gen nt_frauen = 1 if S1 == 1 & nt == 1
-```
-```{stata genifb,echo = F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-gen nt_frauen = 1 if S1 == 1 & nt == 1
-```
-
-Nur wenn beide Bedingungen zutreffen, wird unter `nt_frauen` eine 1 abgelegt:
-```{stata genif2, eval = F}
-list S1 nt nt_frauen in 19671/19675, clean noobs abb(12) 
-```
-```{stata genifb,echo = F}
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-qui gen nt_frauen = 1 if S1 == 1 & nt == 1
-list S1 nt nt_frauen in 19671/19675, clean noobs abb(12) 
-```
-
-In der alltäglichen Arbeit hilft das manchmal, wenn man spezielle Fälle immer wieder aufrufen möchte und nicht immer die "ausgeschriebenen" `if`-Bedingungen verwenden möchte.
 
 ## `egen`
 
-Mit `egen`, den "Extensions to generate", stehen eine ganze Menge an Funktionen zur Verfügung. In [Kapitel](#cut) hatten wir schon die Option `cut` zur Einteilung in Gruppen (`cut`) kennengelernt:
+Mit `egen`, den "Extensions to generate", stehen eine ganze Menge an Funktionen zur Verfügung. In [Kapitel 4](#cut) hatten wir schon die Option `cut` zur Einteilung in Gruppen (`cut`) kennengelernt:
 ```{stata age_cut4, eval = F}
 egen age_cat = cut(zpalter), at(15 18 35 60 100 ) label
 tab age_cat
@@ -52,17 +29,64 @@ egen age_cat = cut(zpalter), at(15 18 35 60 100 )  label
 tab age_cat
 ```
 
-So könnten wir bspw. eine Variable `age_mean` mit dem Mittelwert für `age` erstellen:
+Außerdem könnten wir bspw. eine Variable `durchschnittsalter` mit dem Mittelwert für `zpalter` erstellen:
 ```{stata egenmean1, eval = F}
-egen age_mean = mean(age)
+egen durchschnittsalter = mean(zpalter)
 ```
 
+Oder wir könnten den Vergleich des Wohn- und Arbeitsbundeslandes aus [Kapitel 5](#dummyvar) mit `diff()` durchführen:
+```{stata egendiff, eval = F}
+gen ao_wo =  Bula ==  F233 if !missing(F233)
+egen ao_wo2 = diff( Bula F233_Bula) if !missing(F233) 
+```
+Das führt zum gleichen Ergebnis, allerdings könnten wir in `diff()` noch weitere Variablen für einen Abgleich einfügen (bspw. weitere Arbeitsorte).
 
-Eine Liste aller Optionen für `egen` findet sich unter `help egen`.
+Eine Liste aller Optionen für `egen` findet sich unter `help egen`:
 
 
+```{r egenhelp1, echo = F,out.width = "100%",fig.height= 3.5, fig.align="center"}
+knitr::include_graphics("./pics/06_egen_help.png")
+```
 
-## Übungen 5 {#genue}
+## Erklärungen für `help` und Stata-Begriffe
+
+### numlist, varlist, varname
+
+Eine `numlist` ist eine Liste von Zahlen, die je nach Anwendungsfall durch Leerzeichen oder Kommas getrennt sind. Es gibt eine ganze Reihe von Möglichkeiten, eine `numlist` zu erzeugen. Im `cut`-Beispiel oben haben wir einfach in `at()` direkt die Zahlen angegeben und so eine `numlist` mit den Werten `15 18 35 60 100` erstellt. Wir können aber mit `(start(intervall)stop)` auch eine Zahlenreihe anlegen, bspw. mit `(0(2)8)` die Zahlenreihe `r seq(0,8,2)`. Eine `numlist` kann auch einer Reihe und einem Wert bestehen: `0(1)5 8` führt zu `r c(seq(0,5,1),8)`. Mehr Tricks unter  `help numlist`.
+
+Eine `varlist` ist hingegen eine Liste an Variablennamen. Wenn wir eine solche aufrufen, werden die Namen mit den im Datensatz vorhandenen Variablen abgeglichen (und ggf. eine Fehlermeldung ausgegeben). Wir können `varlist`en einfach direkt angeben, bspw. wie in `diff(bula F233)`, wir können aber auch Verallgemeinerungen, sog. 'wild cards' für die Auswahl von Variablen verwenden:
+
+| | | 
+|:-------|:---------------------------------| 
+| myvar         | nur Variable `myvar`
+| myvar*        | Variablen, deren Name mit `myvar` beginnt, alsp bspw. auch `myvar2` oder `myvariable`
+| *var          | Variablen, deren Name mit `var` endet, alsp bspw. auch `yourvar`
+| my*var        | Variablen deren Name mit `my` beginnt und mit `var` endet - mit einer beliebigen Zahl an Zeichen dazwischen
+| my?var        | Variablen deren Name mit `my` beginnt und mit `var` endet - mit nur einem Zeichen dazwischen
+| myvar1-myvar6 | myvar1, myvar2, ..., myvar6 (je nachdem, welche Variablen vorhanden sind - in der Reihenfolge aus dem Variablenexplorer)
+
+Weiteres unter `help varlist`
+
+`#` steht in den Hilfe-Dateien immer für eine Zahl. 
+
+
+### Beispielsyntax in den `help` Dateien
+
+Ganz unten finden sich in den Hilfen immer Beispiele:
+
+```{r egenhelp2, echo = F,out.width = "100%",fig.height= 3.5, fig.align="center"}
+knitr::include_graphics("./pics/06_egen_help2.png")
+```
+
+Diese beruhen auf Datensätzen, die lokal vorhanden sind (`sysuse ...`) oder direkt aus dem Internet geladen werden können (`webuse`). Die Beispiele 
+
+
+## Übungen 6 {#egenue}
 
 (@) Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
 
+(@) Bilden Sie mit Hilfe von `egen` verschiedene Einkommensklassen (bspw. ab 0EUR in 500EUR-Schritten bis 72000EUR). Nutzen Sie die `numlist`-Funktion mit `(start(intervall)stop)`. Verändern Sie Labels.
+
+(@) Öffnen Sie die Hilfe für `egen` und lassen Sie ein Beispiel Schritt für Schritt durchlaufen - beobachten Sie was passiert, indem Sie mit `browse` den Datensatz betrachten.
+
+(@) Welche Variablen bekommen Sie mit `describe` angezeigt, wenn Sie entweder `describe F21`, `describe F21*`, `describe F21?`, `describe F2*4` oder `describe F2?4` verwenden?

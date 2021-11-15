@@ -1,0 +1,174 @@
+# Inferenzstatistik {#infer} 
+
+```{r setup7, echo = F, message=F, warning = F}
+.libPaths("D:/R-library4")
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(dpi=800)
+library(Statamarkdown)
+library(tidyverse)
+library(kableExtra)
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+# baua <- readstata13::readhttp://127.0.0.1:8264/rmd_output/0/appendix.html#.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F)
+```
+
+
+## Inferenz: von der Stichprobe zur allgemeinen Aussage
+
+Bisher haben wir die Angaben aus unserem Datensatz immer als fix angesehen. 
+Ziel einer statistischen Auswertung ist aber meistens, Aussagen über die *Grundgesamtheit* oder *Population* zu treffen. 
+Im Fall der ETB 2018 wären das also alle Erwerbstätigen in Deutschland.
+In der ETB 2018 wurde eine Zufallsstichprobe erhoben, um eine repräsentative Datengrundlage zu schaffen. 
+Das heißt, es wurde ein Verfahren gewählt, das potenziell allen Erwerbstätigen die gleiche Chance gibt, in der Befragung zu landen.
+Damit ist unser Datensatz eine "verkleinerter Ausschnitt" aus der großen Gesamtpopulation, die wir dann für Aussagen über eben diese Gesamtpopulation verwenden können.
+
+Wenn wir uns jetzt beispielsweise das Durchschnittsalter in der Erwerbstätigenbefragung ansehen:
+```{stata inf1, eval = F}
+summarize zpalter
+```
+
+```{stata inf1t, echo = F}
+set linesize 80
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui mvdecode zpalter, mv(9999)
+summarize zpalter
+```
+
+Natürlich ist relativ intuitiv, dass das Durchschnittsalter *aller Erwerbstätigen in Deutschland* nicht exakt `47.19228` betragen wird. Wir wären uns aber relativ sicher, dass es nicht 30 oder 60 sein wird. 
+Bei 47.4 ist das aber nicht ganz so klar. 
+Vielleicht haben wir ja nur etwas "Pech gehabt" und liegen mit unserer Stichprobe eben etwas neben dem wahren Wert. 
+Das Problem ist aber natürlich, dass wir den wahren Wert nicht kennen - wir kennen das Alter für alle Erwerbstätigen in Deutschland schlicht nicht.
+
+Da wir nun aber davon ausgehen müssen, dass wir mit unserer Stichprobe den exakten wahren Wert wohl nicht getroffen haben, geben wir ein Intervall innerhalb dessen wir den wahren Wert mit einigem Selbstbewusstsein verorten können.
+Aber wie bestimmen wir die Grenzen für dieses Intervall?
+
+Um die Grenzen sinnvoll zu bestimmen, benötigen wir eine Annahme wie sich der Stichprobenwert zum wahren Wert in der Grundgesamtheit verhält.
+Übrigens: Stichprobenmittelwerte werden häufig mit $\bar{x}$ bezeichnet, wohingegen der wahre Mittelwert in der Grundgesamtheit mit $\mu$ bezeichnet wird. 
+Also: lateinischer Buchstabe für die Stichprobe, griechischer für die Grundgesamtheit.
+Für eine Schätzung von $\mu$ auf Basis eines Stichprobenwerts wird $\hat{x}$ verwendet ("Dach").
+
+Wie kommen wir also von $\bar{x}$ zu $\mu$ oder zumindest zu $\hat{x}$? 
+Wie viel Schwankungsbreite sollten wir ansetzen? 
+Dabei hilft uns die Streuung in der Stichprobe: wenn die Werte in der Stichprobe alle sehr nahe beieinander liegen, dann liegt es nahe, dass auch die Streuung in der Grundgesamtheit eher gering ist.
+Dementsprechend kann das Intervall um unsere Schätzung eher eng sein.
+Sollten wir beispielsweise im Extremfall 22000 gleiche Angaben im Datensatz haben, dann sollten 
+Umgekehrt würden wir
+
+Hier hilft uns die Normalverteilung 
+$$\mathcal{N}(\mu,\sigma)$$
+
+und die daran angelehnte Student-t-Verteilung:
+$$t_n=\frac{\mathcal{N}(0,1)}{\sqrt{\frac{\chi^{2}_{n}}{n}}}$$
+So sehen die aus:
+
+```{r, out.height="60%", out.width="60%", fig.align='center', echo = F}
+data1 <- data.frame(z = seq(-4,4,.01)) # dataframe erstellen mit Zahlenfolge zwischen -4 & 4
+data1$nv.var <- dnorm(x=data1$z,mean = 0 ,sd =  1) # Dichtefunktion der Std-NV
+data1$t.var <- dt(x=data1$z,df =  2) # Dichtefunktion der t-Verteilung mit df=2
+data1$t.var10 <- dt(x=data1$z,df =  10) # Dichtefunktion der t-Verteilung mit df=10
+data2 <- data1 %>% pivot_longer(cols = contains("var"),values_to = "nv",names_to = "Verteilung") %>% 
+  mutate(Verteilung = case_when(grepl("nv",Verteilung)~ "Standard-NV",
+                                grepl("t\\.var$",Verteilung)~ "Student-t mit df = 2",
+                                grepl("t\\.var10$",Verteilung)~ "Student-t mit df = 10")) 
+
+ggplot(data = data2, aes(x=z, color = Verteilung)) +   
+  geom_line(aes(y= nv), size = .75) +
+  scale_color_manual(values =c("#3B64A1","#3B414F","#B3875C"), name = "") +
+  theme_minimal() +
+  labs(y = "Häufigkeitsdichte", x = "") +
+  theme(legend.position = "top",
+        panel.grid.major = element_line(size = .1),panel.grid.minor = element_blank()) +
+  guides(colour = guide_legend(override.aes = list(shape = 15 ,size = 6) ,
+                               label.position ="right" , ncol = 3,reverse = T) )
+```
+
+
+Der wesentlich Punkt ist, dass die Normalverteilung voraussetzt, dass wir $\sigma^2$ kennen - die Varianz (Streuung) der Altersangaben in der Grundgesamtheit. 
+Aber wir kennen $\sigma^2$ genauso wenig wie $\mu$, sondern nur die Stichprobenmittelwerte $\bar{x}$ und -varianz $s^2$.
+Daher halten wir uns an die Student-t-Verteilung, die quasi eine etwas lockerere Normalverteilung ist bei unbekannter Populationsvarianz.
+
+
+
+Somit können wir auf Basis einer Stichprobe das Konfidenzintervall einer Schätzung bestimmen, indem wir um den Punktschätzer (den Stichproben-Mittelwert, also die `47.19228 Jahre`) mit Hilfe des eines geeigneten $t$-Werts und des Standardfehlers ($\frac{s}{\sqrt{n}}$[^11]) einen Wertebereich um den Mittelwert $\bar{x}$ konstruieren.
+
+[^11]: Also die Standardabweichung ($s$) dividiert durch die Wurzel der Stichprobengröße ($n$)
+
+$$\bar{x}\,\pm\,t\times\frac{s}{\sqrt{n}}$$
+
+Das $t$ kommt dabei aus der Student-t-Verteilung bzw. als $z$-Wert aus der Standard-Normalverteilung, die wir in der vergangenen Session kennengelernt haben. $t$ wählen wir dabei so, dass bei wiederholter Stichprobenziehung 95% der resultierenden KI den wahren Wert aus der Grundgesamtheit beinhalten würden:
+
+
+Die Bedeutung der Normalverteilung hat andere Gründe:
+Zum einen lassen sich andere statistische Verteilungen aus einer Normalverteilung herleiten oder gehen bei großen Fallzahlen in diese über. Zum
+anderen sind wichtige statistische Maßzahlen, die man aus Stichproben
+berechnen kann, unter bestimmten Bedingungen normalverteilt.
+
+
+Deshalb geben wir anstelll
+
+
+
+
+
+## Gewichtung in Stata
+
+Wir können Gewichtungen in Stata auf zwei Weisen anwenden:
+
+Zum einen können die Daten mit dem Befehl `svyset` als Surveydaten definiert werden. Hierbei können Variablen spezifiziert werden, die Informationen über das Survey-Design enthalten, wie die Stratifizierung und die anzuwendende Gewichtungsvariable. Anschließende Analyseverfahren werden mit dem Befehlspräfix „svy“ durchgeführt. In diesem Beispiel:
+```{stata weight1, eval = F}
+tabulate S1 // ungewichtet
+```
+```{stata weight1b, echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tabulate S1
+```
+
+```{stata weight1a, eval = F}
+svyset _n [pweight=gew2018]
+svy: tabulate S1 , col count
+```
+
+```{stata weight1ab, echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+svyset _n [pweight=gew2018]
+svy: tabulate S1 , col count
+```
+
+Allerdings steht das `svy`-Präfix  nicht für jeden Befehl zur Verfügung. 
+Außerdem können kein weiteren Präfixe neben `svy` verwendet werden - beispielsweise [`by`](#by). 
+Daher steht auch eine Alternative zur Verfügung, bei der wir die Gewichtung bei jedem Auswertungsschritt einzeln angeben. 
+In unserem Beispiel also 
+```{stata weight2, eval = F}
+tabulate S1 [weight=gew2018]
+```
+<span style="color:red">`may not use noninteger frequency weights`</span>  
+<span style="color:blue">`r(401);`</span>
+
+Allerdings akzeptiert Stata bei einigen Gewichtungsverfahren (z.B. Häufigkeitsgewichten "frequency weights"), keine Gewichtungswerte mit Nachkommastellen.
+Leider führt ein einfaches Auf- oder Abrunden führt aber häufig zu falschen Ergebnissen: 
+```{stata weight2b, eval = F}
+tabulate S1 [weight=round(gew2018)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis
+```
+
+```{stata weight2ab, echo = F}
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tabulate S1 [weight=round(gew2018)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis
+```
+Eine mögliche Lösung dieser Problematik ist es, zunächst die Gewichtungsvariable mit einer hohen Zahl (bspw.100 000) zu multiplizieren
+und anschließend auf ganze Werte zu runden:
+
+```{stata weight3, eval =F}
+tabulate S1 [weight=round(gew2018*100 000)]
+```
+
+Verteilungen sollten anschließend korrekt berechnet werden. Beim Bericht der Ergebnisse ist jedoch zu beachten,
+dass die zu Grunde liegende Fallzahl anschließend wieder korrigiert werden muss (also in diesem Beispiel durch
+100 000 geteilt werden muss).
+
+
+## Übungen 6 {#egenue}
+
+(@) Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
+
+(@) 
