@@ -44,7 +44,7 @@ Das führt zum gleichen Ergebnis, allerdings könnten wir in `diff()` noch weite
 Eine Liste aller Optionen für `egen` findet sich unter `help egen`:
 
 
-```{r egenhelp1, echo = F,out.width = "100%",fig.height= 3.5, fig.align="center"}
+```{r egenhelp1, echo = F,out.width = "80%", fig.align="center"}
 knitr::include_graphics("./pics/06_egen_help.png")
 ```
 
@@ -56,14 +56,22 @@ Eine `numlist` ist eine Liste von Zahlen, die je nach Anwendungsfall durch Leerz
 
 Eine `varlist` ist hingegen eine Liste an Variablennamen. Wenn wir eine solche aufrufen, werden die Namen mit den im Datensatz vorhandenen Variablen abgeglichen (und ggf. eine Fehlermeldung ausgegeben). Wir können `varlist`en einfach direkt angeben, bspw. wie in `diff(bula F233)`, wir können aber auch Verallgemeinerungen, sog. 'wild cards' für die Auswahl von Variablen verwenden:
 
-| | | 
-|:-------|:---------------------------------| 
-| myvar         | nur Variable `myvar`
-| myvar*        | Variablen, deren Name mit `myvar` beginnt, alsp bspw. auch `myvar2` oder `myvariable`
-| *var          | Variablen, deren Name mit `var` endet, alsp bspw. auch `yourvar`
-| my*var        | Variablen deren Name mit `my` beginnt und mit `var` endet - mit einer beliebigen Zahl an Zeichen dazwischen
-| my?var        | Variablen deren Name mit `my` beginnt und mit `var` endet - mit nur einem Zeichen dazwischen
-| myvar1-myvar6 | myvar1, myvar2, ..., myvar6 (je nachdem, welche Variablen vorhanden sind - in der Reihenfolge aus dem Variablenexplorer)
+
+```{r egen_helpers, echo =F}
+tribble(~"v",~"l",
+  "myvar"         , "nur Variable `myvar`",
+  "myvar*"        , "Variablen, deren Name mit `myvar` beginnt, alsp bspw. auch `myvar2` oder `myvariable`",
+  "*var"          , "Variablen, deren Name mit `var` endet, alsp bspw. auch `yourvar`",
+  "my*var"        , "Variablen deren Name mit `my` beginnt und mit `var` endet - mit einer beliebigen Zahl an Zeichen dazwischen",
+  "my?var"        , "Variablen deren Name mit `my` beginnt und mit `var` endet - mit nur einem Zeichen dazwischen",
+  "myvar1-myvar6" , "myvar1, myvar2, ..., myvar6 (je nachdem, welche Variablen vorhanden sind - in der Reihenfolge aus dem Variablenexplorer)"
+        ) %>% 
+    kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 12) %>% 
+  column_spec(1,monospace = TRUE) %>% 
+  row_spec(0, color = "white")
+```
+
 
 Weiteres unter `help varlist`
 

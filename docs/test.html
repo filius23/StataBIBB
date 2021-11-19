@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-11-12" />
+<meta name="date" content="2021-11-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -240,9 +240,106 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.5.3" data-path="gen.html"><a href="gen.html#ue53"><i class="fa fa-check"></i><b>5.5.3</b> Übung 5-3</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>6</b> Anhang - fortgeschrittene Themen</a>
+<li class="chapter" data-level="6" data-path="egen.html"><a href="egen.html"><i class="fa fa-check"></i><b>6</b> Variablen erstellen (2), Hilfe verwenden</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>6.1</b> Index bilden</a></li>
+<li class="chapter" data-level="6.1" data-path="egen.html"><a href="egen.html#egen-1"><i class="fa fa-check"></i><b>6.1</b> <code>egen</code></a></li>
+<li class="chapter" data-level="6.2" data-path="egen.html"><a href="egen.html#erklärungen-für-help-und-stata-begriffe"><i class="fa fa-check"></i><b>6.2</b> Erklärungen für <code>help</code> und Stata-Begriffe</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="egen.html"><a href="egen.html#numlist-varlist-varname"><i class="fa fa-check"></i><b>6.2.1</b> numlist, varlist, varname</a></li>
+<li class="chapter" data-level="6.2.2" data-path="egen.html"><a href="egen.html#beispielsyntax-in-den-help-dateien"><i class="fa fa-check"></i><b>6.2.2</b> Beispielsyntax in den <code>help</code> Dateien</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="egen.html"><a href="egen.html#egenue"><i class="fa fa-check"></i><b>6.3</b> Übungen 6</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="infer.html"><a href="infer.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="infer.html"><a href="infer.html#inferenz-von-der-stichprobe-zur-allgemeinen-aussage"><i class="fa fa-check"></i><b>7.1</b> Inferenz: von der Stichprobe zur allgemeinen Aussage</a></li>
+<li class="chapter" data-level="7.2" data-path="infer.html"><a href="infer.html#ttest"><i class="fa fa-check"></i><b>7.2</b> Hypothesentests</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="infer.html"><a href="infer.html#ttest1"><i class="fa fa-check"></i><b>7.2.1</b> beiseitiger t-Test</a></li>
+<li class="chapter" data-level="7.2.2" data-path="infer.html"><a href="infer.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>7.2.2</b> linksseitiger t-Test</a></li>
+<li class="chapter" data-level="7.2.3" data-path="infer.html"><a href="infer.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>7.2.3</b> rechtsseitiger t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="infer.html"><a href="infer.html#mittelwertttest"><i class="fa fa-check"></i><b>7.3</b> Mittelwertvergleiche mit dem t-Test</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="infer.html"><a href="infer.html#unverbundener-t-test"><i class="fa fa-check"></i><b>7.3.1</b> Unverbundener t-Test</a></li>
+<li class="chapter" data-level="7.3.2" data-path="infer.html"><a href="infer.html#verbundener-t-test"><i class="fa fa-check"></i><b>7.3.2</b> Verbundener t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="infer.html"><a href="infer.html#übersicht-zu-varianten-für-ttest"><i class="fa fa-check"></i><b>7.4</b> Übersicht zu Varianten für <code>ttest</code></a></li>
+<li class="chapter" data-level="7.5" data-path="infer.html"><a href="infer.html#gewichtung-in-stata"><i class="fa fa-check"></i><b>7.5</b> Gewichtung in Stata</a></li>
+<li class="chapter" data-level="7.6" data-path="infer.html"><a href="infer.html#übungen-7"><i class="fa fa-check"></i><b>7.6</b> Übungen 7</a></li>
+<li class="chapter" data-level="7.7" data-path="infer.html"><a href="infer.html#tvsmu"><i class="fa fa-check"></i><b>7.7</b> Übung 7.1</a></li>
+<li class="chapter" data-level="7.8" data-path="infer.html"><a href="infer.html#tgroup"><i class="fa fa-check"></i><b>7.8</b> Übung 7.2</a></li>
+<li class="chapter" data-level="7.9" data-path="infer.html"><a href="infer.html#tpaired"><i class="fa fa-check"></i><b>7.9</b> Übung 7.3</a></li>
+<li class="chapter" data-level="7.10" data-path="infer.html"><a href="infer.html#anhang"><i class="fa fa-check"></i><b>7.10</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="7.10.1" data-path="infer.html"><a href="infer.html#distr"><i class="fa fa-check"></i><b>7.10.1</b> Student-t vs. Normalverteilung</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="zshg.html"><a href="zshg.html"><i class="fa fa-check"></i><b>8</b> Zusammenhangsmaße</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="zshg.html"><a href="zshg.html#zshg_met"><i class="fa fa-check"></i><b>8.1</b> Metrisch skalierte Variablen</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="zshg.html"><a href="zshg.html#cor"><i class="fa fa-check"></i><b>8.1.1</b> Korrelationskoeffizient</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="zshg.html"><a href="zshg.html#zshg_ord"><i class="fa fa-check"></i><b>8.2</b> Ordinal skalierte Variablen</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="zshg.html"><a href="zshg.html#spear"><i class="fa fa-check"></i><b>8.2.1</b> Spearman- Rangkorrelation</a></li>
+<li class="chapter" data-level="8.2.2" data-path="zshg.html"><a href="zshg.html#tau"><i class="fa fa-check"></i><b>8.2.2</b> Konkordanzmaße</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="zshg.html"><a href="zshg.html#zshg_nom"><i class="fa fa-check"></i><b>8.3</b> Nominal skalierte Variablen</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="zshg.html"><a href="zshg.html#chi2"><i class="fa fa-check"></i><b>8.3.1</b> Chi²-basierte Maße</a></li>
+<li class="chapter" data-level="8.3.2" data-path="zshg.html"><a href="zshg.html#cramers-upsilon"><i class="fa fa-check"></i><b>8.3.2</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="zshg.html"><a href="zshg.html#welches-maß-richtig"><i class="fa fa-check"></i><b>8.4</b> Welches Maß richtig?</a></li>
+<li class="chapter" data-level="8.5" data-path="zshg.html"><a href="zshg.html#übungen-8"><i class="fa fa-check"></i><b>8.5</b> Übungen 8</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="zshg.html"><a href="zshg.html#met_ord"><i class="fa fa-check"></i><b>8.5.1</b> Übung 8-1</a></li>
+<li class="chapter" data-level="8.5.2" data-path="zshg.html"><a href="zshg.html#auf_nom"><i class="fa fa-check"></i><b>8.5.2</b> Übung 8-2</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="zshg.html"><a href="zshg.html#anhang-2"><i class="fa fa-check"></i><b>8.6</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="zshg.html"><a href="zshg.html#resid"><i class="fa fa-check"></i><b>8.6.1</b> Residuen</a></li>
+<li class="chapter" data-level="8.6.2" data-path="zshg.html"><a href="zshg.html#quad_res"><i class="fa fa-check"></i><b>8.6.2</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="8.6.3" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>8.6.3</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="8.6.4" data-path="zshg.html"><a href="zshg.html#reg_pred"><i class="fa fa-check"></i><b>8.6.4</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="8.6.5" data-path="zshg.html"><a href="zshg.html#resid2"><i class="fa fa-check"></i><b>8.6.5</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="8.6.6" data-path="zshg.html"><a href="zshg.html#r2"><i class="fa fa-check"></i><b>8.6.6</b> Modellgüte</a></li>
+<li class="chapter" data-level="8.6.7" data-path="zshg.html"><a href="zshg.html#indiff"><i class="fa fa-check"></i><b>8.6.7</b> Indifferenztabelle</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Regressionsmodelle</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#reg_intro"><i class="fa fa-check"></i><b>9.1</b> Regressionsmodelle - Grundlagen</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="regression.html"><a href="regression.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>9.1.1</b> vorhergesagte Werte</a></li>
+<li class="chapter" data-level="9.1.2" data-path="regression.html"><a href="regression.html#korrelation-und-regression"><i class="fa fa-check"></i><b>9.1.2</b> Korrelation und Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#kategoriale-unabhängige-variablen"><i class="fa fa-check"></i><b>9.2</b> kategoriale unabhängige Variablen</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#dummyvariablen"><i class="fa fa-check"></i><b>9.2.1</b> Dummyvariablen</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#vergleich-mit-ttest"><i class="fa fa-check"></i><b>9.2.2</b> Vergleich mit <code>ttest</code></a></li>
+<li class="chapter" data-level="9.2.3" data-path="regression.html"><a href="regression.html#mehrere-ausprägungen"><i class="fa fa-check"></i><b>9.2.3</b> Mehrere Ausprägungen</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#mehrere-unabhängige-variablen"><i class="fa fa-check"></i><b>9.3</b> mehrere unabhängige Variablen</a></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#übungen-9"><i class="fa fa-check"></i><b>9.4</b> Übungen 9</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="regression.html"><a href="regression.html#übung-9-1"><i class="fa fa-check"></i><b>9.4.1</b> Übung 9-1</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="bg_reg.html"><a href="bg_reg.html"><i class="fa fa-check"></i><b>10</b> Idee einer Regression</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="zshg.html"><a href="zshg.html#resid"><i class="fa fa-check"></i><b>10.0.1</b> Residuen</a></li>
+<li class="chapter" data-level="10.0.2" data-path="zshg.html"><a href="zshg.html#quad_res"><i class="fa fa-check"></i><b>10.0.2</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="10.0.3" data-path="bg_reg.html"><a href="bg_reg.html#interpretation-der-regression-1"><i class="fa fa-check"></i><b>10.0.3</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="10.0.4" data-path="zshg.html"><a href="zshg.html#reg_pred"><i class="fa fa-check"></i><b>10.0.4</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="10.0.5" data-path="zshg.html"><a href="zshg.html#resid2"><i class="fa fa-check"></i><b>10.0.5</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="10.0.6" data-path="zshg.html"><a href="zshg.html#r2"><i class="fa fa-check"></i><b>10.0.6</b> Modellgüte</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>11</b> Anhang - fortgeschrittene Themen</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>11.1</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
+<li class="chapter" data-level="11.2" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>11.2</b> Index bilden</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i>Test</a></li>
 <li class="divider"></li>
@@ -267,8 +364,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="test" class="section level1 unnumbered">
 <h1>Test</h1>
-<div class="sourceCode" id="cb172"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb172-1"><a href="test.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="kw">qui</span> <span class="kw">use</span> <span class="st">&quot;D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb172-2"><a href="test.html#cb172-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 S3 S2_j zpalter <span class="kw">in</span> 1/5 ,  <span class="kw">noobs</span></span></code></pre></div>
+<div class="sourceCode" id="cb297"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb297-1"><a href="test.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="kw">qui</span> <span class="kw">use</span> <span class="st">&quot;D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb297-2"><a href="test.html#cb297-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 S3 S2_j zpalter <span class="kw">in</span> 1/5 ,  <span class="kw">noobs</span></span></code></pre></div>
 <pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
 unrecognized command:  | invalid command name
 r(199);
@@ -293,6 +390,16 @@ r(199);
 <p><img src="StataBIBB1_files/figure-html/percplot4-1.png" width="100%" height="25%" style="display: block; margin: auto;" /></p>
 
 </div>
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9 Regressionsmodelle | Stata Fortbildungen am BIBB</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9 Regressionsmodelle | Stata Fortbildungen am BIBB" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9 Regressionsmodelle | Stata Fortbildungen am BIBB" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Andreas Filser" />
+
+
+<meta name="date" content="2021-11-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="zshg.html"/>
+<link rel="next" href="bg_reg.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Stata @ BIBB</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Herzlich Willkommen</a></li>
+<li class="chapter" data-level="1" data-path="stata.html"><a href="stata.html"><i class="fa fa-check"></i><b>1</b> Überblick zu Stata</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="stata.html"><a href="stata.html#taschenrechner"><i class="fa fa-check"></i><b>1.1</b> Taschenrechner</a></li>
+<li class="chapter" data-level="1.2" data-path="stata.html"><a href="stata.html#darstellung-in-diesem-skript"><i class="fa fa-check"></i><b>1.2</b> Darstellung in diesem Skript</a></li>
+<li class="chapter" data-level="1.3" data-path="stata.html"><a href="stata.html#dofile-editor"><i class="fa fa-check"></i><b>1.3</b> DoFile Editor</a></li>
+<li class="chapter" data-level="1.4" data-path="stata.html"><a href="stata.html#datensätze-laden"><i class="fa fa-check"></i><b>1.4</b> Datensätze laden</a></li>
+<li class="chapter" data-level="1.5" data-path="stata.html"><a href="stata.html#daten-codebücher-fragebogen"><i class="fa fa-check"></i><b>1.5</b> Daten, Codebücher, Fragebogen</a></li>
+<li class="chapter" data-level="1.6" data-path="stata.html"><a href="stata.html#überblicksbefehle"><i class="fa fa-check"></i><b>1.6</b> Überblicksbefehle</a>
+<ul>
+<li class="chapter" data-level="1.6.1" data-path="stata.html"><a href="stata.html#describe"><i class="fa fa-check"></i><b>1.6.1</b> <code>describe</code></a></li>
+<li class="chapter" data-level="1.6.2" data-path="stata.html"><a href="stata.html#browse"><i class="fa fa-check"></i><b>1.6.2</b> <code>browse</code></a></li>
+<li class="chapter" data-level="1.6.3" data-path="stata.html"><a href="stata.html#list"><i class="fa fa-check"></i><b>1.6.3</b> <code>list</code></a></li>
+<li class="chapter" data-level="1.6.4" data-path="stata.html"><a href="stata.html#lookfor"><i class="fa fa-check"></i><b>1.6.4</b> <code>lookfor</code></a></li>
+</ul></li>
+<li class="chapter" data-level="1.7" data-path="stata.html"><a href="stata.html#U1"><i class="fa fa-check"></i><b>1.7</b> Übungen 1</a></li>
+<li class="chapter" data-level="1.8" data-path="stata.html"><a href="stata.html#profi-übungen-1"><i class="fa fa-check"></i><b>1.8</b> Profi-Übungen 1</a></li>
+<li class="chapter" data-level="1.9" data-path="stata.html"><a href="stata.html#anhang-1"><i class="fa fa-check"></i><b>1.9</b> Anhang 1</a>
+<ul>
+<li class="chapter" data-level="1.9.1" data-path="stata.html"><a href="stata.html#var_types"><i class="fa fa-check"></i><b>1.9.1</b> Variablentypen</a></li>
+<li class="chapter" data-level="1.9.2" data-path="stata.html"><a href="stata.html#otherfmts"><i class="fa fa-check"></i><b>1.9.2</b> import anderer Dateiformate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="Stata2.html"><a href="Stata2.html"><i class="fa fa-check"></i><b>2</b> Arbeiten mit Datensätzen in Stata</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="Stata2.html"><a href="Stata2.html#befehlsstruktur"><i class="fa fa-check"></i><b>2.1</b> Befehlsstruktur</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="Stata2.html"><a href="Stata2.html#zeilenumbrüche"><i class="fa fa-check"></i><b>2.1.1</b> Zeilenumbrüche</a></li>
+<li class="chapter" data-level="2.1.2" data-path="Stata2.html"><a href="Stata2.html#kommentare"><i class="fa fa-check"></i><b>2.1.2</b> Kommentare</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="Stata2.html"><a href="Stata2.html#auszählen-überblick-erhalten"><i class="fa fa-check"></i><b>2.2</b> Auszählen &amp; Überblick erhalten</a></li>
+<li class="chapter" data-level="2.3" data-path="Stata2.html"><a href="Stata2.html#missv"><i class="fa fa-check"></i><b>2.3</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="2.4" data-path="Stata2.html"><a href="Stata2.html#zwei-variablen-eine-tabelle-kontingenztabellen"><i class="fa fa-check"></i><b>2.4</b> Zwei Variablen, eine Tabelle: Kontingenztabellen</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="Stata2.html"><a href="Stata2.html#in-prozent-relative-häufigkeiten"><i class="fa fa-check"></i><b>2.4.1</b> In Prozent: Relative Häufigkeiten</a></li>
+<li class="chapter" data-level="2.4.2" data-path="Stata2.html"><a href="Stata2.html#pro-gruppe-1-zeilenprozente"><i class="fa fa-check"></i><b>2.4.2</b> pro Gruppe 1: Zeilenprozente</a></li>
+<li class="chapter" data-level="2.4.3" data-path="Stata2.html"><a href="Stata2.html#pro-gruppe-2-spaltenprozente"><i class="fa fa-check"></i><b>2.4.3</b> pro Gruppe 2: Spaltenprozente</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="Stata2.html"><a href="Stata2.html#metrische-variablen"><i class="fa fa-check"></i><b>2.5</b> metrische Variablen</a></li>
+<li class="chapter" data-level="2.6" data-path="Stata2.html"><a href="Stata2.html#skalenn"><i class="fa fa-check"></i><b>2.6</b> Exkurs: Skalenniveau</a></li>
+<li class="chapter" data-level="2.7" data-path="Stata2.html"><a href="Stata2.html#nochmal-von-vorne-daten-neu-laden"><i class="fa fa-check"></i><b>2.7</b> Nochmal von vorne: Daten neu laden</a></li>
+<li class="chapter" data-level="2.8" data-path="Stata2.html"><a href="Stata2.html#speichern"><i class="fa fa-check"></i><b>2.8</b> Speichern</a></li>
+<li class="chapter" data-level="2.9" data-path="Stata2.html"><a href="Stata2.html#übungen-2"><i class="fa fa-check"></i><b>2.9</b> Übungen 2</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="Stata2.html"><a href="Stata2.html#tab2"><i class="fa fa-check"></i><b>2.9.1</b> Übung 2-1</a></li>
+<li class="chapter" data-level="2.9.2" data-path="Stata2.html"><a href="Stata2.html#su2"><i class="fa fa-check"></i><b>2.9.2</b> Übung 2-2</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="desc1.html"><a href="desc1.html"><i class="fa fa-check"></i><b>3</b> Deskriptive Statistik</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="desc1.html"><a href="desc1.html#metrische-variablen-beschreiben"><i class="fa fa-check"></i><b>3.1</b> Metrische Variablen beschreiben</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="desc1.html"><a href="desc1.html#cut"><i class="fa fa-check"></i><b>3.1.1</b> Exkurs: Klassen bilden</a></li>
+<li class="chapter" data-level="3.1.2" data-path="desc1.html"><a href="desc1.html#lage--und-konzentrationsmaße"><i class="fa fa-check"></i><b>3.1.2</b> Lage- und Konzentrationsmaße</a></li>
+<li class="chapter" data-level="3.1.3" data-path="desc1.html"><a href="desc1.html#tabstat"><i class="fa fa-check"></i><b>3.1.3</b> <code>tabstat</code></a></li>
+<li class="chapter" data-level="3.1.4" data-path="desc1.html"><a href="desc1.html#by_vgl"><i class="fa fa-check"></i><b>3.1.4</b> Kennzahlen vergleichen mit <code>tabstat</code></a></li>
+<li class="chapter" data-level="3.1.5" data-path="desc1.html"><a href="desc1.html#streu"><i class="fa fa-check"></i><b>3.1.5</b> Streuungsmaße: Varianz, Standardabweichung, Variationskoeffizient</a></li>
+<li class="chapter" data-level="3.1.6" data-path="desc1.html"><a href="desc1.html#gini"><i class="fa fa-check"></i><b>3.1.6</b> Gini-Koeffizient</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="desc1.html"><a href="desc1.html#übungen-3"><i class="fa fa-check"></i><b>3.2</b> Übungen 3</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="desc1.html"><a href="desc1.html#met"><i class="fa fa-check"></i><b>3.2.1</b> Übung 3-1</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="desc1.html"><a href="desc1.html#anhang-kap-3"><i class="fa fa-check"></i><b>3.3</b> Anhang Kap 3</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="desc1.html"><a href="desc1.html#mean"><i class="fa fa-check"></i><b>3.3.1</b> Arithmetisches Mittel</a></li>
+<li class="chapter" data-level="3.3.2" data-path="desc1.html"><a href="desc1.html#median"><i class="fa fa-check"></i><b>3.3.2</b> Median</a></li>
+<li class="chapter" data-level="3.3.3" data-path="desc1.html"><a href="desc1.html#perc"><i class="fa fa-check"></i><b>3.3.3</b> Perzentile erklärt</a></li>
+<li class="chapter" data-level="3.3.4" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>3.3.4</b> Varianz erklärt</a></li>
+<li class="chapter" data-level="3.3.5" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>3.3.5</b> Schiefe &amp; Wölbung</a></li>
+<li class="chapter" data-level="3.3.6" data-path="desc1.html"><a href="desc1.html#bys_su"><i class="fa fa-check"></i><b>3.3.6</b> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+<li class="chapter" data-level="3.3.7" data-path="desc1.html"><a href="desc1.html#kennzahlvergleich-mit-tabulate-und-der-option-summarize"><i class="fa fa-check"></i><b>3.3.7</b> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="iflab.html"><a href="iflab.html"><i class="fa fa-check"></i><b>4</b> if-Bedingungen</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="iflab.html"><a href="iflab.html#if-bedingungen---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>4.1</b> if-Bedingungen - nur manche Zeilen ansehen</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="iflab.html"><a href="iflab.html#labels"><i class="fa fa-check"></i><b>4.1.1</b> Labels</a></li>
+<li class="chapter" data-level="4.1.2" data-path="iflab.html"><a href="iflab.html#miss_if"><i class="fa fa-check"></i><b>4.1.2</b> Fehlende Werte</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="iflab.html"><a href="iflab.html#keep-drop-fälle-dauerhaft-löschen"><i class="fa fa-check"></i><b>4.2</b> keep &amp; drop: Fälle dauerhaft löschen</a></li>
+<li class="chapter" data-level="4.3" data-path="iflab.html"><a href="iflab.html#ifue"><i class="fa fa-check"></i><b>4.3</b> Übungen 4</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="gen.html"><a href="gen.html"><i class="fa fa-check"></i><b>5</b> Variablen erstellen und verändern</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="gen.html"><a href="gen.html#gen-ist-gut-kontrolle-ist-besser"><i class="fa fa-check"></i><b>5.1</b> gen ist gut, Kontrolle ist besser</a></li>
+<li class="chapter" data-level="5.2" data-path="gen.html"><a href="gen.html#dummyvar"><i class="fa fa-check"></i><b>5.2</b> Dummy-Variablen erstellen</a></li>
+<li class="chapter" data-level="5.3" data-path="gen.html"><a href="gen.html#label"><i class="fa fa-check"></i><b>5.3</b> Neue Variablen labeln</a></li>
+<li class="chapter" data-level="5.4" data-path="gen.html"><a href="gen.html#bestehende-variablen-verändern"><i class="fa fa-check"></i><b>5.4</b> Bestehende Variablen verändern</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gen.html"><a href="gen.html#recode"><i class="fa fa-check"></i><b>5.4.1</b> <code>recode</code></a></li>
+<li class="chapter" data-level="5.4.2" data-path="gen.html"><a href="gen.html#replace-informationen-aus-mehreren-variablen-in-einer-variable-zusammenführen"><i class="fa fa-check"></i><b>5.4.2</b> <code>replace</code>: Informationen aus mehreren Variablen in einer Variable zusammenführen</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="gen.html"><a href="gen.html#genue"><i class="fa fa-check"></i><b>5.5</b> Übungen 5</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="gen.html"><a href="gen.html#ue51"><i class="fa fa-check"></i><b>5.5.1</b> Übung 5-1</a></li>
+<li class="chapter" data-level="5.5.2" data-path="gen.html"><a href="gen.html#ue52"><i class="fa fa-check"></i><b>5.5.2</b> Übung 5-2</a></li>
+<li class="chapter" data-level="5.5.3" data-path="gen.html"><a href="gen.html#ue53"><i class="fa fa-check"></i><b>5.5.3</b> Übung 5-3</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="egen.html"><a href="egen.html"><i class="fa fa-check"></i><b>6</b> Variablen erstellen (2), Hilfe verwenden</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="egen.html"><a href="egen.html#egen-1"><i class="fa fa-check"></i><b>6.1</b> <code>egen</code></a></li>
+<li class="chapter" data-level="6.2" data-path="egen.html"><a href="egen.html#erklärungen-für-help-und-stata-begriffe"><i class="fa fa-check"></i><b>6.2</b> Erklärungen für <code>help</code> und Stata-Begriffe</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="egen.html"><a href="egen.html#numlist-varlist-varname"><i class="fa fa-check"></i><b>6.2.1</b> numlist, varlist, varname</a></li>
+<li class="chapter" data-level="6.2.2" data-path="egen.html"><a href="egen.html#beispielsyntax-in-den-help-dateien"><i class="fa fa-check"></i><b>6.2.2</b> Beispielsyntax in den <code>help</code> Dateien</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="egen.html"><a href="egen.html#egenue"><i class="fa fa-check"></i><b>6.3</b> Übungen 6</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="infer.html"><a href="infer.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="infer.html"><a href="infer.html#inferenz-von-der-stichprobe-zur-allgemeinen-aussage"><i class="fa fa-check"></i><b>7.1</b> Inferenz: von der Stichprobe zur allgemeinen Aussage</a></li>
+<li class="chapter" data-level="7.2" data-path="infer.html"><a href="infer.html#ttest"><i class="fa fa-check"></i><b>7.2</b> Hypothesentests</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="infer.html"><a href="infer.html#ttest1"><i class="fa fa-check"></i><b>7.2.1</b> beiseitiger t-Test</a></li>
+<li class="chapter" data-level="7.2.2" data-path="infer.html"><a href="infer.html#linksseitiger-t-test"><i class="fa fa-check"></i><b>7.2.2</b> linksseitiger t-Test</a></li>
+<li class="chapter" data-level="7.2.3" data-path="infer.html"><a href="infer.html#rechtsseitiger-t-test"><i class="fa fa-check"></i><b>7.2.3</b> rechtsseitiger t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="infer.html"><a href="infer.html#mittelwertttest"><i class="fa fa-check"></i><b>7.3</b> Mittelwertvergleiche mit dem t-Test</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="infer.html"><a href="infer.html#unverbundener-t-test"><i class="fa fa-check"></i><b>7.3.1</b> Unverbundener t-Test</a></li>
+<li class="chapter" data-level="7.3.2" data-path="infer.html"><a href="infer.html#verbundener-t-test"><i class="fa fa-check"></i><b>7.3.2</b> Verbundener t-Test</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="infer.html"><a href="infer.html#übersicht-zu-varianten-für-ttest"><i class="fa fa-check"></i><b>7.4</b> Übersicht zu Varianten für <code>ttest</code></a></li>
+<li class="chapter" data-level="7.5" data-path="infer.html"><a href="infer.html#gewichtung-in-stata"><i class="fa fa-check"></i><b>7.5</b> Gewichtung in Stata</a></li>
+<li class="chapter" data-level="7.6" data-path="infer.html"><a href="infer.html#übungen-7"><i class="fa fa-check"></i><b>7.6</b> Übungen 7</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="infer.html"><a href="infer.html#tvsmu"><i class="fa fa-check"></i><b>7.6.1</b> Übung 7.1</a></li>
+<li class="chapter" data-level="7.6.2" data-path="infer.html"><a href="infer.html#tgroup"><i class="fa fa-check"></i><b>7.6.2</b> Übung 7.2</a></li>
+<li class="chapter" data-level="7.6.3" data-path="infer.html"><a href="infer.html#tpaired"><i class="fa fa-check"></i><b>7.6.3</b> Übung 7.3</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="infer.html"><a href="infer.html#anhang"><i class="fa fa-check"></i><b>7.7</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="infer.html"><a href="infer.html#distr"><i class="fa fa-check"></i><b>7.7.1</b> Student-t vs. Normalverteilung</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="zshg.html"><a href="zshg.html"><i class="fa fa-check"></i><b>8</b> Zusammenhangsmaße</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="zshg.html"><a href="zshg.html#zshg_met"><i class="fa fa-check"></i><b>8.1</b> Metrisch skalierte Variablen</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="zshg.html"><a href="zshg.html#cor"><i class="fa fa-check"></i><b>8.1.1</b> Korrelationskoeffizient</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="zshg.html"><a href="zshg.html#zshg_ord"><i class="fa fa-check"></i><b>8.2</b> Ordinal skalierte Variablen</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="zshg.html"><a href="zshg.html#spear"><i class="fa fa-check"></i><b>8.2.1</b> Spearman- Rangkorrelation</a></li>
+<li class="chapter" data-level="8.2.2" data-path="zshg.html"><a href="zshg.html#tau"><i class="fa fa-check"></i><b>8.2.2</b> Konkordanzmaße</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="zshg.html"><a href="zshg.html#zshg_nom"><i class="fa fa-check"></i><b>8.3</b> Nominal skalierte Variablen</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="zshg.html"><a href="zshg.html#chi2"><i class="fa fa-check"></i><b>8.3.1</b> Chi²-basierte Maße</a></li>
+<li class="chapter" data-level="8.3.2" data-path="zshg.html"><a href="zshg.html#cramers-upsilon"><i class="fa fa-check"></i><b>8.3.2</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="zshg.html"><a href="zshg.html#welches-maß-richtig"><i class="fa fa-check"></i><b>8.4</b> Welches Maß richtig?</a></li>
+<li class="chapter" data-level="8.5" data-path="zshg.html"><a href="zshg.html#übungen-8"><i class="fa fa-check"></i><b>8.5</b> Übungen 8</a>
+<ul>
+<li class="chapter" data-level="8.5.1" data-path="zshg.html"><a href="zshg.html#met_ord"><i class="fa fa-check"></i><b>8.5.1</b> Übung 8-1</a></li>
+<li class="chapter" data-level="8.5.2" data-path="zshg.html"><a href="zshg.html#auf_nom"><i class="fa fa-check"></i><b>8.5.2</b> Übung 8-2</a></li>
+</ul></li>
+<li class="chapter" data-level="8.6" data-path="zshg.html"><a href="zshg.html#anhang-2"><i class="fa fa-check"></i><b>8.6</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="8.6.1" data-path="zshg.html"><a href="zshg.html#indiff"><i class="fa fa-check"></i><b>8.6.1</b> Indifferenztabelle</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Regressionsmodelle</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="regression.html"><a href="regression.html#reg_intro"><i class="fa fa-check"></i><b>9.1</b> Regressionsmodelle - Grundlagen</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="regression.html"><a href="regression.html#vorhergesagte-werte"><i class="fa fa-check"></i><b>9.1.1</b> vorhergesagte Werte</a></li>
+<li class="chapter" data-level="9.1.2" data-path="regression.html"><a href="regression.html#korrelation-und-regression"><i class="fa fa-check"></i><b>9.1.2</b> Korrelation und Regression</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="regression.html"><a href="regression.html#kategoriale-unabhängige-variablen"><i class="fa fa-check"></i><b>9.2</b> kategoriale unabhängige Variablen</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="regression.html"><a href="regression.html#dummyvariablen"><i class="fa fa-check"></i><b>9.2.1</b> Dummyvariablen</a></li>
+<li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#vergleich-mit-ttest"><i class="fa fa-check"></i><b>9.2.2</b> Vergleich mit <code>ttest</code></a></li>
+<li class="chapter" data-level="9.2.3" data-path="regression.html"><a href="regression.html#mehrere-ausprägungen"><i class="fa fa-check"></i><b>9.2.3</b> Mehrere Ausprägungen</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#mehrere-unabhängige-variablen"><i class="fa fa-check"></i><b>9.3</b> mehrere unabhängige Variablen</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="regression.html"><a href="regression.html#interaktionsterme"><i class="fa fa-check"></i><b>9.3.1</b> Interaktionsterme</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#übungen-9"><i class="fa fa-check"></i><b>9.4</b> Übungen 9</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="regression.html"><a href="regression.html#übung-9-1"><i class="fa fa-check"></i><b>9.4.1</b> Übung 9-1</a></li>
+</ul></li>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#anhang-3"><i class="fa fa-check"></i><b>9.5</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="regression.html"><a href="regression.html#marginsplot-anpassen"><i class="fa fa-check"></i><b>9.5.1</b> <code>marginsplot</code> anpassen</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="bg_reg.html"><a href="bg_reg.html"><i class="fa fa-check"></i><b>10</b> Regression Hintergründe</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="bg_reg.html"><a href="bg_reg.html#resid"><i class="fa fa-check"></i><b>10.0.1</b> Residuen</a></li>
+<li class="chapter" data-level="10.0.2" data-path="bg_reg.html"><a href="bg_reg.html#quad_res"><i class="fa fa-check"></i><b>10.0.2</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="10.0.3" data-path="bg_reg.html"><a href="bg_reg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>10.0.3</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="10.0.4" data-path="bg_reg.html"><a href="bg_reg.html#reg_pred"><i class="fa fa-check"></i><b>10.0.4</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="10.0.5" data-path="bg_reg.html"><a href="bg_reg.html#resid2"><i class="fa fa-check"></i><b>10.0.5</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="10.0.6" data-path="bg_reg.html"><a href="bg_reg.html#r2"><i class="fa fa-check"></i><b>10.0.6</b> Modellgüte</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>11</b> Anhang - fortgeschrittene Themen</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>11.1</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
+<li class="chapter" data-level="11.2" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>11.2</b> Index bilden</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i>Test</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Stata Fortbildungen am BIBB</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regression" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Regressionsmodelle</h1>
+<div id="reg_intro" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> Regressionsmodelle - Grundlagen</h2>
+<p>Regressionsmodelle zeigen uns den (linearen) Trend zwischen zwei Variablen. Hier geht es darum, um wie sich im Durchschnitt <code>var2</code> verändert, wenn sich <code>var1</code> um eine Einheit erhöht. <code>var2</code> ist also unsere abhängige, <code>var1</code> unsere unabhängige Variable - wir möchten <code>var2</code> mit <code>var1</code> vorhersagen. Im Folgenden sehen wir, dass Regressionsmodelle mit <code>reg</code> erstellt werden können und wie wir den Output interpretieren können. Falls Sie nochmal mehr zu den Grundlagen erfahren wollten, findet sich <a href="bg_reg.html#bg_reg">hier</a> eine ausführlichere Erklärung.</p>
+<p>Wir betrachten einen kleinen Beispieldatensatz mit lediglich 4 Fällen und zwei metrischen Variablen <code>var1</code> und <code>var2</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="regression.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span></code></pre></div>
+<p><img src="StataBIBB1_files/figure-html/regp1-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Mit Regressionsmodellen können wir lineare Zusammenhänge zwischen zwei metrischen Merkmalen untersuchen. In Stata können wir eine Regression mit dem <code>reg</code> Befehl berechnen:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="regression.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =         4
+-------------+----------------------------------   F(1, 2)         =     11.07
+       Model |  12.4932432         1  12.4932432   Prob &gt; F        =    0.0797
+    Residual |  2.25675676         2  1.12837838   R-squared       =    0.8470
+-------------+----------------------------------   Adj R-squared   =    0.7705
+       Total |       14.75         3  4.91666667   Root MSE        =    1.0623
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>Hier steht jetzt eine ganze Menge an Informationen, die wir uns im Folgenden genauer ansehen werden.</p>
+<p>Allgemein sieht unsere Regressionformel wie folgt aus:</p>
+<p><span class="math display">\[\widehat{var2}=\texttt{_cons} + \beta1 \times \texttt{var1} = 2.1351 + 0.5810 \times \texttt{var1}\]</span></p>
+<hr />
+<p>Ein positiver Wert unter <code>Coef.</code> in der Zeile von <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>.</p>
+<blockquote>
+<p>Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811.</p>
+</blockquote>
+<p>Der Wert neben <code>_cons</code> gibt uns Auskunft darüber, wie hoch der vorhergesagte Wert für <code>var2</code> wäre, wenn <code>var1</code> = 0.</p>
+<blockquote>
+<p>Für <code>var1</code> = 0 würden wir <code>var2</code> = 2.135135 vorhersagen.</p>
+</blockquote>
+<p>Außerdem erkennen wir unter <code>R-squared</code> die <a href="bg_reg.html#r2">Modellgüte</a> unseres Regressionsmodells. <span class="math inline">\(R^2\)</span> gibt die prozentuale Verbesserung der Vorhersgen durch die Gerade aus <code>reg</code> im Vergleich zum arithmetische Mittel an. <span class="math inline">\(R^{2}\)</span> bezieht sich auf die Verringerung der <a href="bg_reg.html#resid2">Residuen</a> durch das <code>reg</code>-Modell im Vergleich zur Mittelwertregel.</p>
+<blockquote>
+<p>Unser Regressionsmodell kann also 84,7% der Streuung um den Mittelwert erklären.</p>
+</blockquote>
+<p>Außerdem sehen wir oben links in der Spalte <code>SS</code> die <a href="bg_reg.html#quad_res">“Sum of Squares”</a>: unter <code>Total</code> ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (die Abstände zwischen den orangen und schwarzen Punkten: <code>14.75</code>). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (die Abstände zwischen den schwarzen und den blauen Punkten:<code>2.256..</code>).</p>
+<p>In der Spalte <code>P&gt;|t|</code> und <code>t</code> sehen wir die Ergebnisse eines t-Tests für die jeweiligen Koeffizienten. Hier wird der Koeffizient (sprich: die Steigung der Geraden) “gegen Null” getestet. Ist der Zusammenhang zwischen dem Alter der Befragten und ihrem Fernsehkonsum in der Population nicht eigentlich 0?</p>
+<p><span class="math display">\[H_0:\, \mu_{Koeff(var1)} = 0  \qquad H_A: \mu_{Koeff(var1)} \neq 0\]</span>
+Was hier also gemacht wird, ist ein t-Test für <code>0.5810811</code> vs. <span class="math inline">\(\mu=0\)</span>. Unter <code>P&gt;|t|</code> erkennen wir hier aber, dass die Irrtumswahrscheinlichkeit für die Ablehnung der <span class="math inline">\(H_0\)</span> größer als 0,05 ist. Dementsprechend verwerfen wir die Nullhypothese nicht (wonach <span class="math inline">\(\beta1\)</span> = 0 ist) und können hier nicht einen statistisch signifikanten Zusammenhang sprechen.</p>
+<hr />
+<p><img src="StataBIBB1_files/figure-html/reg_graph-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div id="vorhergesagte-werte" class="section level3" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> vorhergesagte Werte</h3>
+<p>Die vorhergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert neben <code>_cons</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>. Wir starten also sozusagen bei <code>var2</code>=0 und gehen dann eben x Schritte entlang der Geraden.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="regression.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span> <span class="co">/// noheader macht den Output übersichtlicher</span></span></code></pre></div>
+<pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
+       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+------------------------------------------------------------------------------</code></pre>
+<p>Vorhergesagte Werte für <code>var2</code> werden mit <span class="math inline">\(\widehat{var2}\)</span> bezeichnet - das <span class="math inline">\(\widehat{}\)</span> steht dabei für “geschätzt”:</p>
+<p><span class="math display">\[\widehat{var2}=\texttt{_cons} + \beta1 \times \texttt{var1} = 2.1351 + 0.5810 \times \texttt{var1}\]</span><br />
+Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: <span class="math inline">\(2.1351+0.5811\times1\)</span>= 2.7162
+Wir könnten also auch einen vorhergesagten Wert für einen beliebigen Wert von <code>var1</code> berechnen, für 5: <span class="math inline">\(2.1351+0.5811\times5\)</span>= 5.0406</p>
+<p>Wir können dafür <code>display 2.1351+0.5811*5</code> nutzen.
+Alternativ können wir uns die Tipparbeit auch sparen, indem wir erst <code>reg</code> laufen lassen und dann mit <code>_b</code> auf die Ergebnisse zugreifen:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="regression.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">display</span> _b[<span class="dt">_cons</span>] + _b[var1] * 5</span></code></pre></div>
+<pre><code>5.0405405</code></pre>
+<p>Mit <code>predict</code> können wir jeweils die vorhergesagten Werte für die Ausprägungen von <code>var1</code> im Datensatz berechnen und in einer neuen Variable <code>pred_vorher</code> ablegen:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="regression.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> pred_vorher, <span class="kw">xb</span></span></code></pre></div>
+<p>Hier wird also gerechnet:</p>
+<p><span class="math display">\[2.1351 + 0.5810811 * 1 = 2.716216\]</span>
+<span class="math display">\[2.1351 + 0.5810811 * 2 = 3.297297\]</span>
+<span class="math display">\[2.1351 + 0.5810811 * 7 = 6.202703\]</span>
+<span class="math display">\[2.1351 + 0.5810811 * 8 = 6.783784\]</span></p>
+<pre><code>  var1 var2 pred_vorher mean_var2
+1    1    2    2.716216      4.75
+2    2    4    3.297297      4.75
+3    7    7    6.202703      4.75
+4    8    6    6.783784      4.75</code></pre>
+<p>Die Grafik oben zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für <code>var1</code>.</p>
+</div>
+<div id="korrelation-und-regression" class="section level3" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Korrelation und Regression</h3>
+<p><img src="StataBIBB1_files/figure-html/reg_korr-1.png" width="100%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="kategoriale-unabhängige-variablen" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> kategoriale unabhängige Variablen</h2>
+<p>Wir können aber auch kategoriale unabhängige Variablen in Regressionsmodellen verwenden.</p>
+<div id="dummyvariablen" class="section level3" number="9.2.1">
+<h3><span class="header-section-number">9.2.1</span> Dummyvariablen</h3>
+<p>Ein klassisches Beispiel für ene Dummyvariable aus unab. Variable in einem Regressionsmodell ist der Zusammenhang zwischen dem Geschlecht und dem Einkommen (Stichwort Gender Pay Gap). In der ETB 2018 ist das Geschlecht unter <code>S1</code> abgelegt: <code>1</code> steht dabei für Männer, <code>2</code> steht für Frauen.</p>
+<p>Wie können wir <code>S1</code> nun in das Regressionsmodell aufnehmen? Bisher hatten wir ja nur Modelle für metrische unabhängige und abhängige Variablen erstellt. Das Geschlecht ist aber kein metrisches Merkmal (<span class="math inline">\(\Rightarrow\)</span> sondern?). Die Zahlencodes sollten hier nicht als Werte verwendet werden. Hier gibt es keine Punktewolke, durch die sinnvoll eine Gerade durch Residuenminimierung gezogen werden kann:
+<img src="StataBIBB1_files/figure-html/dummyplot-1.png" width="70%" height="70%" style="display: block; margin: auto;" /></p>
+<p>In einem Regressionsmodell müssen wir Stata mit dem Präfix <code>i.</code> mitteilen, dass es sich bei der Variable um eine kategoriale Variable handelt:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="regression.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.S1</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    16,635
+-------------+----------------------------------   F(1, 16633)     =    712.78
+       Model |  8.5219e+09         1  8.5219e+09   Prob &gt; F        =    0.0000
+    Residual |  1.9886e+11    16,633  11955853.8   R-squared       =    0.0411
+-------------+----------------------------------   Adj R-squared   =    0.0410
+       Total |  2.0738e+11    16,634  12467451.9   Root MSE        =    3457.7
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+          S1 |
+   weiblich  |  -1431.809      53.63   -26.70   0.000     -1536.93   -1326.689
+       _cons |   4232.735   37.51532   112.83   0.000     4159.201    4306.269
+------------------------------------------------------------------------------</code></pre>
+<p>Der Koeffizient für <code>S1</code> entspricht also der Differenz zwischen dem mittleren Einkommen für Männer und Frauen. Durch den Zusatz <code>weiblich</code> erhalten wir zusätzlich die Information über die <em>Referenzkategorie</em>:</p>
+<p>Befragte mit der Ausprägung <code>S1 = 2</code>, also Frauen, haben im Vergleich zu Befragten mit der anderen Ausprägung (<span class="math inline">\(\rightarrow\)</span> Männer) ein um 1431.809 EUR niedrigeres Einkommen. Der Zusammenhang zwischen Einkommen und dem Geschlecht der Befragten ist am 0,001-Niveau signifikant.</p>
+<p>Formal sieht unser Modell also so aus:</p>
+<p><span class="math display">\[\widehat{\text{F518_SUF}} =  \hat{\beta0} + \hat{\beta1} \times \texttt{S1=2}\]</span></p>
+<p>Für <code>S1=2</code> setzen wir dann entweder 0 oder 1 ein - je nachdem ob wir einen vorhergesagten Wert für Frauen oder für Männer berechnen wollen. 0 setzen wir immer dann ein, wenn wir einen Wert für die <em>Referenzkategorie</em> berechnen wollen:</p>
+<p>4232.735 + -1431.809 <span class="math inline">\(\times 0\)</span> = 4232.735</p>
+<p>Für Frauen sähe die Berechnung wie folgt aus - hier setzen wir die 1 ein, weil sozusagen <code>sex2</code> zutrifft:</p>
+<p>4232.735 + -1431.809 <span class="math inline">\(\times 1\)</span> = 2800.926</p>
+<p>Die Logik folgt hier einem Gruppenvergleich zwischen den Gruppen. Wir vergleichen also die Mittelwerte zwischen verschiedenen Gruppen, in diesem Fall zwischen Männern und Frauen:<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p><img src="StataBIBB1_files/figure-html/educplot-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Wir können die Referenzkategorie natürlich auch ändern auf <code>S1 = 2</code>.
+Dazu geben wir <code>ib2.</code> an:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="regression.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF ib2.S1</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    16,635
+-------------+----------------------------------   F(1, 16633)     =    712.78
+       Model |  8.5219e+09         1  8.5219e+09   Prob &gt; F        =    0.0000
+    Residual |  1.9886e+11    16,633  11955853.8   R-squared       =    0.0411
+-------------+----------------------------------   Adj R-squared   =    0.0410
+       Total |  2.0738e+11    16,634  12467451.9   Root MSE        =    3457.7
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+          S1 |
+   mÃ¤nnlich  |   1431.809      53.63    26.70   0.000     1326.689     1536.93
+       _cons |   2800.926   38.32464    73.08   0.000     2725.806    2876.046
+------------------------------------------------------------------------------</code></pre>
+<p>Wie hier ist dann also die Interpretation “umgekehrt”:</p>
+<p>Befragte mit der Ausprägung <code>S1 = 1</code>, also Männer, haben im Vergleich zu Befragten mit der anderen Ausprägung (<span class="math inline">\(\rightarrow\)</span> Frauen) ein um 1431.81 EUR höheres Einkommen. Der Zusammenhang zwischen Einkommen und dem Geschlecht der Befragten ist am 0,001-Niveau signifikant.</p>
+</div>
+<div id="vergleich-mit-ttest" class="section level3" number="9.2.2">
+<h3><span class="header-section-number">9.2.2</span> Vergleich mit <code>ttest</code></h3>
+<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="regression.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.S1</span>
+<span id="cb14-2"><a href="regression.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> F518_SUF,<span class="kw">by</span>(S1)</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    16,635
+-------------+----------------------------------   F(1, 16633)     =    712.78
+       Model |  8.5219e+09         1  8.5219e+09   Prob &gt; F        =    0.0000
+    Residual |  1.9886e+11    16,633  11955853.8   R-squared       =    0.0411
+-------------+----------------------------------   Adj R-squared   =    0.0410
+       Total |  2.0738e+11    16,634  12467451.9   Root MSE        =    3457.7
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+          S1 |
+   weiblich  |  -1431.809      53.63   -26.70   0.000     -1536.93   -1326.689
+       _cons |   4232.735   37.51532   112.83   0.000     4159.201    4306.269
+------------------------------------------------------------------------------
+
+
+Two-sample t test with equal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+mÃ¤nnlich |   8,495    4232.735    42.87073    3951.324    4148.698    4316.772
+weiblich |   8,140    2800.926    31.62129    2852.935     2738.94    2862.912
+---------+--------------------------------------------------------------------
+combined |  16,635    3532.109    27.37647    3530.928    3478.448    3585.769
+---------+--------------------------------------------------------------------
+    diff |            1431.809       53.63                1326.689     1536.93
+------------------------------------------------------------------------------
+    diff = mean(mÃ¤nnlich) - mean(weiblich)                        t =  26.6979
+Ho: diff = 0                                     degrees of freedom =    16633
+
+    Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
+ Pr(T &lt; t) = 1.0000         Pr(|T| &gt; |t|) = 0.0000          Pr(T &gt; t) = 0.0000</code></pre>
+</div>
+<div id="mehrere-ausprägungen" class="section level3" number="9.2.3">
+<h3><span class="header-section-number">9.2.3</span> Mehrere Ausprägungen</h3>
+Diese Logik des Gruppenvergleichs lässt sich auch auf kategoriale Variablen mit mehreren Ausprägungen erweitern, bspw. der Schulbildung der Befragten (<code>educ</code> - siehe DoFile für Vorbereitung):
+<table class="table table-condensed" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;color: white !important;">
+v
+</th>
+<th style="text-align:left;color: white !important;">
+l
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-family: monospace;font-weight: bold;background-color: rgba(242, 242, 242, 1) !important;">
+educ
+</td>
+<td style="text-align:left;font-weight: bold;background-color: rgba(242, 242, 242, 1) !important;">
+höchster Schulabschluss
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+1
+</td>
+<td style="text-align:left;">
+max. Hauptschulabschluss
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+2
+</td>
+<td style="text-align:left;">
+max. mittlere Reife
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+3
+</td>
+<td style="text-align:left;">
+(Fach-)Abitur
+</td>
+</tr>
+</tbody>
+</table>
+<p>Wir müssen Stata wieder mit <code>i.</code> mitteilen, dass es sich um Gruppencodes (eine kategoriale Variable) handelt:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="regression.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.educ</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    16,428
+-------------+----------------------------------   F(2, 16425)     =    366.95
+       Model |  8.7409e+09         2  4.3704e+09   Prob &gt; F        =    0.0000
+    Residual |  1.9562e+11    16,425  11910111.4   R-squared       =    0.0428
+-------------+----------------------------------   Adj R-squared   =    0.0427
+       Total |  2.0436e+11    16,427  12440764.2   Root MSE        =    3451.1
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        educ |
+   m. Reife  |   258.8338   86.05536     3.01   0.003     90.15599    427.5116
+ (Fach-)Abi  |   1633.935   80.55099    20.28   0.000     1476.046    1791.824
+             |
+       _cons |   2579.348   71.71147    35.97   0.000     2438.786     2719.91
+------------------------------------------------------------------------------</code></pre>
+<p>Auch diese Koeffizienten sind als Gruppenvergleiche zu interpretieren - und zwar immer relativ zu der Ausprägung von <code>educ</code>, die <em>nicht</em> in der Regressionstabelle aufgeführt ist. (Hier also max. Hauptschule)</p>
+<p>Befragte mit mittlerer Reife haben ein um 258.83 Euro höheres Bruttoeinkommen als Befragte, die maximal einen Hauptschulabschluss haben. Der Zusammenhang ist am 0,01-Niveau signifikant.  </p>
+<p>Befragte mit (Fach-)Abitur verdienen 1633.93 Euro höheres Bruttoeinkommen als Befragte, die maximal Hauptschulabschluss haben. Der Zusammenhang ist am 0,001-Niveau signifikant.  </p>
+<p>Formal sieht unser Modell also so aus:
+<span class="math display">\[\widehat{\texttt{F518_SUF}} = \hat{\beta0} + \hat{\beta1}\times\texttt{educ=2} + \hat{\beta2} \times \texttt{educ=3}\]</span></p>
+<p>Für <code>educ=2</code> wird nur dann eine <code>1</code> eingesetzt, wenn der/die Befragte mittlere Reife hat - alle anderen Variablen sind dann notwendigerweise auf 0 gesetzt. Für eine(n) Befragte*n mit max Hauptschulabschluss (also eine Person aus der Referenzkategorie) wird für alle Variablen die Null eingesetzt.</p>
+<p><img src="StataBIBB1_files/figure-html/unnamed-chunk-3-1.png" width="80%" height="80%" style="display: block; margin: auto;" /></p>
+<p>Auch hier können wir die Referenzkategorie natürlich auch ändern auf <code>educ = 3</code>.
+Dazu geben wir <code>ib3.</code> an:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="regression.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF ib3.educ</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    16,428
+-------------+----------------------------------   F(2, 16425)     =    366.95
+       Model |  8.7409e+09         2  4.3704e+09   Prob &gt; F        =    0.0000
+    Residual |  1.9562e+11    16,425  11910111.4   R-squared       =    0.0428
+-------------+----------------------------------   Adj R-squared   =    0.0427
+       Total |  2.0436e+11    16,427  12440764.2   Root MSE        =    3451.1
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        educ |
+      Haupt  |  -258.8338   86.05536    -3.01   0.003    -427.5116   -90.15599
+ (Fach-)Abi  |   1375.101   60.07426    22.89   0.000     1257.349    1492.853
+             |
+       _cons |   2838.182   47.57088    59.66   0.000     2744.938    2931.426
+------------------------------------------------------------------------------</code></pre>
+</div>
+</div>
+<div id="mehrere-unabhängige-variablen" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> mehrere unabhängige Variablen</h2>
+<p>Natürlich können wir auch mehrere unabhängige Variablen in unser Modell aufnehmen. Beispielsweise können wir so für die Wochenarbeitszeiten kontrollieren:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="regression.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.educ F200</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    14,480
+-------------+----------------------------------   F(3, 14476)     =    742.37
+       Model |  2.0190e+10         3  6.7301e+09   Prob &gt; F        =    0.0000
+    Residual |  1.3124e+11    14,476  9065696.61   R-squared       =    0.1333
+-------------+----------------------------------   Adj R-squared   =    0.1332
+       Total |  1.5143e+11    14,479  10458269.1   Root MSE        =    3010.9
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        educ |
+   m. Reife  |   338.4655   78.50361     4.31   0.000     184.5883    492.3426
+ (Fach-)Abi  |   1632.405   74.10677    22.03   0.000     1487.146    1777.664
+             |
+        F200 |   110.7945   2.907157    38.11   0.000     105.0961    116.4929
+       _cons |  -1341.138    120.729   -11.11   0.000    -1577.783   -1104.494
+------------------------------------------------------------------------------</code></pre>
+<p>Hier ändert sich dann die Interpretation: unter konstanthaltung der Wochenarbeitszeit geben Befagte mit (Fach-)Abitur ein um 1632.40EUR höheres Einkommen als Befragte mit maximal Hauptschulabschluss an.</p>
+<p>Ein äußerst hilfreicher Befehl in diesem Zusammenhang ist <code>margins</code> bzw. <code>marginsplot</code>:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="regression.html#cb22-1" aria-hidden="true" tabindex="-1"></a>margins, <span class="fu">at</span>( F200 = (15(5)45) educ = (1(1)3))</span>
+<span id="cb22-2"><a href="regression.html#cb22-2" aria-hidden="true" tabindex="-1"></a>marginsplot</span></code></pre></div>
+<p><img src="pics/09_mplot1.png" width="90%" style="display: block; margin: auto;" /></p>
+<div id="interaktionsterme" class="section level3" number="9.3.1">
+<h3><span class="header-section-number">9.3.1</span> Interaktionsterme</h3>
+<p>Wenn wir uns aber fragen, ob sich der Zusammenhang zwischen der Schulbildung und dem Einkommen mit der Wochenarbeitszeit verändert, benötigen wir einen Interaktionsterm:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="regression.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.educ##c.F200</span></code></pre></div>
+<pre><code>      Source |       SS           df       MS      Number of obs   =    14,480
+-------------+----------------------------------   F(5, 14474)     =    465.76
+       Model |  2.0987e+10         5  4.1974e+09   Prob &gt; F        =    0.0000
+    Residual |  1.3044e+11    14,474  9011913.45   R-squared       =    0.1386
+-------------+----------------------------------   Adj R-squared   =    0.1383
+       Total |  1.5143e+11    14,479  10458269.1   Root MSE        =      3002
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+        educ |
+   m. Reife  |  -349.9542   318.3893    -1.10   0.272     -974.038    274.1296
+ (Fach-)Abi  |  -663.3032    303.201    -2.19   0.029    -1257.616   -68.99055
+             |
+        F200 |   70.78942   7.417587     9.54   0.000        56.25    85.32884
+             |
+ educ#c.F200 |
+   m. Reife  |   19.18259   8.914635     2.15   0.031     1.708764    36.65641
+ (Fach-)Abi  |    66.3379   8.467607     7.83   0.000     49.74031     82.9355
+             |
+       _cons |   54.97775    266.958     0.21   0.837    -468.2941    578.2496
+------------------------------------------------------------------------------</code></pre>
+<p>Bei Interaktionstermen empfiehlt sich ganz besonders, einen <code>marginsplot</code> zu erstellen:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="regression.html#cb25-1" aria-hidden="true" tabindex="-1"></a>margins, <span class="fu">at</span>( F200 = (15(5)45) educ = (1(1)3))</span>
+<span id="cb25-2"><a href="regression.html#cb25-2" aria-hidden="true" tabindex="-1"></a>marginsplot</span></code></pre></div>
+<p><img src="pics/09_mplot2.png" width="90%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="übungen-9" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Übungen 9</h2>
+<div id="übung-9-1" class="section level3" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> Übung 9-1</h3>
+<p>Lassen Sie mal <code>i.</code> weg - was verändert sich?</p>
+</div>
+</div>
+<div id="anhang-3" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span> Anhang</h2>
+<div id="marginsplot-anpassen" class="section level3" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> <code>marginsplot</code> anpassen</h3>
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="regression.html#cb26-1" aria-hidden="true" tabindex="-1"></a>marginsplot, <span class="co">/// </span></span>
+<span id="cb26-2"><a href="regression.html#cb26-2" aria-hidden="true" tabindex="-1"></a>        graphregion(fcolor(<span class="st">&quot;250 250 250&quot;</span>)) <span class="co">/// Hintergundfarbe (außerhalb des eigentlichen Plots)</span></span>
+<span id="cb26-3"><a href="regression.html#cb26-3" aria-hidden="true" tabindex="-1"></a>    plot1(<span class="kw">color</span>(<span class="st">&quot;57 65 101&quot;</span>)  msize(small)) <span class="co">/// Farbe &amp; Größe für erste Gruppe</span></span>
+<span id="cb26-4"><a href="regression.html#cb26-4" aria-hidden="true" tabindex="-1"></a>        ci1opts(<span class="kw">color</span>(<span class="st">&quot;57 65 101&quot;</span>)) <span class="co">/// Farbe für Konfidenzintervalle der ersten Gruppe</span></span>
+<span id="cb26-5"><a href="regression.html#cb26-5" aria-hidden="true" tabindex="-1"></a>        plot2(<span class="kw">color</span>(<span class="st">&quot;177 147 74&quot;</span>) msize(small)) <span class="co">///</span></span>
+<span id="cb26-6"><a href="regression.html#cb26-6" aria-hidden="true" tabindex="-1"></a>        ci2opts(<span class="kw">color</span>(<span class="st">&quot;177 147 74&quot;</span>)) <span class="co">/// </span></span>
+<span id="cb26-7"><a href="regression.html#cb26-7" aria-hidden="true" tabindex="-1"></a>        plot3(<span class="kw">color</span>(<span class="st">&quot;16 15 20&quot;</span>)   msize(small)) <span class="co">/// </span></span>
+<span id="cb26-8"><a href="regression.html#cb26-8" aria-hidden="true" tabindex="-1"></a>        ci3opts(<span class="kw">color</span>(<span class="st">&quot;16 15 20&quot;</span>)) <span class="co">/// </span></span>
+<span id="cb26-9"><a href="regression.html#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="bn">legend</span>(<span class="bn">cols</span>(3) region(<span class="kw">color</span>(<span class="bn">white</span>) fcolor(<span class="bn">white</span>))  )   <span class="co">/// Spaltenzahl, Rahmen- &amp; Hintergrundfarbe für Legende</span></span>
+<span id="cb26-10"><a href="regression.html#cb26-10" aria-hidden="true" tabindex="-1"></a>        <span class="bn">xtitle</span>(<span class="st">&quot;vertragl. vereinb. Arbeitsstunden&quot;</span>) <span class="co">/// Achsentitel</span></span>
+<span id="cb26-11"><a href="regression.html#cb26-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">ylabel</span>(,angle(0)) <span class="co">/// Achen</span></span>
+<span id="cb26-12"><a href="regression.html#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="bn">ytitle</span>(<span class="st">&quot;Einkommen (F518_SUF)&quot;</span>) <span class="co">/// </span></span>
+<span id="cb26-13"><a href="regression.html#cb26-13" aria-hidden="true" tabindex="-1"></a>        <span class="bn">title</span>(<span class="st">&quot;Titel&quot;</span>) <span class="co">///</span></span>
+<span id="cb26-14"><a href="regression.html#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="bn">subtitle</span>(<span class="st">&quot;Untertitel&quot;</span>) <span class="co">///</span></span>
+<span id="cb26-15"><a href="regression.html#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="bn">caption</span>(<span class="st">&quot;{it:Quelle: Erwerbstätigenbefragung 2018}&quot;</span>, <span class="kw">size</span>(8pt) <span class="bn">position</span>(5) <span class="bn">ring</span>(5) )</span></code></pre></div>
+<p><img src="pics/09_mplot4.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><strong><a href="https://www.stata.com/meeting/germany18/slides/germany18_Jann.pdf">weiterführende Informationen</a></strong></p>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Um zu verdeutlichen wieviele Befragte jeweils das (ungefähr) gleiche Einkommen haben, wurden die Punkte hier nach links und rechts verschoben. Im Unterschied zu den bisherigen Streudiagrammen hat die relative Position innerhalb der Kategorien Männer und Frauen jedoch keine Bedeutung.<a href="regression.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="zshg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bg_reg.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["StataBIBB1.pdf", "StataBIBB1.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

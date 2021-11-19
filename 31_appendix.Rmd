@@ -1,6 +1,6 @@
 # Anhang - fortgeschrittene Themen {#appendix} 
 
-```{r setup10, echo = F, message=F, warning = F}
+```{r setup31, echo = F, message=F, warning = F}
 .libPaths("D:/R-library4")
 knitr::opts_chunk$set(collapse = TRUE)
 knitr::opts_chunk$set(dpi=800)
@@ -21,7 +21,7 @@ Die Kombination aus `gen` und `if` hilft uns, wenn wir eine Variable nur für ei
 ```{stata genif, eval = F}
 gen nt_frauen = 1 if S1 == 1 & nt == 1
 ```
-```{stata genifb,echo = F}
+```{stata genifb2,echo = F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 gen nt_frauen = 1 if S1 == 1 & nt == 1
 ```

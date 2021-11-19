@@ -14,6 +14,14 @@ xt <- baua2 %>% summarise(across(everything(), ~sum(as.numeric(.x) %in% c(9999,-
 
 labs <- baua %>% map(.,~attributes(.x)$label) %>% bind_rows(.) %>% 
   t(.) %>% data.frame() %>% rownames_to_column(.,var = "var") %>% janitor::clean_names() %>% tibble() 
+ndis <- 
+  baua2 %>% summarise(across(everything(), ~length(unique(.x)  )) )  %>% 
+  t(.) %>% data.frame(ndis = .) %>% rownames_to_column(.,var = "var") %>% janitor::clean_names() %>% tibble() 
+
+
+ndis %>% left_join(labs, by ="var") %>% 
+  arrange(ndis) %>% filter(ndis %in% 3:5) %>% print(.,n=Inf)
+
 
 
 
@@ -23,17 +31,16 @@ xt <- baua2 %>% summarise(across(everything(), ~sum(as.numeric(.x) %in% c(9999))
 
 
 
-ndis <- 
-  baua2 %>% summarise(across(everything(), ~length(unique(.x)  )) )  %>% 
-  t(.) %>% data.frame(ndis = .) %>% rownames_to_column(.,var = "var") %>% janitor::clean_names() %>% tibble() 
-
-
-xt %>% left_join(ndis) %>% left_join(labs, by ="var") %>% 
-  arrange(ndis) %>% filter(ndis %in% 3:5) %>% print(.,n=Inf)
-
-
+  
 
 unique(baua$zpalter) %>% length(.)
+
+
+
+rstudioapi::jobRunScript(path = "00_build.R")
+
+
+
 
 
 

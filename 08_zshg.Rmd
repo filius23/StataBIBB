@@ -1,0 +1,446 @@
+# Zusammenhangsmaße {#zshg} 
+
+```{r setup8, echo = F, message=F, warning = F}
+.libPaths("D:/R-library4")
+knitr::opts_chunk$set(collapse = TRUE)
+knitr::opts_chunk$set(dpi=800)
+library(Statamarkdown)
+library(tidyverse)
+library(kableExtra)
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+options(width = 200)
+df <- data.frame(var1 = c(1,2,7,8),
+                 var2 = c(2,4,7,6))
+
+# path <- "D:/oCloud/RFS/"
+# ak <- readr::read_delim(paste0(path,"allbus_kumuliert_1980-2018.csv"), delim = ";", col_types = cols(.default = col_double())) %>%  
+#   mutate_all(~ifelse(.<0,NA,.))
+```
+
+Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden lernen wir die Berechnung einer Reihe von Kennzahlen kennen, welche den Zusammenhang zwischen zwei Variablen ausdrücken. Diese variieren je nachdem ob sie nur die Stäke oder auch die Richtung eines Zusammenhangs ausdrücken. Der Abstand zur Null dient dabei als Indikator für die Stärke des Zusammenhangs - je größer der Abstand zur Null, desto stärker der Zusammenhang:
+  
+|  |  |
+|:----------|:---------------------------|
+| Wert der Kennzahl ($K$) |  Grad des Zusammenhangs |
+| $K$ = 0 | Keiner |
+| 0,00 ≤ $K$ < 0,05 | Praktisch keiner |
+| 0,05 ≤ $K$ < 0,25 | Geringer |
+| 0,25 ≤ $K$ < 0,50 | Mittlerer |
+| 0,50 ≤ $K$ < 1,00 | Starker |
+| $K$ = 1,00 | Perfekter | 
+  
+  
+  Zusammenhangsmaße für metrische und ordinale Variablen geben mittels der Vorzeichen auch die *Zusammenhangsrichtung* an, sie variieren zwischen -1 und +1.
+
+## Metrisch skalierte Variablen {#zshg_met}
+
+Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter (`zpalter`) und der Stundenzahl im Home Office (`F321`) an.
+
+### Korrelationskoeffizient {#cor}
+Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]. Die Standardabweichung hatten wir in Session 4 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte > $\bar{x}$ auch $>\bar{y}$?):
+  
+```{r s07_15b, message=F, warning=F, out.height="80%", out.width="100%", echo=F,fig.align='center'}
+eq1 <-  substitute(italic(bar(x))) # formel erstellen
+eq2 <-  substitute(italic(bar(y))) # formel erstellen
+
+baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F,
+                                select.cols = c("F231","zpalter")) %>% 
+  mutate(across(matches("F231|zpalter"), ~ ifelse(.x>100,NA,.x)))
+set.seed(26131)
+baua2 <- baua %>% select(matches("F231|zpalter")) %>%  na.omit() %>%  sample_n(150)
+
+ggplot(baua2, aes(x = zpalter, y = F231)) + 
+  geom_point(color ="#29304E", fill = "grey98", shape = 21) + 
+  geom_vline(aes(xintercept = mean(zpalter,na.rm = T)), color = "#19D4EE", size = .75) +
+  geom_hline(aes(yintercept = mean(F231,na.rm = T)),color = "#2473D5", size = .75) +
+  geom_text(data = data.frame(zpalter = 50, F231 = 51), aes(label = as.character(as.expression(eq1)) ),
+            label.size = .01, hjust = 0.5, color = prismatic::clr_darken("#19D4EE"), parse = T, size = 4.5) +
+  geom_text(data = data.frame(zpalter = 97, F231 = 11), aes(label = as.character(as.expression(eq2)) ),
+            label.size = .01, hjust = 0.5, 
+            color = prismatic::clr_darken("#2473D5"), parse = T, size = 4.5) +
+  ggthemes::theme_stata() +
+  labs(title = "Alter & Stunden im Home Office (F231)",
+       caption = "Quelle: 150 zufällig ausgewählte Beobachtungen der ETB 2018",
+       y = "Stunden im Home Office (F231)",
+       x = "Alter (zpalter)")+
+  theme(aspect.ratio = 1)
+
+# cor(baua2$F231,baua2$zpalter,use = "pairwise.complete.obs")
+```
+In der Grafik sind der Übersichtlichkeit halber nur 150 Beobachtungen dargestellt, für diese Auswahl ist liegt der Korrelationskoeffizient bei `r round(cor(baua2$F231,baua2$zpalter,use = "pairwise.complete.obs"),3)`.
+
+
+In Stata können wir den Korrelationskoeffizienten mit `pwcorr` berechnen. Mit der Option `,sig` werden :
+```{stata corr1,eval=F}
+pwcorr zpalter F231, sig
+```
+```{stata corr1b, echo =F}
+set linesize 90
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui mvdecode zpalter, mv(9999)
+qui replace F231 =  . if F231 > 99
+pwcorr zpalter F231, sig
+```
+
+Es handelt sich mit `0.0548` also um einen geringen Zusammenhang. Der p-Wert gibt uns auch hier wieder Auskunft über die stat. Signifikanz: mit `r sprintf("%.4f",cor.test(baua$F231,baua$zpalter,use = "pairwise.complete.obs")$p.value)` liegt der p-Wert deutlich unter 0,05 $\Rightarrow$ wir würden hier die Nullhypothese verwerfen, dass die Korrelation in der Grundpopulation gleich Null ist. 
+
+
+## Ordinal skalierte Variablen {#zshg_ord}
+
+Ein klassisches ordinales Merkmal ist die Schulbildung, die wir aus `S3` zusammenfassen können (Details im DoFile):
+            
+
+Wir sehen uns den (möglichen) Zusammenhang zwischen der Schulbildung und `F600_12` an:
+
+ 
+
+```{r ord_vars, echo =F}
+tribble(~"v",~"l",
+        "educ", "höchster Schulabschluss",
+          "1" , "max. Hauptschulabschluss",
+          "2" , "max. mittlere Reife",
+          "3" , "(Fach-)Abitur",
+          "F600_12", "Häufigkeit: unter Lärm arbeiten",
+          "1" , "häufig",
+          "2" , "manchmal",
+          "3" , "selten",
+          "4" , "nie"
+        ) %>% 
+    kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 10) %>% 
+  column_spec(1,monospace = TRUE) %>% 
+  row_spec(c(1,5), bold = T, background = "#F2F2F2FF") %>% 
+    row_spec(0, color = "white")
+```
+
+            
+So sieht die Verteilung zunächst in einer Kreuztabelle aus:
+```{stata tabF, eval = F}
+tab F600_12 educ
+```
+          
+```{stata tabT, echo = F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	mvdecode S3, mv(1 10/12 99)
+	cap drop educ
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F600_12, mv(9)
+	lab var educ "educ"
+}
+tab F600_12 educ // finale Tabelle
+```
+          
+Auch hier fragen wir uns jetzt: sind die Werte von `F600_12` tendenziell höher oder niedriger bei höheren Werten von `educ`? Allerdings ist hier der Korrelationskoeffizient nicht adäquat, die hier die Abstände zwischen den Kategorien nicht gleichmäßig sind (es handelt sich ja um ordinale Merkmale). Daher müssen hier spezifische Zusammenhangsmaße für ordinale Variablen verwendet werden.
+          
+### Spearman- Rangkorrelation {#spear}
+
+Eine Möglichkeit, zur Bestimmung eines Zusammenhangs zwischen zwei *ordinal* skalierten Variablen ist der Spearman-Rangkorrelationskoeffizient ($\rho$). Für den Rangkorrelationskoeffizienten werden die Werte der Variablen in Ränge überführt und dann mit diesen Rängen den Korrelationskoeffizient berechnet. Wir können den Rangkorrelationskoeffizienten mit `spearman` berechnen:
+```{stata spearmF, eval = F}
+spearman educ F600_12
+```
+
+```{stata spearmT, echo = F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	mvdecode S3, mv(1 10/12 99)
+	cap drop educ
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F600_12, mv(9)
+}
+spearman  educ F600_12 
+```
+          
+Es zeigt sich also mit einem Korrelationskoeffizienten von 0.17 ein schwacher, positiver Zusammenhang. 
+Das positive Vorzeichen des Zusammenhangs deutet darauf hin, dass mit einer höheren Ausprägung von `educ` tendenziell höhere Werte für  `F600_12` einher gehen: eine höhere Schulbildung geht mit einem höheren Wert in `F600_12` einher. 
+Da höhere Werte in `F600_12` seltenere Belastung angeben sind also Befragte mit höherer Schulbildung seltener von Lärm belastet.
+          
+### Konkordanzmaße {#tau}
+          
+          
+```{stata tabKTF, eval = F}
+tab educ mi02
+```
+
+```{stata tabKTT, echo = F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	mvdecode S3, mv(1 10/12 99)
+	cap drop educ
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F600_12, mv(9)
+	lab var educ "educ"
+}
+tab educ F600_12
+```
+
+Ein weiteres Zusammenhangsmaß für ordinale Variablen sind Konkordanzmaße wie Kendall's $\tau$. 
+Hierfür werden die Werteverhältnisse bzw. Paarvergleiche gezählt.
+Die Idee ist, dass aus den Tabellenwerten Paarvergleiche gebildet werden können:
+```{r paarvgl, echo = F,out.width = "90%",fig.height= 3, fig.align="center"}
+knitr::include_graphics("./pics/08_paarvgl.png")
+```
+
++ $\tau_a$: Differenz der konkordaten (C) und diskordanten (D) Paarvergleiche als Anteil an allen möglichen Paarvergleichen $\frac{n\times(n-1)}{2}$: 
+
+$$\tau_a=\frac{C-D}{\frac{n\times(n-1)}{2}}$$
+  Nachteil: Bei Bindungen in X u. Y Maximalwerte (-1; +1) nicht zu erreichen
+
+
++ $\tau_b$: Differenz der konkordaten (C) und diskordanten (D) Paarvergleiche als Anteil an allen möglichen Paarvergleichen $\frac{n\times(n-1)}{2}$ *unter Ausschluss von Bindungen in X und Y* 
+
+$$\tau_{b}=\frac{C-D}{\sqrt{(C+D+T_x)\times(C+D+T_y)}}$$
+  Nachteil: Bei Bindungen in X o. Y Maximalwerte (-1; +1) nicht zu erreichen
+
++ Goodman & Kruskal's $\gamma$ ignoriert die Bindungen vollständig:
+            
+$$\gamma=\frac{C-D}{C+D}$$
+            
+Zur Berechnung in Stata können wir `ktau` verwenden:
+```{stata tauF, eval = F}
+ktau  educ F600_12
+```
+```{stata tauT, echo = F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	mvdecode S3, mv(1 10/12 99)
+	cap drop educ
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F600_12, mv(9)
+	lab var educ "educ"
+}
+ktau  educ F600_12
+```
+Auch hier zeigt sich eine Zusammenhangsstärke in der gleichen Größenordnung wie beim Rangkorrelationskoeffizienten ($\tau_a$ = `-0.2151` und $\tau_b$ = `-0.3350`). Zudem ist auch hier das Vorzeichen negativ: `educ` korreliert negativ mit  `mi02`. Der Wert von Kendall's $\tau_a$ ist deutlich niedriger als von Kendall's $\tau_b$, da hier der Nenner durch die Berücksichtigung *aller* möglichen Paarvergleiche größer wird, der Zähler aber für beide Varianten von Kendall's $\tau$ gleich definiert ist. 
+
+Ein weiteres Maß ist Goodman & Kruskal's $\gamma$, dieses bekommen wir mit der Option `,gamma` in `tab`:
+```{stata tauG, eval = F}
+tab educ F600_12, gamma
+```
+```{stata tauG2, echo = F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	mvdecode S3, mv(1 10/12 99)
+	cap drop educ
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F600_12, mv(9)
+	lab var educ "educ"
+}
+tab educ F600_12, gamma
+```
+
+Auch Goodman & Kruskal's $\gamma$ deutet auf einen negativen Zusammenhang hin, hier ist die Stärke mit (`-0.5065`) aber deutlich höher. Dies ist auf die Berücksichtigung der Bindungen zurückzuführen: hier werden alle Bindungen ausgeschlossen, also auch Paarvergleiche mit Bindungen nur auf  einer Variable. Es reduziert sich also der Nenner, somit ergibt sich im Ergebnis ein höherer Koeffizient für Goodman & Kruskal's $\gamma$ als für Kendall's $\tau_b$. 
+
+
+Insgesamt ist also von einem mittleren Zusammenhang zwischen `educ` und `mi02` auszugehen. 
+
+***
+
+**[Übung 1](#met_ord)**
+
+***
+
+
+## Nominal skalierte Variablen {#zshg_nom}
+
+Unser Beispiel für nominal skalierte Variablen dreht sich um die Frage: *Gibt es Geschlechterunterschiede bei der Abgeltung der Überstunden?*
+Dazu betrachten wir die Variablen `F204` und `S1`:
+  
+```{r nom_vars, echo =F}
+tribble(~"v",~"l",
+        "F204",  "Wie wird Ihre Mehrarbeit bzw. wie werden Ihre Überstunden abgegolten?",
+        "1"  ,"durch Auszahlung",
+        "2"  ,"durch Freizeitausgleich",
+        "3"  ,"durch beides",
+        "4"  ,"keine Abgeltung",
+        "S1"  ,"Geschlecht",
+        "1"  ,"männlich",
+        "2"  ,"weiblich"
+        ) %>% 
+    kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 10) %>% 
+  column_spec(1,monospace = TRUE) %>% 
+  row_spec(c(1,6), bold = T, background = "#F2F2F2FF") %>% 
+    row_spec(0, color = "white")
+```
+
+
+Ausgangspunkt der Zusammenhangsmaße für nominale Merkmale ist die Kontingenztabelle der beiden Variablen (Vorbereitungen im DoFile):
+```{stata, crstabF, eval =F}
+tab S1 F204
+```
+
+```{stata, crstabT, echo =F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F204, mv(9)
+}
+tab F204 S1 
+```
+
+### Chi²-basierte Maße {#chi2}
+
+$\chi^2$  basiert auf dem Vergleich der beobachteten Häufigkeit mit einer (theoretischen) Verteilung, welche statistische Unabhängigkeit abbildet (Indifferenztabelle - [mehr dazu](#indiff)). Wir bleiben bei `aq03` und `dh01`. Den $\chi^2$-Wert für diese Häufigkeitstabelle bekommen wir mit `, chi2`:
+  
+```{r, echo=F, warning=F}
+baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F,
+                                select.cols = c("S1","F204")) 
+tab1 <- xtabs(~ F204 + S1, data = baua %>% select(S1,F204) %>% filter(F204<9))
+tx <- chisq.test(tab1)
+```
+
+```{stata chitabF, eval =F}
+tab F204 S1, chi 
+```
+```{stata chitabT, echo =F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F204, mv(9)
+}
+tab F204 S1, chi wrap
+```
+### Cramer's $\upsilon$
+
+Auf Basis dieses $\chi^2$-Werts von `r round(as.numeric(tx$statistic),3)` können wir Cramer's $\upsilon$ berechnen. Dieses ist definiert als der Quotient aus dem $\chi^2$-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. `n`, erkennen wir aus dem `Total` rechts unten in der Tabelle. Außerdem hat unsere Tabelle 2 Zeilen und 4 Spalten, dementsprechend entspricht das Minimum hier 2:
+
+$$ Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n \times min(k-1,m-1)}}=\sqrt{\frac{225.4461}{9359\times(2-1)}} = 0.1552$$
+            
+Das geht auch einfacher mit der Option `, V`:
+```{stata cramersv, eval =F}
+tab F204 S1, V 
+```
+```{stata cramersvT, echo =F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F204, mv(9)
+}
+tab F204 S1, V
+```
+
+Dieser Wert für Cramer's $\upsilon$ legt einen praktisch keinen Zusammenhang nahe.
+
+Cramer's $\upsilon$ für 2x2-Tabellen wird auch als $\phi$ ("phi") bezeichnet. Dies wäre das passende Maß für die zusammengefasste Variable aller Haustierbesitzer\*innen `aq03b` von oben und `dh01`:
+
+$$\phi= \sqrt{\frac{\chi^2}{n}}$$ 
+$$\text{bei k=2 und m=2:}\qquad Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n\times min(k-1,m-1)}}=\sqrt{\frac{\chi^2}{n\times\,1}}$$
+
+
+***
+          
+**[Übung 8-2](#auf_nom)**
+          
+***
+          
+## Welches Maß richtig?
+                
+Wir haben jetzt eine ganze Reihe an Zusammenhangsmaßen kennengelernt, die folgende Liste fasst nochmal alle Varianten zusammen. Es gibt noch eine ganze Reihe weiterer Zusammenhangsmaße und diese Liste deckt lediglich die Maße ab, die wir kennengelernt haben:  
+                
++ nominal skalierte Variablen 
++ [Odds Ratio](#OR): basierend auf Kreuztabelle `tab x y`
++ [$\chi^2$-basierte Maße](#chi2) `tab x y, chi`, danach Division von $\chi^2$ durch n und Zahl der Spalten/Zeilen
+                  
++ ordinal skalierte Variablen
++ [Spearman-Rangkorrelationskoeffizient](#spear) `spearman x y` 
+  + [Konkordanzmaße](#tau) 
+  + Kendall's $\tau_a$ & Kendall's $\tau_b$:  `ktau x y` 
+  + Goodman & Kruskal's $\gamma$: `tab x y, gamma`      
+      
+        
++ metrische skalierte Variablen 
+  + Zusammenhangsstärke: [Pearson-Korrelationskoeffizient](#corr) `corr x y`
+  + [Regression](#regression) zur Vorhersage von Werten auf Basis einer Variable: `reg x y`
+
+Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. können metrische Variablen durch Kategorisierung ([Kapitel 6](#egen)) in ordinale Variablen überführt werden.  
+
+
+
+## Übungen 8
+
+### Übung 8-1 {#met_ord}
+### Übung 8-2 {#auf_nom}
+
+## Anhang
+
+### Indifferenztabelle {#indiff}
+
+[$\chi^2$](#chi2) ergibt sich aus der Differenz zwischen der Indifferenztabelle und den beobachteten Häufigkeiten. Die Indifferenztabelle können wir mit `,expected` aufrufen (mit `nofreq` blenden wir die tatsächlichen Häufigkeiten aus):
+```{stata indtabF, eval =F}
+tab F204 S1, expected nofreq
+```
+```{stata indtabT, echo =F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F204, mv(9)
+	lab var F204 "F204"
+}
+tab F204 S1, expected nofreq
+```
+
+Ausgangspunkt für diese Indifferenztabelle sind die relativen Häufigkeiten der tatsächlich beoachteten Werte:
+```{stata indtab2F, eval =F}
+tab F204 S1, cell nofreq
+```
+```{stata indtab2T, echo =F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F204, mv(9)
+	lab var F204 "F204"
+}
+tab F204 S1, cell nofreq
+```
+
+```{r, echo = F,message = F,warning=F}
+baua <- readstata13::read.dta13("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",convert.factors = F,
+                                select.cols = c("S1","F204")) %>% 
+  mutate(across(matches("S1|F204"), ~ ifelse(.x>8,NA,.x))) %>% select(S1,F204) %>% filter(F204<9)
+tab1 <- xtabs(~ F204 + S1, data = baua )
+tx <- chisq.test(tab1)
+rel_tab1 <- prop.table(tab1)
+abs_tab1 <- addmargins(tab1)
+rand_tab1 <- addmargins(rel_tab1)
+```
+<!-- `r round(rand_tab1[2,2],2)*100` \% der Befragten sind Frauen (`S1` = 2) und bekommen ihre Überstunden durch Freizeitausgleich ausgeglichen (`F204`=2).     -->
+Uns interessieren hier nur die Randverteilungen aus `Sum`: `r round(rand_tab1[2,"Sum"],4)*100` \% aller Befragten bekommen ihre Überstunden (ausschließlich) durch Freizeitausgleich ausgeglichen (`F204`=2).  `r round(rand_tab1["Sum",2],4)*100` \% aller Befragten sind Frauen (`S1` = 2).
+
+```{r, echo=F, warning=F, message=F}
+baua_lab <- haven::read_dta("D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta",n_max = 1)
+
+rand_tab2 <- addmargins(rel_tab1)
+rand_tab2[1:4,1:2] <- LETTERS[1:length(unlist(rand_tab2[1:4,1:2]))]
+rand_tab2["Sum",] <- rand_tab2["Sum",] %>% as.numeric(.) %>% round(.,4)
+rand_tab2[,"Sum"] <- rand_tab2[,"Sum"] %>% as.numeric(.) %>% round(.,4)
+
+
+rownames(rand_tab2) <- c(names(attributes(baua_lab$F204)$labels)[1:4],"Total")
+colnames(rand_tab2) <- c("männlich","weiblich","Total")
+
+kable(rand_tab2) %>% kable_styling(bootstrap_options = "condensed", full_width = F)
+```
+Wären beide Merkmale unabhängig voneinander, würden wir erwarten, dass die Wahrscheinlichkeit für das Auftreten einer Merkmalskombination dem Produkt der Einzelwahrscheinlichkeiten entspricht (das ist die "Indifferenz"): $P(A\cup B) = P(A) \times P(B)$. Bspw. ergibt sich der erwartete Wert für die Zellen dann aus der relativen Randverteilung multipliziert mit der Gesamtfallzahl:
+
++ für Zelle  `B`: `0.4522` $\times$ `0.5383` $\times$ `r sum(tab1)` = `r round(addmargins(rel_tab1)[5]*addmargins(rel_tab1)[12]*sum(tab1),4)`.
+
++ für Zelle  `H`: `0.1987` $\times$ `0.4617` $\times$ `r sum(tab1)` = `r round(addmargins(rel_tab1)[10]*addmargins(rel_tab1)[14]*sum(tab1),4)`.
+
+Dies sind auch die Werte, die Stata uns oben mit `tab  F204 S1, expected nofreq` ausgegeben hatte.
+
+$\chi^2$ ist dann die summierte Differenz zwischen dieser Indifferenztabelle (also der erwarteten Verteilung bei Unabhängigkeit beider Merkmale) und den beobachteten Häufigkeiten: je größer die Differenz, desto unwahrscheinlicher ist es, dass beide Merkmale unabhängig sind.  
+
+

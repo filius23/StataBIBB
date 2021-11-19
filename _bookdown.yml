@@ -5,4 +5,6 @@ language:
   ui:
     chapter_name: ""
 rmd_files: ['index.Rmd','01-IntroI.Rmd','02-Datensaetze.Rmd','03_Deskription.Rmd','04_if_label.Rmd','05_gen.Rmd','06_egen.Rmd','07_gewichtung.Rmd',
-'10_appendix.Rmd','98-test.Rmd']
+'08_zshg.Rmd', '09_mreg.Rmd',
+'21_bgregression.Rmd',
+'31_appendix.Rmd','98-test.Rmd']

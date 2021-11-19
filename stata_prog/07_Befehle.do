@@ -5,7 +5,14 @@ mvdecode zpalter, mv(9999)
 
 svyset _n [pweight=gew2018]
 tab S1
-svy: tab S1, col count format(%7.0g)
+svy: tab S1, 	col count format(%11.0g)
+svy: tab F1600, col count format(%11.0g)
+svy: tab Mig, 	col count format(%11.0g)
+svy: tab S3, 	col count format(%11.0g)
+
+
+
+
 
 tab S1 [weight=gew2018] // problem: Nachkommastellen
 tabulate S1 [weight=round(gew2018)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis

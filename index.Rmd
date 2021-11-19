@@ -3,7 +3,6 @@ title: "Stata Fortbildungen am BIBB"
 author: "Andreas Filser"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-# output: bookdown::pdf_document2
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
@@ -12,6 +11,7 @@ description: "This is a minimal example of using the bookdown package to write a
 ---
 
 ```{r setup, echo = F, message=F, warning = F}
+# output: bookdown::pdf_document2
 if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
 list.of.packages <- c("tidyr","dplyr","readr","haven","rmarkdown","bookdown","devtools","tidyverse","knitr") # Pakete eintragen
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]

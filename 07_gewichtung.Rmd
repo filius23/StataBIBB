@@ -67,7 +67,7 @@ Wir bestimmen also  auf Basis einer Stichprobe das Konfidenzintervall einer Sch�
 [^11]: Also die Standardabweichung ($s$) dividiert durch die Wurzel der Stichprobengröße ($n$)
 
 Das $t$ kommt dabei aus der Student-t-Verteilung bzw. als $z$-Wert aus der Standard-Normalverteilung ([Illustration](#distr)). $t$ wählen wir dabei so, dass bei wiederholter Stichprobenziehung 95% der resultierenden KI den wahren Wert aus der Grundgesamtheit beinhalten würden:
-```{r, out.height="35%", out.width="100%", fig.align='center', echo=F}
+```{r, out.height="25%", out.width="100%", fig.align='center', echo=F}
 data1 <- data.frame(z = seq(-4,4,.01)) # dataframe erstellen mit Zahlenfolge zwischen -4 & 4
 data1$t.var <- dt(x=data1$z,df =  9999) 
 
@@ -206,7 +206,7 @@ mean zpalter
 
 ## Hypothesentests {#ttest}
 
-Vergangene Session hatten wir aus Stichproben Aussagen über Parameter in einer Grundgesamtheit getroffen. Eigentliches Ziel statistischer Auswertungen ist aber häufig, Entscheidungen über allgemeine Hypothesen zu treffen.
+Neben Aussagen über Parameter in einer Grundgesamtheit auf Basis einer Stichprobe ist das eigentliche Ziel statistischer Auswertungen  aber in der Regel, allgemeine Zusammenhänge/Hypothesen zu testen.
 
 Ausgangsszenario: wir betrachten ein Merkmal und möchten durch eine Stichprobe überprüfen, ob der Mittelwert mit unserer Vermutung übereinstimmt bzw. größer/kleiner ist. Testen wir auf Übereinstimmung, verwenden wir einen sog. beidseitigen Test, bei einem einseitigen Test testen wir ob der Stichprobenwert signifikant größer bzw. kleiner als der vermutete Populationswert ist.
 Auch hier bleiben wir beim Durchschnittsalter der Erwerbstätigen - mit welcher Sicherheit können wir ausschließen, dass das Durchschnittsalter 47.4 Jahre ist?
@@ -223,12 +223,12 @@ Zunächst müssen wir uns entscheiden ob wir eine gerichtete oder ungerichtete H
 
 Formal werden die Hypothesen dann wie folgt festgehalten:
 
-+ ungerichtete Hypothesen: $H_0: \mu = 47.4 Jahre$ und $H_A: \mu \neq 47.4 Jahre$  
++ ungerichtete Hypothesen: $H_0: \mu = 47.4\;Jahre$ und $H_A: \mu \neq 47.4\;Jahre$  
 + gerichtete Hypothesen:
-  + rechtsseitig  $H_0: \mu \leqslant 47.4 Jahre$ und $H_A: \mu > 47.4 Jahre$  
-  $\Rightarrow$ die $H_A$ hält fest, dass der wahre Wert **größer** als der Wert aus der $H_0$ ist
-  + linksseitig   $H_0: \mu \geqslant 47.4 Jahre$ und $H_A: \mu < 47.4 Jahre$  
-  $\Rightarrow$ die $H_A$ hält fest, dass der wahre Wert **kleiner** als der Wert aus der $H_0$ ist
+  + rechtsseitig  $H_0: \mu \leqslant 47.4\;Jahre$ und $H_A: \mu > 47.4\;Jahre$  
+  $\Rightarrow$ die $H_A$ postuliert, dass der wahre Wert **größer** als der Wert aus der $H_0$ ist
+  + linksseitig   $H_0: \mu \geqslant 47.4\;Jahre$ und $H_A: \mu < 47.4\;Jahre$  
+  $\Rightarrow$ die $H_A$ postuliert, dass der wahre Wert **kleiner** als der Wert aus der $H_0$ ist
 
 Die grundlegende Idee des Hypothesentests ist, dass wir uns nur dann für die Alternativhypothese entscheiden, wenn wir eine ausreichend große Abweichung von dem in der $H_0$ postulierten Wert feststellen. Dazu berechnen wir den $t$-Wert für den SP-Mittelwert entsprechend dieser Formel:  
 
@@ -246,7 +246,7 @@ In der Wissenschaft hat sich als Konvention etabliert, von einem signifikanten U
 
 Ein **beid**seitiger Test testet die $H_0$ im Vergleich zur folgenden Aussage der $H_A$: "die wahren Mietausgaben der Studierenden in Oldenburg sind *ungleich* 47.4 Jahre". Dazu formalisieren wir zunächst die $H_0$ und $H_A$:
 
-$H_0: \mu = 47.4 Jahre \qquad H_A: \mu \neq 47.4 Jahre$  
+$H_0: \mu = 47.4\;Jahre \qquad H_A: \mu \neq 47.4\;Jahre$  
 
 Für die Berechnung können wir in Stata die Funktion `ttest` nutzen. 
 Neben den zu testenden Werten geben wir mit `mu` den in der Nullhypothese festgehaltenen Mittelwert an:
@@ -300,7 +300,7 @@ Außerdem werden auch gleich die Ergebnisse für den linksseitigen und rechtssei
 
 Ein **links**seitiger Test testet die $H_0$ im Vergleich zu folgender Aussage: "das wahre Durchschnittsalter der Erwerbstätigen in D ist *kleiner* als 47.4 Jahre". Formal sehen die $H_0$ und $H_A$ so aus:
 
-$H_0:\, \mu \geqslant 47.4 Jahre \qquad H_A:\, \mu < 47.4 Jahre$
+$H_0:\, \mu \geqslant 47.4\;Jahre \qquad H_A:\, \mu < 47.4\;Jahre$
 
 ```{stata ttest2a, eval = F}
 ttest zpalter==47.4
@@ -346,7 +346,7 @@ ggplot(data = data1, aes(x=z, y =t.var)) +
 
 Ein **rechts**seitiger Test testet die $H_0$ im Vergleich zu folgender Aussage: "das wahre Durchschnittsalter der Erwerbstätigen in ist *größer* als 47.4 Jahre". Formal sehen die $H_0$ und $H_A$ so aus:
 
-$H_0: \mu \leqslant 47.4 Jahre \qquad H_A: \mu > 47.4 Jahre$
+$H_0: \mu \leqslant 47.4\;Jahre \qquad H_A: \mu > 47.4\;Jahre$
 
 ```{stata ttest3a, eval = F}
 ttest zpalter==47.4
@@ -358,7 +358,7 @@ qui mvdecode zpalter, mv(9999)
 ttest zpalter==47.4
 ```
 
-Wir sehen unter `mean > 47.4` dass der Wert `1-pt(q = -z_wert, df = 19836)=``r round(1-pt(q = -z_wert, df = 19836),4)` deutlich größer als 0,05 ist - dementsprechend würden wir auf Basis eines rechtsseitigen Hypothesentests die $H_0$ **nicht** verwerfen.
+Wir sehen unter `mean > 47.4` dass der Wert 1 - `r round(pt(q = z_wert, df = 19836),4)`=`r round(pt(q = -z_wert, df = 19836),4)` deutlich größer als 0,05 ist - dementsprechend würden wir auf Basis eines rechtsseitigen Hypothesentests die $H_0$ **nicht** verwerfen.
 
 ```{r ttest_bsp_rechts_illu, out.height="60%", out.width="60%", fig.align='center', echo=F}
 data1 <- data.frame(z = seq(-4,4,.01)) ## dataframe erstellen mit Zahlenfolge zwischen -4 & 4
@@ -385,13 +385,10 @@ ggplot(data = data1, aes(x=z, y =t.var)) +
                             size = 3.25,vjust= 0, hjust = 0 )
 ```
 
-All das haben wir eben auch schon in `ttest` gesehen:
-
-
 
 ***
 
-[Übung 1](#tvsmu)
+[**Übung 7.1**](#tvsmu)
 
 ***
 
@@ -437,7 +434,7 @@ Für den Altersvergleich zwischen Frauen und Männern ergeben sich folgende Hypo
 <!-- ``` -->
 
 <!-- Aber ist diese, in der Stichprobe festgestellte Differenz auch bezogen auf die **Grundgesamtheit** von Bedeutung? Dazu  -->
-Wenn wir nun die beiden Mittelwerte für Männer und Frauen vergleichen, greifen wieder auf den `ttest` zurück, aber hier geben wir anstelle von `== XYZ` mit `by(sex)` die Gruppenvariable an:
+Wenn wir nun die beiden Mittelwerte für Männer und Frauen vergleichen, greifen wieder auf den `ttest` zurück, aber hier geben wir anstelle von `== XYZ` mit `by(sex)` die Gruppenvariable an. Mit `unequal` lassen wir zudem zu, dass die Varianz des Alters in beiden Gruppen unterschiedlich ist (was sehr häufig der Fall ist):
 ```{stata ttest6, eval = F}
 ttest zpalter, by(S1) unequal
 ```
@@ -448,13 +445,15 @@ qui mvdecode zpalter, mv(9999)
 ttest zpalter, by(S1) unequal
 ```
 
->Da der p-Wert für den beiseitigen Test (unter `Ha: diff != 0`) deutlich unter 0,05 liegt, können wir hier die $H_0$ verwerfen und gehen von signifikanten Größenunterschieden aus.  
->Für einen rechtsseitigen Test achten wir auf `Ha: diff > 0`- Männer sind also signifikant *größer* als Frauen.
->Für einen linksseitigen Test ist hingegen `Ha: diff < 0` ausschlaggebend: Männer sind also nicht signifikant *kleiner* als Frauen.
+Für die jeweiligen Tests ergeben sich folgende Entscheidungen:
+
+  + beidseitiger Test: Da der p-Wert für den beiseitigen Test (unter `Ha: diff != 0`) deutlich unter 0,05 liegt, können wir hier die $H_0$ verwerfen und gehen von signifikanten Altersunterschieden aus.  
+  + rechtsseitiger Test: für einen rechtsseitigen Test achten wir auf `Ha: diff > 0`- die erwerbstätigen Männer sind also nicht signifikant *älter* als die erwerbstätigen Frauen.
+ + linksseitiger Test: für einen linksseitigen Test ist hingegen `Ha: diff < 0` ausschlaggebend: erwerbstätigen Männer sind also signifikant *jünger* als erwerbstätige Frauen.
 
 ***
 
-[Übung2](#tgroup)
+[**Übung 7.2**](#tgroup)
 
 ***
 
@@ -470,8 +469,8 @@ browse bp_before bp_after
 ```
 
 
-```{r bpwide_shot, echo = F,out.width = "100%",out.height="100%", fig.align="center"}
-knitr::include_graphics("08_bpwide.png")
+```{r bpwide_shot, echo = F,out.width = "60%",out.height="60%", fig.align="center"}
+knitr::include_graphics("./pics/07_bpwide.png")
 ```
 
 Diese vorher/nachher Werte können wir jetzt mit einem verbundenen t-Test vergleichen:
@@ -495,7 +494,7 @@ Auch hier sehen wir wieder die Ergebnisse für einen links- (` Ha: mean(diff) < 
     
 ***
 
-[Übung3](#tpaired)
+[**Übung 7.3**](#tpaired)
 
 ***
 
@@ -513,8 +512,9 @@ Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tes
   + verschieden: $\Rightarrow$ `ttest testvariable, by(gruppenvariable) unequal` (wie oben)
   
 + Verbundene oder unverbundene Stichprobe?
-  +  Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` für eine unverbundene Stichprobe (mit ggf. `unequal`)
-  +  Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format), dann kann mit `ttest vorher==nachher` ein verbundener `ttest` durchgeführt werden.
+  + Sind die einzelnen Messwerte voneinander unabhängig? D.h. ein Messwert steht in keinem direkten Zusammenhang mit einem anderen $\Rightarrow$ `ttest testvariable, by(gruppenvariable)` für eine unverbundene Stichprobe (mit ggf. `unequal`)
+  + Stehen die einzelnen Messwerte in einem Zusammenhang? D.h. ein Messwert steht in einem direkten Zusammenhang mit einem anderen
+    $\Rightarrow$ Werte für beide Variablen sollten "nebeneinander" abgelegt sein (*wide*-Format), dann kann mit `ttest vorher==nachher` ein verbundener `ttest` durchgeführt werden.
 
 
 
@@ -537,6 +537,7 @@ svy: tabulate S1 , col count
 ```
 
 ```{stata weight1ab, echo = F}
+set linesize 100
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 svyset _n [pweight=gew2018]
 svy: tabulate S1 , col count
@@ -569,16 +570,26 @@ und anschließend auf ganze Werte zu runden:
 tabulate S1 [weight=round(gew2018*100 000)]
 ```
 
-Verteilungen sollten anschließend korrekt berechnet werden. Beim Bericht der Ergebnisse ist jedoch zu beachten,
-dass die zu Grunde liegende Fallzahl anschließend wieder korrigiert werden muss (also in diesem Beispiel durch
-100 000 geteilt werden muss).
+Das führt zu korrekten Verteilungen. 
+Allerdings ist für die Ergebnisse jedoch zu beachten, dass die zu Grunde liegende Fallzahl anschließend wieder korrigiert werden muss (also in diesem Beispiel durch 100 000 geteilt werden muss).
 
 
-## Übungen 6 {#infue}
+## Übungen 7 
 
 (@) Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
 
+### Übung 7.1 {#tvsmu}
+
 (@) 
+
+### Übung 7.2 {#tgroup}
+
+(@) 
+
+### Übung 7.3 {#tpaired}
+
+(@) 
+
 
 
 ## Anhang
@@ -617,6 +628,8 @@ Daher halten wir uns an die Student-t-Verteilung, die quasi eine etwas lockerere
 
 Die Bedeutung der Normalverteilung ergibt sich daraus, dass wichtige statistische Maßzahlen, die man aus Stichproben berechnen kann, unter bestimmten Bedingungen normalverteilt sind.
 
-Literaturtipps:
+Literaturtipps:  
+
 + S.133 *ff.*, Kapitel 6 "Zufallsstichproben und Schätzen" in [Diaz-Bone, R. (2019). Statistik für Soziologen (4. Auflage)](https://www.utb-studi-e-book.de/9783838550718)
+
 + S.79 *ff.* Kapitel 6 "Stichprobe und Grundgesamtheit" in [Bortz, J., & Schuster, C. (2010). Statistik für Human- und Sozialwissenschaftler (7. Auflage)](https://link.springer.com/book/10.1007/978-3-642-12770-0) (ausführliche formale Beschreibung)
