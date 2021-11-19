@@ -86,15 +86,94 @@ Ganz unten finden sich in den Hilfen immer Beispiele:
 knitr::include_graphics("./pics/06_egen_help2.png")
 ```
 
-Diese beruhen auf Datensätzen, die lokal vorhanden sind (`sysuse ...`) oder direkt aus dem Internet geladen werden können (`webuse`). Die Beispiele 
+Diese beruhen auf Datensätzen, die lokal vorhanden sind (`sysuse ...`) oder direkt aus dem Internet geladen werden können (`webuse`). Oft ist es hilfreich, die Beispiele Schritt für Schritt durchlaufen zu lassen und im `browse`-Modus zu beobachten, was passiert.
+
+***
+
+**[Übung 1](#egenue)**
+
+***
+
+## `by`
+
+Mit dem Präfix `by` können Berechnungen getrennt für verschiedene Gruppen durchgeführt werden. 
+Das ist insbesondere in Kombination mit `egen` ein sehr vielseitiges Werkzeug.
+So können wir beispielsweise das Durchschnittsalter in unserem Datensatz getrennt für Frauen und Männer berechnen:
+```{stata by1, eval = F}
+by S1: egen mean_byS1 = mean(zpalter)
+```
+<span style="color:red">`not sorted`</span>  
+<span style="color:blue">`r(5);`</span>
+
+Allerdings setzt das immer voraus, dass der Datensatz nach den in `by` angegebenen Variablen sortiert ist - sonst bekommen wir eine Fehlermeldung. 
+Sortieren können wir entweder mit `sort varname`:
+```{stata sort1, eval= F}
+sort S1
+by S1: egen mean_byS1 = mean(zpalter)
+```
+...oder alles in einem Befehl:
+```{stata sort2, eval = F}
+bysort S1: egen mean_byS1 = mean(zpalter)
+```
+
+
+```{stata by2, echo = F}
+quietly{
+  set linesize 120
+  qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	mvdecode zpalter, mv(9999 )
+}
+bysort S1: egen mean_byS1 = mean(zpalter)
+sort intnr
+list S1 zpalter mean_byS1 in 1/5, noobs abbrev(10)
+```
+
+> Anmerkung für die Ausgabe der Fälle wurde nach `by S1,sort: egen mean_byS1 = mean(zpalter)` mit `sort intnr` wieder die ursprüngliche Reihenfolge hergestellt.
+
+
+Wir könnten
+```{stata bys3, eval = F}
+bysort S1 S3: egen mean_byS1S3 = mean(zpalter)
+```
+
+```{stata bys4, echo = F}
+quietly{
+  set linesize 120
+  qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	mvdecode zpalter, mv(9999 )
+}
+qui bysort S1: egen mean_byS1 = mean(zpalter)
+qui bysort S1 S3: egen mean_byS1S3 = mean(zpalter)
+qui sort intnr
+list S1 S3 zpalter mean_byS1 mean_byS1S3 in 1/5, noobs abbrev(14)
+```
+
+***
+
+**[Übung 2](#byue)**
+
+***
 
 
 ## Übungen 6 {#egenue}
 
 (@) Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
 
+### Übungen 6-1 {#egenue}
+
 (@) Bilden Sie mit Hilfe von `egen` verschiedene Einkommensklassen (bspw. ab 0EUR in 500EUR-Schritten bis 72000EUR). Nutzen Sie die `numlist`-Funktion mit `(start(intervall)stop)`. Verändern Sie Labels.
+
+
+(@) Welche Variablen bekommen Sie mit `describe` angezeigt, wenn Sie entweder `describe F21`, `describe F21*`, `describe F21?`, `describe F2*4` oder `describe F2?4` verwenden?
+
+### Bonusaufgabe 
 
 (@) Öffnen Sie die Hilfe für `egen` und lassen Sie ein Beispiel Schritt für Schritt durchlaufen - beobachten Sie was passiert, indem Sie mit `browse` den Datensatz betrachten.
 
-(@) Welche Variablen bekommen Sie mit `describe` angezeigt, wenn Sie entweder `describe F21`, `describe F21*`, `describe F21?`, `describe F2*4` oder `describe F2?4` verwenden?
+### Übungen 6-2 {#byue}
+
+(@) Berechnen Sie das Durchschnittseinkommen (basierend auf `F518_SUF`) getrennt für Männer und Frauen und legen Sie es in einer neuen Variable `m_inc_byS1` ab.
+  + mit `mvdecode F518_SUF, mv(99998/99999)` können Sie die Missings ausschließen
+  + Denken Sie daran, dass Sie die Daten sortieren müssen.
+
+(@) Wie würden Sie jetzt für jede\*n Befragten berechnen, um wieviel ihr\*sein Einkommen vom geschlechtsspezifischen Durchschnittswert unterscheidet?

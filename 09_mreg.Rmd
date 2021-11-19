@@ -224,6 +224,10 @@ ggplot(df2,aes(x,y)) +
 ```
 
 
+****
+
+
+
 ## kategoriale unabhängige Variablen
 
 Wir können aber auch kategoriale unabhängige Variablen in Regressionsmodellen verwenden.

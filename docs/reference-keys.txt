@@ -132,3 +132,5 @@ output-bookdownpdf_document2
 interaktionsterme
 anhang-3
 marginsplot-anpassen
+by
+byue
