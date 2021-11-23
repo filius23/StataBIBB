@@ -358,7 +358,7 @@ qui mvdecode zpalter, mv(9999)
 ttest zpalter==47.4
 ```
 
-Wir sehen unter `mean > 47.4` dass der Wert 1 - `r round(pt(q = z_wert, df = 19836),4)`=`r round(pt(q = -z_wert, df = 19836),4)` deutlich größer als 0,05 ist - dementsprechend würden wir auf Basis eines rechtsseitigen Hypothesentests die $H_0$ **nicht** verwerfen.
+Wir sehen unter `mean > 47.4` dass der Wert `r round(pt(q = z_wert, df = 19836),4)` deutlich größer als 0,05 ist - dementsprechend würden wir auf Basis eines rechtsseitigen Hypothesentests die $H_0$ **verwerfen**.
 
 ```{r ttest_bsp_rechts_illu, out.height="60%", out.width="60%", fig.align='center', echo=F}
 data1 <- data.frame(z = seq(-4,4,.01)) ## dataframe erstellen mit Zahlenfolge zwischen -4 & 4
@@ -519,6 +519,17 @@ Für Mittelwertvergleich gibt es insgesamt zwei Aspekte, anhand derer sich t-Tes
 
 
 ## Gewichtung in Stata
+
+> Bei der Datenanalyse ist man oft mit einer Stichprobe aus einer größeren Population konfrontiert und man möchte aus dieser Stichprobe Rückschlüsse auf die größere Population ziehen. Die meisten statistischen Verfahren für diese sog. „Inferenzstatistik“ beruhen dabei auf der Annahme, dass die Stichprobe eine einfache Zufallsstichprobe ist. Bei einer solchen Stichprobe gelangen alle Elemente der Grundgesamtheit mit der gleichen Wahrscheinlichkeit in die Stichprobe. In der Praxis sind solche Stichproben aber die große Ausnahme. Häufig haben bestimmte Gruppen von Personen höhere Auswahlwahrscheinlichkeiten als andere. [Kohler/Kreuter, S.1](https://doi.org/10.1515/9783110469509)
+
+Grundsätzlich sind in Stata drei Arten der Gewichtung verfügbar:
+
++ `pweight` $\Rightarrow$ die Beobachtungen aus der Grundgesamtheit haben eine unterschiedliche Wahrscheinlichkeit, in der Stichprobe zu sein
++ `fweight` $\Rightarrow$ jede Beobachtung kommt mehrfach vor (Hochrechnungsfaktor)
++ `aweight` $\Rightarrow$ jede Beobachtung im Datensatz ist eigentlich ein Gruppenmittelwert, der auf mehreren Beobachtungen basiert
+
+[*Weiterlesen*](https://www.parisschoolofeconomics.eu/docs/dupraz-yannick/using-weights-in-stata(1).pdf)
+
 
 Wir können Gewichtungen in Stata auf zwei Weisen anwenden:
 

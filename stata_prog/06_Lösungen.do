@@ -1,4 +1,4 @@
-* Kapitel 6 - Lösungen
+* Kapitel 6 - Lösungen, final
 cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
 use "BIBBBAuA_2018_suf1.0.dta", clear
 mvdecode F518_SUF, mv( 99995/  99999)

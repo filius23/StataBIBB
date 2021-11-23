@@ -224,7 +224,11 @@ ggplot(df2,aes(x,y)) +
 ```
 
 
-****
+***
+
+**[Übung 1](#regue1)**
+
+***
 
 
 
@@ -587,10 +591,15 @@ knitr::include_graphics("./pics/09_mplot2.png")
 
 ## Übungen 9
 
-### Übung 9-1
+### Übung 9-1 {#regue1}
+
+(@)
 
 
-Lassen Sie mal `i.` weg - was verändert sich?
+### Übung 9-2 {#regue2}
+
+
+(@) Lassen Sie mal `i.` weg - was verändert sich?
 
 
 

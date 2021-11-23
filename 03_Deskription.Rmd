@@ -97,7 +97,7 @@ Hier wird eine ganze Menge auf einmal angezeigt - die Kennzahlen sind dabei in d
 
 ### `tabstat`
 
-Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist `tabstat` eine gute Lösung. Mit `tabstat` können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei das folgende Format: `tabstat zpalter, s(*kennzahl*)`
+Häufig möchten wir aber vielleicht nur eine bestimmte Information. Dafür ist `tabstat` eine gute Lösung. Mit `tabstat` können wir eine ganze Reihe statistischer Kennzahlen für metrische/kontinuierliche Merkmale berechnen. Die Syntax hat dabei das folgende Format: `tabstat zpalter, s(*option*)`
 
 Hier eine Übersicht der Kennzahlen:
 ```{r, ft.align = "center",message=F,warning=F, echo = F}
@@ -106,7 +106,7 @@ opts <- options(knitr.kable.NA = "")
 
 readxl::read_xlsx("03_tabstat.xlsx",sheet = 1) %>% 
   kable() %>% 
-  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 10) %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 11) %>% 
   column_spec(1,monospace = TRUE)
 ```
 
@@ -507,12 +507,12 @@ Die Schiefe (skewness) ist ein Maß für die Asymmetrie einer Verteilung. Bei ei
 ```{r skewplot1, echo=F, warning=F, message=F, out.height="25%", out.width="100%", fig.align="center"}
 sk_df <-  
   data.frame(x= 1:10) %>%
-  mutate(y1 = round(4/x*4)+ 2,
+  mutate(y1 = 13-(round(4*x/4)+ 2),
          y2 = round(4*x/4)+ 2,
          y3 = as.numeric(round(20 - abs(scale(x))*9.5)),
          y4 = ifelse(x %in% 5:6, 10,1) ) %>% 
-  bind_rows(data.frame(x=0,y1=12,y2=2,y3=1,y4=1),
-            data.frame(x=11,y1=2,y2=9,y3=1,y4=1)) 
+  bind_rows(data.frame(x=0,y1=8,y2=2,y3=1,y4=1),
+            data.frame(x=11,y1=1,y2=9,y3=1,y4=1)) 
 
 skew1 <- 
   sk_df %>% 
@@ -536,7 +536,7 @@ skew2 <-
 
 skew3 <- 
   sk_df %>% 
-  ggplot(aes(x=x,y=y2)) +
+  ggplot(aes(x=x,y=y1)) +
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[4]) +
   labs(title = "positive Schiefe (linkssteil/rechtsschief)") +
   theme_minimal(base_size = 11) +
@@ -589,19 +589,6 @@ In Stata bekommen wir die Schiefe und Wölbung einer Verteilung mit `summary var
 
 Mit `hist variablenname` bekommen wir ein Histogramm ausgegeben, welches einen Überblick wie die oben gezeigten Darstellungen bietet.
 
-### Kombination von `summarize` mit dem `by`-Präfix {#bys_su}
-
-Bspw. können wir die Altersangaben für Männer (`S1`=1) und Frauen (`S1`=2) vergleichen, indem wir das Befehls-Präfix `bys varX:` verwenden. `bys` steht für "by sort". Stata sortiert also den Datensatz entsprechend der angegebenen Variable und die folgende Berechnung wird getrennt nach den Werten für `varX` ausgeführt. Wenn wir also `summarize` für beide Ausprägungen von `S1` berechnen möchten, gehen wir wir folgt vor:
-```{stata bysuF, eval = F}
-bys S1: summarize age 
-```
-```{stata bysuT, echo = F}
-set linesize 80
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-qui mvdecode zpalter, mv(9999)
-bys S1: summarize age 
-```
-In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = `r 53.90083 - 50.66093` Jahre älter.
 
 ### Kennzahlvergleich mit `tabulate` und der Option `summarize()` 
 

@@ -1,0 +1,29 @@
+# Literatur {#lit}
+
+## Stata 
+
+Kohler, U., & Kreuter, F. (2017). Datenanalyse mit Stata: Allgemeine Konzepte der Datenanalyse und ihre praktische Anwendung (5., aktualisierte Auflage.). De Gruyter Oldenbourg. [**Link**](https://doi.org/10.1515/9783110469509)  
+
+**[The Interguide to Stata](https://wlm.userweb.mwn.de/Stata/)**  
+**[Hilfeseiten der UCLA](https://stats.idre.ucla.edu/stata/)**  
+**[StataList-Forum](https://statalist.org/forums/)**  
+**[Germán Rodríguez](https://data.princeton.edu/stata)**s Seiten enthalten viele Beispiele, Tricks und Erklärungen  
+
+## Statistik-Lehrbücher
+
+Fokus auf Intuition und Beispiele:
+
+Diaz-Bone, R. (2019). Statistik für Soziologen (4., überarbeitete Auflage.). [**Link**](https://www.utb-studi-e-book.de/9783838550718)
+
+Kronthaler, F. (2014). Statistik angewandt. Springer Berlin Heidelberg. [**Link**](https://doi.org/10.1007/978-3-642-53740-0)
+
+Urban, D., & Mayerl, J. (2018). Angewandte Regressionsanalyse: Theorie, Technik und Praxis. Springer Fachmedien Wiesbaden. [**Link**](https://doi.org/10.1007/978-3-658-01915-0)
+
+etwas formaler und ausführlicher:
+
+Backhaus, K., Erichson, B., Plinke, W., & Weiber, R. (2016). Multivariate Analysemethoden: Eine anwendungsorientierte Einführung (14., überarbeitete und aktualisierte Auflage). Springer Gabler. [**Link**](https://link.springer.com/book/10.1007/978-3-662-46076-4)
+
+Bortz, J., & Schuster, C. (2010). Statistik für Human- und Sozialwissenschaftler (7th ed.). Springer. [**Link**](https://link.springer.com/book/10.1007/978-3-642-12770-0)
+
+Wolf, C., & Best, H. (Eds.). (2010). Handbuch der sozialwissenschaftlichen Datenanalyse (1. Aufl). VS Verlag für Sozialwissenschaften.
+[**Link**](https://doi.org/10.1007/978-3-531-92038-2)

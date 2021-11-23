@@ -37,11 +37,8 @@ unique(baua$zpalter) %>% length(.)
 
 
 
-rstudioapi::jobRunScript(path = "00_build.R")
-
-
-
-
-
-
+#run render in background -------------------
+ bookdown::preview_chapter("03_Deskription.Rmd")
+chap <- "03_Deskription.Rmd"
+rstudioapi::jobRunScript(path = "00_build.R",importEnv = T)
   

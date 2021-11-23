@@ -1,12 +1,16 @@
-* Kapitel 7 - Gewichtung
+* Kapitel 8 - Zusammenhangsmaße
 cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
 use "BIBBBAuA_2018_suf1.0 - Kopie.dta", clear
-mvdecode zpalter, mv(9999)
-replace F231 =  . if F231 > 99
 
 * ---------------------- *
 * metrische Variablen: korrelation
 * ---------------------- *
+	
+	* Vorbereitungen -> . setzen
+	mvdecode zpalter, mv(9999)
+	replace F231 =  . if F231 > 99
+
+*Korrelationskoeffizient
 pwcorr zpalter F231, sig
 
 * ---------------------- *

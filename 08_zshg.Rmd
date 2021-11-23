@@ -32,14 +32,21 @@ Zusammenhänge sind das Herz (fast) aller statistischer Analysen. Im Folgenden l
 | $K$ = 1,00 | Perfekter | 
   
   
-  Zusammenhangsmaße für metrische und ordinale Variablen geben mittels der Vorzeichen auch die *Zusammenhangsrichtung* an, sie variieren zwischen -1 und +1.
+Zusammenhangsmaße für metrische und ordinale Variablen geben mittels der Vorzeichen auch die *Zusammenhangsrichtung* an, sie variieren zwischen -1 und +1.
 
 ## Metrisch skalierte Variablen {#zshg_met}
 
 Wir sehen uns den (möglichen) Zusammenhang zwischen dem Alter (`zpalter`) und der Stundenzahl im Home Office (`F321`) an.
 
 ### Korrelationskoeffizient {#cor}
-Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]. Die Standardabweichung hatten wir in Session 4 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte > $\bar{x}$ auch $>\bar{y}$?):
+Zur Bestimmung eines Zusammenhangs zwischen zwei metrischen Variablen empfiehlt sich der Korrelationskoeffizient nach Pearson. 
+Dieser ist definiert als die Kovarianz dividiert durch die jeweiligen Standardabweichungen der beiden Variablen und liegt im Intervall [-1,1]:
+
+$$r = \frac{\frac{1}{n}\Sigma_{i}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\frac{1}{n}\Sigma_{i}^{n}(x_i-\bar{x})^2} \times \sqrt{\frac{1}{n}\Sigma_{i}^{n} (y_i-\bar{y})^2}} = \frac{cov_{xy}}{s_x \times s_y}$$
+
+Ein positiver Korrelationskoeffizient deutet auf einen positiven Zusammenhang hin ("je größer X, desto *größer* Y").
+Ein negativer Korrelationskoeffizient deutet auf einen negativen Zusammenhang hin ("je größer X, desto *kleiner* Y").
+Die Standardabweichung hatten wir in Session 4 kennengelernt, die Kovarianz erfasst die Lage der Datenpunkte relativ zu den Mittelwerten der beiden interessierenden Variablen (liegen Punkte > $\bar{x}$ auch $>\bar{y}$?):
   
 ```{r s07_15b, message=F, warning=F, out.height="80%", out.width="100%", echo=F,fig.align='center'}
 eq1 <-  substitute(italic(bar(x))) # formel erstellen
@@ -310,9 +317,9 @@ qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 }
 tab F204 S1, chi wrap
 ```
-### Cramer's $\upsilon$
+### Cramér's $\upsilon$
 
-Auf Basis dieses $\chi^2$-Werts von `r round(as.numeric(tx$statistic),3)` können wir Cramer's $\upsilon$ berechnen. Dieses ist definiert als der Quotient aus dem $\chi^2$-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. `n`, erkennen wir aus dem `Total` rechts unten in der Tabelle. Außerdem hat unsere Tabelle 2 Zeilen und 4 Spalten, dementsprechend entspricht das Minimum hier 2:
+Auf Basis dieses $\chi^2$-Werts von `r round(as.numeric(tx$statistic),3)` können wir Cramér's $\upsilon$ berechnen. Dieses ist definiert als der Quotient aus dem $\chi^2$-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. `n`, erkennen wir aus dem `Total` rechts unten in der Tabelle. Außerdem hat unsere Tabelle 2 Zeilen und 4 Spalten, dementsprechend entspricht das Minimum hier 2:
 
 $$ Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n \times min(k-1,m-1)}}=\sqrt{\frac{225.4461}{9359\times(2-1)}} = 0.1552$$
             
@@ -330,9 +337,9 @@ qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 tab F204 S1, V
 ```
 
-Dieser Wert für Cramer's $\upsilon$ legt einen praktisch keinen Zusammenhang nahe.
+Dieser Wert für Cramér's $\upsilon$ legt einen praktisch keinen Zusammenhang nahe.
 
-Cramer's $\upsilon$ für 2x2-Tabellen wird auch als $\phi$ ("phi") bezeichnet. Dies wäre das passende Maß für die zusammengefasste Variable aller Haustierbesitzer\*innen `aq03b` von oben und `dh01`:
+Cramér's $\upsilon$ für 2x2-Tabellen wird auch als $\phi$ ("phi") bezeichnet. Dies wäre das passende Maß für die zusammengefasste Variable aller Haustierbesitzer\*innen `aq03b` von oben und `dh01`:
 
 $$\phi= \sqrt{\frac{\chi^2}{n}}$$ 
 $$\text{bei k=2 und m=2:}\qquad Cramer's\,\,\upsilon = \sqrt{\frac{\chi^2}{n\times min(k-1,m-1)}}=\sqrt{\frac{\chi^2}{n\times\,1}}$$
@@ -369,8 +376,23 @@ Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. k�
 
 ## Übungen 8
 
+(@) Laden Sie die Erwerbstätigenbefragung in Stata. 
+
 ### Übung 8-1 {#met_ord}
+
+(@) Untersuchen Sie den Zusammenhang zwischen der Wochenarbeitszeit und dem Einkommen der Befragten. Welches Maß ist das richtige?
+  + Denken Sie daran, die Missings mit `mv`
+
+(@) Untersuchen Sie den Zusammenhang zwischen der Häufigkeit von starkem Termin- oder Leistungsdruck `F411_01` und der dreistufigen Schulbildungsvariable `educ`.
+  + So können Sie `educ` erstellen: `recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "mittlere Reife") (7/9 = 3 "(Fach-)Abi") (else = .), into(educ)` 
+  + Denken Sie daran, die Missings in `F411_01` zu überschreiben: `mvdecode F411_01, mv(9)`
+  + Berechnen Sie ein oder mehrere geeignete Zusammenhangsmaße für diese beiden Variablen.
+
 ### Übung 8-2 {#auf_nom}
+
+(@) Untersuchen Sie den Zusammenhang zwischen der Frage, ob der\*die Befragte teiweise von zu Hause aus arbeitet (`F228`) und ob die Befragten gerne eine andere als ihre aktuelle Tätigkeit (`F103`) ausüben würden. 
+  + In beiden Variablen ist `9` als fehlender Wert auszuschließen
+
 
 ## Anhang
 

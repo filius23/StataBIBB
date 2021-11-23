@@ -159,16 +159,13 @@ list S1 S3 zpalter mean_byS1 mean_byS1S3 in 1/5, noobs abbrev(14)
 
 (@) Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
 
-### Übungen 6-1 {#egenue}
+### Übungen 6-1 {#egenue1}
 
 (@) Bilden Sie mit Hilfe von `egen` verschiedene Einkommensklassen (bspw. ab 0EUR in 500EUR-Schritten bis 72000EUR). Nutzen Sie die `numlist`-Funktion mit `(start(intervall)stop)`. Verändern Sie Labels.
 
 
 (@) Welche Variablen bekommen Sie mit `describe` angezeigt, wenn Sie entweder `describe F21`, `describe F21*`, `describe F21?`, `describe F2*4` oder `describe F2?4` verwenden?
 
-### Bonusaufgabe 
-
-(@) Öffnen Sie die Hilfe für `egen` und lassen Sie ein Beispiel Schritt für Schritt durchlaufen - beobachten Sie was passiert, indem Sie mit `browse` den Datensatz betrachten.
 
 ### Übungen 6-2 {#byue}
 
@@ -177,3 +174,26 @@ list S1 S3 zpalter mean_byS1 mean_byS1S3 in 1/5, noobs abbrev(14)
   + Denken Sie daran, dass Sie die Daten sortieren müssen.
 
 (@) Wie würden Sie jetzt für jede\*n Befragten berechnen, um wieviel ihr\*sein Einkommen vom geschlechtsspezifischen Durchschnittswert unterscheidet?
+
+### Bonusaufgabe 
+
+(@) Öffnen Sie die Hilfe für `egen` und lassen Sie ein Beispiel Schritt für Schritt durchlaufen - beobachten Sie was passiert, indem Sie mit `browse` den Datensatz betrachten.
+
+
+
+## Anhang
+
+### Kombination von `summarize` mit dem `by`-Präfix {#bys_su}
+
+Mit `bysort` können wir auch Gruppenvergleiche erstellen. Bspw. können wir die Altersangaben für Männer (`S1`=1) und Frauen (`S1`=2) vergleichen, indem wir das Befehls-Präfix `bys varX:` verwenden. Stata sortiert also den Datensatz entsprechend der angegebenen Variable und die folgende Berechnung wird getrennt nach den Werten für `varX` ausgeführt. Wenn wir also `summarize` für beide Ausprägungen von `S1` berechnen möchten, gehen wir wir folgt vor:
+```{stata bysuF, eval = F}
+bysort S1: summarize zpalter 
+```
+```{stata bysuT, echo = F}
+set linesize 80
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui mvdecode zpalter, mv(9999)
+bys S1: summarize zpalter 
+```
+In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = `r 53.90083 - 50.66093` Jahre älter.
+
