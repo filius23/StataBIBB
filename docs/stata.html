@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-11-17" />
+<meta name="date" content="2021-11-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -53,8 +53,6 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -209,8 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3.3" data-path="desc1.html"><a href="desc1.html#perc"><i class="fa fa-check"></i><b>3.3.3</b> Perzentile erklärt</a></li>
 <li class="chapter" data-level="3.3.4" data-path="desc1.html"><a href="desc1.html#variance"><i class="fa fa-check"></i><b>3.3.4</b> Varianz erklärt</a></li>
 <li class="chapter" data-level="3.3.5" data-path="desc1.html"><a href="desc1.html#sk_kur"><i class="fa fa-check"></i><b>3.3.5</b> Schiefe &amp; Wölbung</a></li>
-<li class="chapter" data-level="3.3.6" data-path="desc1.html"><a href="desc1.html#bys_su"><i class="fa fa-check"></i><b>3.3.6</b> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
-<li class="chapter" data-level="3.3.7" data-path="desc1.html"><a href="desc1.html#kennzahlvergleich-mit-tabulate-und-der-option-summarize"><i class="fa fa-check"></i><b>3.3.7</b> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></a></li>
+<li class="chapter" data-level="3.3.6" data-path="desc1.html"><a href="desc1.html#kennzahlvergleich-mit-tabulate-und-der-option-summarize"><i class="fa fa-check"></i><b>3.3.6</b> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="iflab.html"><a href="iflab.html"><i class="fa fa-check"></i><b>4</b> if-Bedingungen</a>
@@ -248,7 +245,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2.1" data-path="egen.html"><a href="egen.html#numlist-varlist-varname"><i class="fa fa-check"></i><b>6.2.1</b> numlist, varlist, varname</a></li>
 <li class="chapter" data-level="6.2.2" data-path="egen.html"><a href="egen.html#beispielsyntax-in-den-help-dateien"><i class="fa fa-check"></i><b>6.2.2</b> Beispielsyntax in den <code>help</code> Dateien</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="egen.html"><a href="egen.html#egenue"><i class="fa fa-check"></i><b>6.3</b> Übungen 6</a></li>
+<li class="chapter" data-level="6.3" data-path="egen.html"><a href="egen.html#by"><i class="fa fa-check"></i><b>6.3</b> <code>by</code></a></li>
+<li class="chapter" data-level="6.4" data-path="egen.html"><a href="egen.html#egenue"><i class="fa fa-check"></i><b>6.4</b> Übungen 6</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="egen.html"><a href="egen.html#egenue1"><i class="fa fa-check"></i><b>6.4.1</b> Übungen 6-1</a></li>
+<li class="chapter" data-level="6.4.2" data-path="egen.html"><a href="egen.html#byue"><i class="fa fa-check"></i><b>6.4.2</b> Übungen 6-2</a></li>
+<li class="chapter" data-level="6.4.3" data-path="egen.html"><a href="egen.html#bonusaufgabe"><i class="fa fa-check"></i><b>6.4.3</b> Bonusaufgabe</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="egen.html"><a href="egen.html#anhang"><i class="fa fa-check"></i><b>6.5</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="egen.html"><a href="egen.html#bys_su"><i class="fa fa-check"></i><b>6.5.1</b> Kombination von <code>summarize</code> mit dem <code>by</code>-Präfix</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="infer.html"><a href="infer.html"><i class="fa fa-check"></i><b>7</b> Inferenzstatistik</a>
 <ul>
@@ -266,13 +273,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="infer.html"><a href="infer.html#übersicht-zu-varianten-für-ttest"><i class="fa fa-check"></i><b>7.4</b> Übersicht zu Varianten für <code>ttest</code></a></li>
 <li class="chapter" data-level="7.5" data-path="infer.html"><a href="infer.html#gewichtung-in-stata"><i class="fa fa-check"></i><b>7.5</b> Gewichtung in Stata</a></li>
-<li class="chapter" data-level="7.6" data-path="infer.html"><a href="infer.html#übungen-7"><i class="fa fa-check"></i><b>7.6</b> Übungen 7</a></li>
-<li class="chapter" data-level="7.7" data-path="infer.html"><a href="infer.html#tvsmu"><i class="fa fa-check"></i><b>7.7</b> Übung 7.1</a></li>
-<li class="chapter" data-level="7.8" data-path="infer.html"><a href="infer.html#tgroup"><i class="fa fa-check"></i><b>7.8</b> Übung 7.2</a></li>
-<li class="chapter" data-level="7.9" data-path="infer.html"><a href="infer.html#tpaired"><i class="fa fa-check"></i><b>7.9</b> Übung 7.3</a></li>
-<li class="chapter" data-level="7.10" data-path="infer.html"><a href="infer.html#anhang"><i class="fa fa-check"></i><b>7.10</b> Anhang</a>
+<li class="chapter" data-level="7.6" data-path="infer.html"><a href="infer.html#übungen-7"><i class="fa fa-check"></i><b>7.6</b> Übungen 7</a>
 <ul>
-<li class="chapter" data-level="7.10.1" data-path="infer.html"><a href="infer.html#distr"><i class="fa fa-check"></i><b>7.10.1</b> Student-t vs. Normalverteilung</a></li>
+<li class="chapter" data-level="7.6.1" data-path="infer.html"><a href="infer.html#tvsmu"><i class="fa fa-check"></i><b>7.6.1</b> Übung 7.1</a></li>
+<li class="chapter" data-level="7.6.2" data-path="infer.html"><a href="infer.html#tgroup"><i class="fa fa-check"></i><b>7.6.2</b> Übung 7.2</a></li>
+<li class="chapter" data-level="7.6.3" data-path="infer.html"><a href="infer.html#tpaired"><i class="fa fa-check"></i><b>7.6.3</b> Übung 7.3</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="infer.html"><a href="infer.html#anhang-2"><i class="fa fa-check"></i><b>7.7</b> Anhang</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="infer.html"><a href="infer.html#distr"><i class="fa fa-check"></i><b>7.7.1</b> Student-t vs. Normalverteilung</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="zshg.html"><a href="zshg.html"><i class="fa fa-check"></i><b>8</b> Zusammenhangsmaße</a>
@@ -289,7 +298,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.3" data-path="zshg.html"><a href="zshg.html#zshg_nom"><i class="fa fa-check"></i><b>8.3</b> Nominal skalierte Variablen</a>
 <ul>
 <li class="chapter" data-level="8.3.1" data-path="zshg.html"><a href="zshg.html#chi2"><i class="fa fa-check"></i><b>8.3.1</b> Chi²-basierte Maße</a></li>
-<li class="chapter" data-level="8.3.2" data-path="zshg.html"><a href="zshg.html#cramers-upsilon"><i class="fa fa-check"></i><b>8.3.2</b> Cramer’s <span class="math inline">\(\upsilon\)</span></a></li>
+<li class="chapter" data-level="8.3.2" data-path="zshg.html"><a href="zshg.html#cramérs-upsilon"><i class="fa fa-check"></i><b>8.3.2</b> Cramér’s <span class="math inline">\(\upsilon\)</span></a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="zshg.html"><a href="zshg.html#welches-maß-richtig"><i class="fa fa-check"></i><b>8.4</b> Welches Maß richtig?</a></li>
 <li class="chapter" data-level="8.5" data-path="zshg.html"><a href="zshg.html#übungen-8"><i class="fa fa-check"></i><b>8.5</b> Übungen 8</a>
@@ -297,15 +306,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.5.1" data-path="zshg.html"><a href="zshg.html#met_ord"><i class="fa fa-check"></i><b>8.5.1</b> Übung 8-1</a></li>
 <li class="chapter" data-level="8.5.2" data-path="zshg.html"><a href="zshg.html#auf_nom"><i class="fa fa-check"></i><b>8.5.2</b> Übung 8-2</a></li>
 </ul></li>
-<li class="chapter" data-level="8.6" data-path="zshg.html"><a href="zshg.html#anhang-2"><i class="fa fa-check"></i><b>8.6</b> Anhang</a>
+<li class="chapter" data-level="8.6" data-path="zshg.html"><a href="zshg.html#anhang-3"><i class="fa fa-check"></i><b>8.6</b> Anhang</a>
 <ul>
-<li class="chapter" data-level="8.6.1" data-path="zshg.html"><a href="zshg.html#resid"><i class="fa fa-check"></i><b>8.6.1</b> Residuen</a></li>
-<li class="chapter" data-level="8.6.2" data-path="zshg.html"><a href="zshg.html#quad_res"><i class="fa fa-check"></i><b>8.6.2</b> Quadrierte Residuen</a></li>
-<li class="chapter" data-level="8.6.3" data-path="zshg.html"><a href="zshg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>8.6.3</b> Interpretation der Regression</a></li>
-<li class="chapter" data-level="8.6.4" data-path="zshg.html"><a href="zshg.html#reg_pred"><i class="fa fa-check"></i><b>8.6.4</b> Vorhergesagte Werte</a></li>
-<li class="chapter" data-level="8.6.5" data-path="zshg.html"><a href="zshg.html#resid2"><i class="fa fa-check"></i><b>8.6.5</b> Residuen Teil 2</a></li>
-<li class="chapter" data-level="8.6.6" data-path="zshg.html"><a href="zshg.html#r2"><i class="fa fa-check"></i><b>8.6.6</b> Modellgüte</a></li>
-<li class="chapter" data-level="8.6.7" data-path="zshg.html"><a href="zshg.html#indiff"><i class="fa fa-check"></i><b>8.6.7</b> Indifferenztabelle</a></li>
+<li class="chapter" data-level="8.6.1" data-path="zshg.html"><a href="zshg.html#indiff"><i class="fa fa-check"></i><b>8.6.1</b> Indifferenztabelle</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>9</b> Regressionsmodelle</a>
@@ -321,27 +324,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2.2" data-path="regression.html"><a href="regression.html#vergleich-mit-ttest"><i class="fa fa-check"></i><b>9.2.2</b> Vergleich mit <code>ttest</code></a></li>
 <li class="chapter" data-level="9.2.3" data-path="regression.html"><a href="regression.html#mehrere-ausprägungen"><i class="fa fa-check"></i><b>9.2.3</b> Mehrere Ausprägungen</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#mehrere-unabhängige-variablen"><i class="fa fa-check"></i><b>9.3</b> mehrere unabhängige Variablen</a></li>
+<li class="chapter" data-level="9.3" data-path="regression.html"><a href="regression.html#mehrere-unabhängige-variablen"><i class="fa fa-check"></i><b>9.3</b> mehrere unabhängige Variablen</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="regression.html"><a href="regression.html#interaktionsterme"><i class="fa fa-check"></i><b>9.3.1</b> Interaktionsterme</a></li>
+</ul></li>
 <li class="chapter" data-level="9.4" data-path="regression.html"><a href="regression.html#übungen-9"><i class="fa fa-check"></i><b>9.4</b> Übungen 9</a>
 <ul>
-<li class="chapter" data-level="9.4.1" data-path="regression.html"><a href="regression.html#übung-9-1"><i class="fa fa-check"></i><b>9.4.1</b> Übung 9-1</a></li>
+<li class="chapter" data-level="9.4.1" data-path="regression.html"><a href="regression.html#regue1"><i class="fa fa-check"></i><b>9.4.1</b> Übung 9-1</a></li>
+<li class="chapter" data-level="9.4.2" data-path="regression.html"><a href="regression.html#regue2"><i class="fa fa-check"></i><b>9.4.2</b> Übung 9-2</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="bg_reg.html"><a href="bg_reg.html"><i class="fa fa-check"></i><b>10</b> Idee einer Regression</a>
+<li class="chapter" data-level="9.5" data-path="regression.html"><a href="regression.html#anhang-4"><i class="fa fa-check"></i><b>9.5</b> Anhang</a>
 <ul>
-<li class="chapter" data-level="10.0.1" data-path="zshg.html"><a href="zshg.html#resid"><i class="fa fa-check"></i><b>10.0.1</b> Residuen</a></li>
-<li class="chapter" data-level="10.0.2" data-path="zshg.html"><a href="zshg.html#quad_res"><i class="fa fa-check"></i><b>10.0.2</b> Quadrierte Residuen</a></li>
-<li class="chapter" data-level="10.0.3" data-path="bg_reg.html"><a href="bg_reg.html#interpretation-der-regression-1"><i class="fa fa-check"></i><b>10.0.3</b> Interpretation der Regression</a></li>
-<li class="chapter" data-level="10.0.4" data-path="zshg.html"><a href="zshg.html#reg_pred"><i class="fa fa-check"></i><b>10.0.4</b> Vorhergesagte Werte</a></li>
-<li class="chapter" data-level="10.0.5" data-path="zshg.html"><a href="zshg.html#resid2"><i class="fa fa-check"></i><b>10.0.5</b> Residuen Teil 2</a></li>
-<li class="chapter" data-level="10.0.6" data-path="zshg.html"><a href="zshg.html#r2"><i class="fa fa-check"></i><b>10.0.6</b> Modellgüte</a></li>
+<li class="chapter" data-level="9.5.1" data-path="regression.html"><a href="regression.html#marginsplot-anpassen"><i class="fa fa-check"></i><b>9.5.1</b> <code>marginsplot</code> anpassen</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>11</b> Anhang - fortgeschrittene Themen</a>
+</ul></li>
+<li class="chapter" data-level="10" data-path="bg_reg.html"><a href="bg_reg.html"><i class="fa fa-check"></i><b>10</b> Regression Hintergründe</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>11.1</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
-<li class="chapter" data-level="11.2" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>11.2</b> Index bilden</a></li>
+<li class="chapter" data-level="10.0.1" data-path="bg_reg.html"><a href="bg_reg.html#resid"><i class="fa fa-check"></i><b>10.0.1</b> Residuen</a></li>
+<li class="chapter" data-level="10.0.2" data-path="bg_reg.html"><a href="bg_reg.html#quad_res"><i class="fa fa-check"></i><b>10.0.2</b> Quadrierte Residuen</a></li>
+<li class="chapter" data-level="10.0.3" data-path="bg_reg.html"><a href="bg_reg.html#interpretation-der-regression"><i class="fa fa-check"></i><b>10.0.3</b> Interpretation der Regression</a></li>
+<li class="chapter" data-level="10.0.4" data-path="bg_reg.html"><a href="bg_reg.html#reg_pred"><i class="fa fa-check"></i><b>10.0.4</b> Vorhergesagte Werte</a></li>
+<li class="chapter" data-level="10.0.5" data-path="bg_reg.html"><a href="bg_reg.html#resid2"><i class="fa fa-check"></i><b>10.0.5</b> Residuen Teil 2</a></li>
+<li class="chapter" data-level="10.0.6" data-path="bg_reg.html"><a href="bg_reg.html#r2"><i class="fa fa-check"></i><b>10.0.6</b> Modellgüte</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i>Test</a></li>
+<li class="chapter" data-level="11" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>11</b> Literatur</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="lit.html"><a href="lit.html#stata-1"><i class="fa fa-check"></i><b>11.1</b> Stata</a></li>
+<li class="chapter" data-level="11.2" data-path="lit.html"><a href="lit.html#statistik-lehrbücher"><i class="fa fa-check"></i><b>11.2</b> Statistik-Lehrbücher</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>12</b> Anhang - fortgeschrittene Themen</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>12.1</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
+<li class="chapter" data-level="12.2" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>12.2</b> Index bilden</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -525,17 +540,18 @@ F209_01         byte    %8.0g      F209_01    Arbeiten Sie in Schichtarbeit?</co
 <div id="lookfor" class="section level3" number="1.6.4">
 <h3><span class="header-section-number">1.6.4</span> <code>lookfor</code></h3>
 <p>All diese Befehle setzen aber voraus, dass wir wissen, unter welchem Variablennamen die interessierende Information abgelegt wurde. Mit <code>lookfor "stichwort"</code> können wir den Datensatz nach einem Stichwort durchsuchen:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="stata.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">lookfor</span> <span class="st">&quot;schicht&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="stata.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">lookfor</span> <span class="st">&quot;Englisch&quot;</span></span></code></pre></div>
 <pre><code> | is not a valid command name
 r(199);
 
               storage   display    value
 variable name   type    format     label      variable label
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-F209_01         byte    %8.0g      F209_01    Arbeiten Sie in Schichtarbeit?
-F210            byte    %8.0g      F210       In welchen Schichten arbeiten Sie in dieser TÃ¤tigkeit?
-F211            byte    %8.0g      F211       Um welche Schichten handelt es sich dabei?
-F210_01         byte    %8.0g      F210_01    Belastet Sie das? (Schichtarbeit)</code></pre>
+F404_01         byte    %8.0g      F404_01    Wie gut mÃ¼ssen Sie Englisch beherrschen? Sicher in Wort
+F404_02         byte    %8.0g      F404_02    Wie gut mÃ¼ssen Sie Englisch beherrschen? Sicher in Schrift
+F404_03         byte    %8.0g      F404_03    Wie gut mÃ¼ssen Sie Englisch beherrschen? Verhandlungssicher
+F404_09         byte    %8.0g      F404_09    Wie gut mÃ¼ssen Sie Englisch beherrschen? Keine Angabe
+F1606_02        byte    %8.0g      F1606_02   Muttersprache: Englisch</code></pre>
 <p>Alternativ können wir auch in der Variablenübersicht mit Hilfe des Suchfelds nach Variablen suchen:
 <img src="pics/01_Stata8_Datensatz_suche2.PNG" width="100%" style="display: block; margin: auto;" /></p>
 </div>

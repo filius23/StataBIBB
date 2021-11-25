@@ -27,3 +27,4 @@ list  intnr Bula gkpol Stib zpalter  in 1/10, nol // auch hier ohne labels anzei
 // Variablen & Bezeichnungen suchen
 lookfor "Englisch"
 lookfor "englisch" // Groß/Kleinschreibung wird ignoriert
+

@@ -263,12 +263,12 @@ list intnr Bula gkpol Stib zpalter in 1/5, nolabel
 
 All diese Befehle setzen aber voraus, dass wir wissen, unter welchem Variablennamen die interessierende Information abgelegt wurde. Mit `lookfor "stichwort"` können wir den Datensatz nach einem Stichwort durchsuchen:
 ```{stata lookf, eval = F}
-lookfor "schicht"
+lookfor "Englisch"
 ```
 ```{stata lookfb, echo = F}
 set linesize 200
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-lookfor "schicht"
+lookfor "Englisch"
 ```
 
 Alternativ können wir auch in der Variablenübersicht mit Hilfe des Suchfelds nach Variablen suchen:
