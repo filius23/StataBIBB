@@ -1,0 +1,363 @@
+# ANOVA {#hypo}
+
+```{r setup22, include=F}
+.libPaths("D:/R-library4") 
+library(tidyverse)
+library(ggplot2)
+library(LaCroixColoR)
+library(patchwork)
+library(Statamarkdown)
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+knitr::opts_chunk$set(engine.path=list(stata=stataexe))
+knitr::opts_chunk$set(collapse = F)
+knitr::opts_chunk$set(collectcode = F)
+
+# ak <- readr::read_delim("D:/oCloud/RFS/allbus_kumuliert.csv", delim = ";", col_types = cols(.default = col_double())) 
+# a14gr <- filter(ak, year == 2014, hs16>0 )
+```
+
+ANOVA steht für **an**alysis **o**f **v**ariance und wird auch als univariate Varianzanalyse bezeichnet. 
+
+ANOVA wird verwendet, um Mittelwertunterschiede zwischen 2 oder mehr Gruppen zu vergleichen. Dies geschieht, indem die Varianz in den Daten betrachtet wird (daher der Name). Insbesondere vergleicht ANOVA das Ausmaß der Variation zwischen den Gruppen (*between variance*) mit dem Ausmaß der Variation innerhalb der Gruppen (*within variance*).  Wir hatten diese Logik der Varianzzerlegung schon bei Regressionsmodellen kennengelernt:
+
+```{r anova_plt1,out.width = "80%",fig.height= 3.5, echo=F, fig.align="center" , eval = T, message=F}
+df <- data.frame(var1 = c(1,2,7,8),
+                 var2 = c(2,4,7,6)) %>% mutate(mean_var2 = mean(var2))
+m1 <- lm(var2~ var1, data = df)  
+df$pred_vorher <- m1$fitted.values
+
+ggplot(df, aes(x = var1, y = var2)) + geom_point(size = 3) + ggthemes::theme_stata() +
+  geom_hline(aes(yintercept = mean_var2), color = "grey50", size = .75, linetype = "dashed") +
+  geom_point(aes(x = var1, y = mean_var2), col = "darkorange", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = mean_var2), color = "red", size = .65, linetype = "dotted")  +
+  geom_smooth(method = "lm", color = "darkblue" , se = FALSE) +
+  geom_point(aes(x = var1, y = pred_vorher), color = "dodgerblue3", size = 3) +
+  geom_segment(aes(x = var1, xend = var1, y = var2, yend = pred_vorher), color = "dodgerblue3", size = .65, linetype = 1) +
+  theme(aspect.ratio = 1)
+```
+
+Hier hatten wir die Gesamtvarianz in erklärte und unerklärte Varianz zerlegt. Diese Sum of Squares bezeichnet Stata `Model` und `Residual`:
+```{stata regx_bsp, eval=F}
+use "https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta", clear
+reg var2 var1
+```
+
+```{stata regx_bsp1, collectcode=F, echo = F}
+set linesize 200
+qui use "D:\oCloud\Home-Cloud\Lehre\Methodenseminar\Stata_Skript\regression_bsp.dta", clear
+reg var2 var1
+```
+
+Diese Logik überträgt ANOVA auf kategoriale Variablen, indem hier die Varianz in eine Streuung zwischen (`between`) und innerhalb der (`within`) der Gruppen aufgeteilt wird:
+
+```{r anova_plot1,out.width = "100%", fig.height= 8, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
+eq <-  substitute(italic(bar(inc))) # formel erstellen
+eq2 <-  substitute(italic(bar(inc[m]))) # formel erstellen
+eq3 <-  substitute(italic(bar(inc[f]))) # formel erstellen
+
+
+
+df2 <- tibble(sex = rep(1:2,15)) %>% mutate(inc = runif(30,1500,3000) + ifelse(sex==1, 1806.5515,0))
+
+tot_plt <- 
+    df2 %>% 
+      mutate(mean = mean(inc,na.rm = T)) %>% 
+      group_by(sex) %>% 
+      mutate(mean_s = mean(inc,na.rm = T)) %>%
+      ungroup() %>%
+      sample_n(30) %>% 
+      mutate(id = 1:n() ) %>%  # %>% str_pad(.,width = 2,side = "left",pad = 0) %>%  paste0(sex,. ) %>% parse_number(.) ) %>% 
+      ggplot(.,aes(x = id, y = inc)) +
+      geom_segment(aes(yend= mean, xend = id , color = factor(sex)),
+                   size = .45, linetype = 2 ) +
+      geom_line(aes(x=id,y=mean), size = .75, color = "#B8A369") +
+      geom_point(size = 1.95,aes(color = factor(sex)) ) +
+      geom_label(aes(x = 20, y = mean, label = as.character(as.expression(eq))), 
+                 label.size = .01, hjust = 0.5, color = "#B8A369", fill = "white", parse = T, size = 4.5) +
+      scale_color_manual( values = c("#172869","#5E70B5"), name = "", breaks = 1:2, labels = c("Männer","Frauen")) +
+      guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
+                                 label.position ="right" , ncol = 2,reverse = F)  ) + 
+      labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Total variation") +
+      ggthemes::theme_stata(base_size = 13) +
+      expand_limits(y = c(1000,4800)) +
+      theme(axis.text.x = element_blank(), 
+            plot.title = element_text(hjust=.5),
+            plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot",
+            legend.background = element_rect(fill="grey95", size=.05),
+            legend.title = element_blank(),
+            legend.justification=c(0.5,0), legend.position=c(.5,0))
+wit_plt <-
+          df2 %>% 
+            mutate(mean = mean(inc,na.rm = T)) %>% 
+            group_by(sex) %>% 
+            mutate(mean_s = mean(inc,na.rm = T)) %>%
+            sample_n(15) %>%
+            ungroup() %>%
+            mutate(id = 1:n() %>% ifelse(sex==2,.+7,.)) %>%  
+            ggplot(.,aes(x = id, y = inc)) +
+            geom_segment(aes(yend= mean_s, xend = id , color = factor(sex)),
+                         size = .45, linetype = 2 ) +
+            geom_line(aes(x=id,y=mean_s,color = factor(sex), group =  factor(sex)), size = .75) +
+            geom_point(size = 1.95,aes(color = factor(sex)) )+ 
+            geom_label(data = data.frame(x1 = 16, mean_s1 = mean(df2$inc[df2$sex==1]), sex = 1),
+                       aes(x = x1, y = mean_s1, label = as.character(as.expression(eq2)) , color = factor(sex)), 
+                       label.size = .01, hjust = 0, fill = "white", parse = T, size = 4.5, show.legend = F) +
+            geom_label(data = data.frame(x1 = 22, mean_s1 = mean(df2$inc[df2$sex==2]), sex = 2),
+                       aes(x = x1, y = mean_s1, label = as.character(as.expression(eq3)) , color = factor(sex)), 
+                       label.size = .01, hjust = 1, fill = "white", parse = T, size = 4.5, show.legend = F) +
+            scale_color_manual( values = c("#172869","#5E70B5"), name = "", breaks = 1:2, labels = c("Männer","Frauen")) +
+            guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
+                                       label.position ="right" , ncol = 1,reverse = F)  ) + 
+            labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Within-group-variation") +
+            ggthemes::theme_stata(base_size = 9) +
+            expand_limits(y = c(1000,4800)) +
+            theme(axis.text.x = element_blank(), 
+                  plot.title = element_text(hjust=.5),
+                  plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot",
+                  legend.background = element_rect(fill="grey95", size=.05),
+                  legend.title = element_blank(),
+                  legend.justification=c(1,1), legend.position=c(1,1))
+
+
+bet_plt <-
+           df2 %>% 
+              mutate(mean = mean(inc,na.rm = T)) %>% 
+              group_by(sex) %>% 
+              mutate(mean_s = mean(inc,na.rm = T)) %>%
+              sample_n(15) %>%
+              ungroup() %>%
+              mutate(id = 1:n() %>% ifelse(sex==2,.+7,.)) %>%  
+              ggplot(.,aes(x = id, y = mean)) +
+              geom_point(size = 1.95,aes(y = inc,color = factor(sex)), alpha = .3 )+ 
+              geom_segment(aes(yend= mean_s, xend = id, color = factor(sex) ),
+                           linetype = "dotted", size = .65, show.legend = F) +
+              geom_line(aes(x=id,y=mean_s,color = factor(sex), group =  factor(sex)), size = .75) +
+              geom_hline(aes(yintercept = mean), color = "#B8A369", size = .75)  +
+              geom_label(data = data.frame(x1 = 16, mean_s1 = mean(df2$inc[df2$sex==1]), sex = 1),
+                         aes(x = x1, y = mean_s1, label = as.character(as.expression(eq2)) , color = factor(sex)), 
+                         label.size = .01, hjust = 0, fill = "white", parse = T, size = 4.5, show.legend = F) +
+              geom_label(data = data.frame(x1 = 22, mean_s1 = mean(df2$inc[df2$sex==2]), sex = 2),
+                         aes(x = x1, y = mean_s1, label = as.character(as.expression(eq3)) , color = factor(sex)), 
+                         label.size = .01, hjust = 1, fill = "white", parse = T, size = 4.5, show.legend = F) +
+              geom_label(aes(x = 20, y = mean, label = as.character(as.expression(eq))), label.size = .01, hjust = 0.5, color = "#B8A369", fill = "white", parse = T, size = 4.5) +
+              scale_color_manual( values = c("#172869","#5E70B5"), name = "", breaks = 1:2, labels = c("Männer","Frauen")) +
+              scale_linetype_manual(values = c(2,NA)) +
+              guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
+                                         label.position ="right" , ncol = 1,reverse = F)  ) + 
+              labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "between-group-variation") +
+              ggthemes::theme_stata(base_size = 9) +
+              expand_limits(y = c(1000,4800)) +
+              theme(axis.text.x = element_blank(), 
+                    plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot",
+                    legend.background = element_rect(fill="grey95", size=.05),
+                    legend.title = element_blank(),
+                    legend.justification=c(1,1), legend.position=c(1,1))
+
+tot_plt / (bet_plt | wit_plt )
+```
+
+Aus diesen beiden Streuungen berechnen wir wieder `Sum of squares`, welche dann ins Verhältnis gesetzt werden, um den sog. F-Wertb zu berechnen:
+
+$$F=\frac{\textbf{between}\;\texttt{Sum of Squares}}{\textbf{within}\;\texttt{Sum of Squares}}$$
+
+Wenn der durchschnittliche Unterschied zwischen den Gruppen ähnlich ist wie innerhalb der Gruppen, beträgt das F-Verhältnis etwa 1. Wenn der durchschnittliche Unterschied zwischen den Gruppen größer wird als der innerhalb der Gruppen, wird das F-Verhältnis größer als 1. Um einen P-Wert zu erhalten, kann er gegen die F-Verteilung einer Zufallsvariablen mit den mit dem Zähler und Nenner des Verhältnisses verbundenen Freiheitsgraden getestet werden (ähnlich wie beim F-Test oben). Der P-Wert ist die Wahrscheinlichkeit, dieses oder ein größeres F-Verhältnis zu erhalten. Größere F-Verhältnisse ergeben kleinere P-Werte.
+
+Mit `oneway F518_SUF S1, tabulate` bekommen wir bspw. die Varianzzerlegung der Einkommensangaben (`F518_SUF`) nach Geschlechtern (`S1`):
+```{stata anova1, eval =F }
+oneway F518_SUF S1, tabulate
+```
+
+```{stata anova2, echo =F }
+set linesize 200
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+oneway F518_SUF S1, tabulate
+```
+Die deskriptive Zusammenfassung oben liefert einige Deskriptionen: das arith. Mittel (`Mean`), die Standardabweichung (`Std. Dev.`) und die Stichprobengrößen (`Freq.`) für die abhängige Variable (Einkommen in unserem Beispiel) für jede Gruppe der unabhängigen Variable `S1` (also Frauen und Männer) sowie wenn alle Gruppen kombiniert werden (`Total`). 
+
+Die Stata-Ausgabe der einseitige ANOVA findet sich in der unteren Tabelle und zeigt an, ob wir einen statistisch signifikanten Unterschied zwischen unseren beiden Gruppenmittelwerten haben. Das Verhältnis von `between` und `within` wird unter `F` angegeben. Wir können sehen, dass das Signifikanzniveau `Prob > F` deutlich unter 0,05 liegt. Das legt einen statistisch signifikanten Unterschied im mittleren Einkommen den beiden Gruppen nahe. 
+
+Außerdem werden uns die Sum of Squares für die Unterschiede innerhalb und zwischen den Gruppen angezeigt. Wir sehen hier, dass die Varianz innerhalb der Gruppen die Gruppendifferenz deutlich übersteigt: die Sum of Squares zwischen den Gruppen sind mit `1.9886e+11` deutlich geringer als die Within-group SS `8.5219e+09`. 
+(`8.5219e+09` steht für `8,521,900,000`, also `4.883*10^9` ",`1.9886e+11` entspricht `198,860,000,000`).
+Wir können aus den Zahlen für die Sum of Squares auch die Varianzaufklärung durch die Variable `S1` berechnen (`between`/`Total`):
+
+```{stata dipl1r2}
+dis  (8.5219e+09/ 2.0738e+11)
+```
+Durch Kenntnis der Varibale `S1` können also 4.11% der gesamten Varianz ("Unterschiede") des Einkommens erklärt werden.
+
+
+### ANOVA vs. t-Tests
+
+Der t-Test wird beim Vergleich zweier Gruppen verwendet, während die ANOVA für den Vergleich von mehr als 2 Gruppen verwendet wird. Wenn wir den p-Wert unter Verwendung der ANOVA für 2 Gruppen berechnen, erhalten wir die gleichen Ergebnisse wie beim t-Test - hier also einen signifikanten Gruppenunterschied:
+```{stata ttest_anova1, eval =F }
+ttest F518_SUF, by(S1) unequ
+```
+
+```{stata  ttest_anova2, echo =F }
+set linesize 200
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+ttest F518_SUF, by(S1) unequ
+```
+
+### ANOVA vs. lineare Regression
+
+Die lineare Regression wird zur Analyse kontinuierlicher Beziehungen verwendet; die Regression ist jedoch im Wesentlichen die gleiche wie die ANOVA. Bei der ANOVA berechnen wir Mittelwerte und Abweichungen unserer Daten von den Mittelwerten. Bei der linearen Regression berechnen wir die beste Linie durch die Daten und berechnen die Abweichungen der Daten von dieser Linie. Stata gibt uns das F-Verhältnis bei Regressionsmodellen direkt mit aus. Zu beachten ist aber hier, dass wir für eine kategoriale unabhängige Variable `i.` voranstellen müssen:
+
+```{stata reg_anova, eval =F }
+reg F518_SUF i.S1
+```
+
+```{stata  reg_anova2, echo =F,collectcode = F }
+set linesize 200
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+reg F518_SUF i.S1
+```
+
++ die obere Tabelle entspricht dem Output von `oneway`: 
+  + die Sum of Squares innerhalb von `S1` betragen `1.9886e+11`, zwischen `S1` ist die Sum of Squares (`8.5219e+09`)
+  + Das Verhältnis der within und between Streuung beträgt `F(  1, 16633) =  712.78` (siehe Spalte `F` in `oneway`)
+  + die Variable `S1` kann 4,11% der Streuung der Einkommen erklären (`R-squared =  0.0411`), siehe unsere Berechnung oben
+
+- die untere Tabelle entspricht dem `ttest`:
+  + Frauen verdienen im Mittel `1431.809` weniger als Männer und dieser Unterschied ist statistisch signifikant  (vgl. `diff` bei `ttest`) 
+
+***
+
+[Übungen 3](#anova1)
+
+***
+
+
+## ANOVA mehrere Gruppen
+
+Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede für Variablen mit mehr als zwei Ausprägungen untersuchen lassen, bspw. Schulbildungsniveaus:
+
+```{r anova_plot2,out.width = "100%", fig.height= 8, dpi = 1000, echo=F, fig.align="center" , eval = T, message=F, warning =F}
+set.seed(023123)
+df3 <- tibble(educ = rep(1:5,8)) %>% mutate(inc = runif(40,1500,3000),
+                                                            inc = case_when(educ == 2 ~ inc + 347.0904,
+                                                                            educ == 3 ~ inc + 544.888 ,
+                                                                            educ == 4 ~ inc + 1074.884,
+                                                                            educ == 5 ~ inc + 1270.937,
+                                                                            TRUE ~ inc))
+
+ tot_plt3 <- 
+    df3 %>% 
+  mutate(mean = mean(inc,na.rm = T)) %>% 
+  group_by(educ) %>% 
+  mutate(mean_s = mean(inc,na.rm = T)) %>%
+  ungroup() %>%
+  mutate(id = 1:n() ) %>%  
+  ggplot(.,aes(x = id, y = inc)) +
+  geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75)  +
+  geom_segment(aes(yend= mean, xend = id , color = factor(educ)),
+                 size = .45, linetype = 2 ) +
+  geom_point(size = 1.95,aes(color = factor(educ)) ) +
+  scale_color_viridis_d(name = "", breaks = 1:5, labels = c("k.Abs.","Hauptschule","Mittlere Reife","Fachabi","Abi"), end = .75) +
+  scale_linetype_manual(values = c(2,NA)) +
+  guides(color= guide_legend(override.aes = list(shape = 15,size = 6) ,
+                             label.position ="right" , ncol = 3,reverse = F)  ) +  
+    labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Total variation") +
+    ggthemes::theme_stata(base_size = 13) +
+    expand_limits(y = c(1000,4800)) +
+      theme(axis.text.x = element_blank(), 
+            plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot",
+            legend.background = element_rect(fill=NA, color=NA),
+            legend.title = element_blank(),
+            legend.justification=c(1,0), legend.position=c(1,0))
+
+
+wit_plt3 <-
+  df3 %>% 
+  mutate(mean = mean(inc,na.rm = T)) %>% 
+  group_by(educ) %>% 
+  mutate(mean_s = mean(inc,na.rm = T)) %>%
+  ungroup() %>%
+  arrange(educ) %>% 
+  mutate(id = 1:n() ) %>%  
+  ggplot(.,aes(x = id, y = inc)) +
+  geom_segment(aes(yend= mean_s, xend = id , color = factor(educ)),
+               size = .45, linetype = 2 ) +
+  geom_line(aes(x=id,y=mean_s,color = factor(educ), group =  factor(educ)), size = .75) +
+  geom_point(size = 1.95,aes(color = factor(educ)) )+ 
+  scale_color_viridis_d(name = "", breaks = 1:5, labels = c("k.Abs.","Hauptschule","Mittlere Reife","Fachabi","Abi"), end = .75) +
+  guides(color= F) +
+  labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Within-group-variation") +
+  ggthemes::theme_stata(base_size = 7) +
+  expand_limits(y = c(1000,4800)) +
+  theme(axis.text.x = element_blank(), 
+        plot.title = element_text(hjust=.5),
+        plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot",
+        legend.background = element_rect(fill=NA, color=NA),
+        legend.title = element_blank(),
+        legend.justification=c(1,0), legend.position=c(1,0))
+
+  
+bet_plt3 <-
+  df3 %>% 
+  mutate(mean = mean(inc,na.rm = T)) %>% 
+  group_by(educ) %>% 
+  mutate(mean_s = mean(inc,na.rm = T)) %>%
+  ungroup() %>%
+    arrange(educ) %>% 
+  mutate(id = 1:n() ) %>% 
+  ggplot(.,aes(x = id, y = mean)) +
+  geom_point(size = 1.95,aes(y = inc,color = factor(educ)), alpha = .3 )+ 
+  geom_segment(aes(yend= mean_s, xend = id, color = factor(educ)), 
+               linetype = "dotted", size = .45, show.legend = F) +
+  geom_line(aes(x=id,y=mean_s,color = factor(educ), group =  factor(educ)), size = .5) +
+  geom_hline(aes(yintercept = mean), color = "#AF6125", size = .75)  +
+  scale_color_viridis_d(name = "", breaks = 1:5, labels = c("k.Abs.","Hauptschule","Mittlere Reife","Fachabi","Abi"), end = .75) +
+  scale_linetype_manual(values = c(1,NA)) +
+  guides(color= F  ) + 
+  labs(y = "Einkommen (inc)", x = "", caption = "Fiktive Daten", title = "Between-group-variation") +
+  ggthemes::theme_stata(base_size = 7) +
+  expand_limits(y = c(1000,4800)) +
+  theme(axis.text.x = element_blank(), 
+        plot.caption = element_text(size = rel(.75)), plot.caption.position = "plot",
+        legend.background = element_rect(fill=NA, color=NA),
+        legend.title = element_blank(),
+        legend.justification=c(1,0), legend.position=c(1,0))
+
+tot_plt3 / (bet_plt3 | wit_plt3 )
+```
+
+
+```{stata anova3groupts, eval = F}
+oneway F518_SUF m1202, tabulate
+```
+
+```{stata anova3groupts2, echo = F,,collectcode = F }
+set linesize 200
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+oneway F518_SUF m1202, tabulate
+```
+
+Wir erkennen:
+
++ dass signifikante Gruppenunterschiede bestehen: `Prob > F` ist deutlich < 0,05
++ Kenntnis von `m1202` kann 
++ dass Befragte mit einem Abschluss der Fachhochschule, Universität/ geh., höhere Beamte die höchsten Durchschnittseinkommen haben (`Mean` = `4643.9031`), Befatgte ohne Berufsabschluss die niedrigsten (`Mean` = `2150.7608`) usw.
+
+Auch hier der Vergleich zu Regressionsmodellen einer kategorialen UV:
+
+```{stata reg_anova3, eval =F }
+reg F518_SUF i.m1202
+```
+
+```{stata  reg_anova4, echo =F , collectcode = F}
+set linesize 200
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+reg F518_SUF i.m1202
+```
+
+
+$\rightarrow$ hier sind die Koeffizienten jeweils auf den Vergleich zu `educ=1` zu interpretieren:
+
++ Befragte mit dualer o. schulischer Berufsausbildung/einf.,mittl. Beamte verdienen im Schnitt  586.0038 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist aber statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit  Aufstiegsfortbildung verdienen im Schnitt 1483.236 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist aber statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit Abschluss einer Fachhochschule, Universität/ geh., höhere Beamte verdienen im Schnitt 2493.142 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist aber statistisch signifikant (`P>|t|` < 0,05).
+
+
+

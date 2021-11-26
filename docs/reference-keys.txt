@@ -143,3 +143,7 @@ lit
 stata-1
 statistik-lehrbücher
 anhang-4
+hypo
+anova-vs.-t-tests
+anova-vs.-lineare-regression
+anova-mehrere-gruppen

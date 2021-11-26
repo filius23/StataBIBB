@@ -7,5 +7,6 @@ language:
 rmd_files: ['index.Rmd','01-IntroI.Rmd','02-Datensaetze.Rmd','03_Deskription.Rmd','04_if_label.Rmd','05_gen.Rmd','06_egen.Rmd','07_gewichtung.Rmd',
 '08_zshg.Rmd', '09_mreg.Rmd',
 '21_bgregression.Rmd',
+'22_anova.Rmd',
 '30_literatur.Rmd',
 '31_appendix.Rmd']
