@@ -85,6 +85,8 @@ Außerdem sehen wir oben links in der Spalte `SS` die ["Sum of Squares"](#quad_r
 In der Spalte `P>|t|` und `t` sehen wir die Ergebnisse eines t-Tests für die jeweiligen Koeffizienten. Hier wird der Koeffizient (sprich: die Steigung der Geraden) "gegen Null" getestet. Ist der Zusammenhang zwischen dem Alter der Befragten und ihrem Fernsehkonsum in der Population nicht eigentlich 0?
         
 $$H_0:\, \mu_{Koeff(var1)} = 0  \qquad H_A: \mu_{Koeff(var1)} \neq 0$$
+
+
 Was hier also gemacht wird, ist ein t-Test für `0.5810811` vs. $\mu=0$. Unter `P>|t|` erkennen wir hier aber, dass die Irrtumswahrscheinlichkeit für die Ablehnung der $H_0$ größer als 0,05 ist. Dementsprechend verwerfen wir die Nullhypothese nicht (wonach $\beta1$ = 0 ist) und können hier nicht einen statistisch signifikanten Zusammenhang sprechen.
       
 ***
@@ -148,10 +150,10 @@ predict pred_vorher, xb
 ```
 Hier wird also gerechnet:
         
-$$2.1351 + 0.5810811 * 1 = 2.716216$$
-$$2.1351 + 0.5810811 * 2 = 3.297297$$
-$$2.1351 + 0.5810811 * 7 = 6.202703$$
-$$2.1351 + 0.5810811 * 8 = 6.783784$$
++ `2.1351 + 0.5810811 * 1 = 2.716216`  
++ `2.1351 + 0.5810811 * 2 = 3.297297`  
++ `2.1351 + 0.5810811 * 7 = 6.202703`  
++ `2.1351 + 0.5810811 * 8 = 6.783784`  
         
 ```{r predx, echo=F}
 m1 <- lm(var2~ var1, data = df)  
@@ -222,6 +224,36 @@ ggplot(df2,aes(x,y)) +
     strip.text = element_blank()) 
 
 ```
+
+Außerdem entspricht der Korrelationskoeffizient der Wurzel von $R^2$ oder umgekfehrt: $(R^2)^2$ entspricht dem quadrierten Korrelationskoeffizienten:
+
+
+```{stata corr_r2reg2, eval=F}
+reg var2 var1, notable // notable um regtabelle auszublenden
+```
+```{stata corr_r2reg, echo=F}
+qui use "regression_bsp.dta", clear
+reg var2 var1, notable
+```
+
+```{stata corr_r2corv, eval=F}
+pwcorr var2 var1
+```
+```{stata corr_r2corc, echo=F}
+qui use "regression_bsp.dta", clear
+pwcorr var2 var1
+```
+
+
+```{stata r2corr, collectcode = F}
+dis sqrt(0.8470) // R² zu corr
+```
+
+```{stata r2corr2, collectcode = F}
+dis 0.9203^2 // corr zu R²
+```
+
+
 
 
 ***
