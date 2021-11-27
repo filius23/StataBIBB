@@ -170,7 +170,7 @@ oneway F518_SUF S1, tabulate
 
 ```{stata anova2, echo =F }
 set linesize 200
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta",clear
 oneway F518_SUF S1, tabulate
 ```
 Die deskriptive Zusammenfassung oben liefert einige Deskriptionen: das arith. Mittel (`Mean`), die Standardabweichung (`Std. Dev.`) und die Stichprobengrößen (`Freq.`) für die abhängige Variable (Einkommen in unserem Beispiel) für jede Gruppe der unabhängigen Variable `S1` (also Frauen und Männer) sowie wenn alle Gruppen kombiniert werden (`Total`). 
@@ -196,7 +196,7 @@ ttest F518_SUF, by(S1) unequ
 
 ```{stata  ttest_anova2, echo =F }
 set linesize 200
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta",clear
 ttest F518_SUF, by(S1) unequ
 ```
 
@@ -210,7 +210,7 @@ reg F518_SUF i.S1
 
 ```{stata  reg_anova2, echo =F,collectcode = F }
 set linesize 200
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta",clear
 reg F518_SUF i.S1
 ```
 
@@ -330,7 +330,7 @@ oneway F518_SUF m1202, tabulate
 
 ```{stata anova3groupts2, echo = F,,collectcode = F }
 set linesize 200
-qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta",clear
 oneway F518_SUF m1202, tabulate
 ```
 
