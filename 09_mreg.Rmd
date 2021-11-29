@@ -8,8 +8,8 @@ library(Statamarkdown)
 library(tidyverse)
 library(kableExtra)
 library(scico)
-# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
-stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+# stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 options(width = 200)
 df <- data.frame(var1 = c(1,2,7,8),
@@ -137,7 +137,7 @@ Alternativ können wir uns die Tipparbeit auch sparen, indem wir erst `reg` lauf
 ```{stata pre_dis2, eval = F}
 display _b[_cons] + _b[var1] * 5
 ```
-```{stata pre_dis2T, echo=F}
+```{stata pre_dis2T, echo=F, collectcode = F}
 use "regression_bsp.dta", clear
 qui reg var2 var1
 display _b[_cons] + _b[var1] * 5

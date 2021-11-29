@@ -68,7 +68,7 @@ list S1 if zpalter > 81 & F518_SUF < 1000
 
 Mit `|` können wir hingegen Fälle auswählen, für welche die ein *oder* die andere Bedingung zutrifft:
 ```{stata if7, eval = F}
-tabulate S1 if zpalter == 81 | inc < 1000 // 81 Jahre alt oder unter 1000EUR Einkommen
+tabulate S1 if zpalter == 81 | F518_SUF < 1000 // 81 Jahre alt oder unter 1000EUR Einkommen
 ```
 
 Mit `inrange` können wir Auswahlen auf einen Wertebereich eingrenzen - d.h. diese beiden Auswahlen führen zum gleichen Ergebnis (nur Befragte, die zwischen 20 und 30 Jahre alt sind):
@@ -84,7 +84,7 @@ tabulate S1 if inlist(zpalter,15,79,80,82)
 ```
 
 
-### Labels 
+## Labels 
 
 Genauso könnten wir auch vorgehen wenn wir nur männliche oder weibliche Befragte betrachten möchten. Hier nochmal die Auszählung der Variable `S1`:
 ```{stata tab3, eval = F}
@@ -135,7 +135,7 @@ tabulate S1 if S1 == 2
 
 Mehr zu labels [hier](#adva)
 
-### Fehlende Werte {#miss_if}
+## Fehlende Werte {#miss_if}
 
 Eine häufige Fehlerquelle bei fehlende Werten in Stata ist deren Verhältnis zu `>`. 
 Fehlende Werte werden nämlich von Stata als "unendlich groß" gewertet! 
@@ -210,14 +210,15 @@ describe, short
 
 (@) Ersetzen Sie die Werte 9999 in `zpalter` mit `.`: `mvdecode zpalter, mv(9999)`
 
-(@) Lassen Sie sich eine Häufigkeitsauszählung der Wohnortgröße für folgende Gruppen ausgeben:
+(@) Lassen Sie sich die Wohngröße (`gkpol`) für alle Befragte mit fehlender Altersangabe ausgeben.
+
+(@) Lassen Sie sich eine Häufigkeitsauszählung der Wohnortgröße (`tab gkpol`) für folgende Gruppen ausgeben:
   + Befragte, die jünger als 30 Jahre alt sind (das Alter ist in `zpalter` abgelegt)
   + Befragte, die älter als 60 Jahre alt sind (Denken Sie an den Umgang mit Missings!)
   + Befragte, die jünger als 30 Jahre alt und weiblich sind (das Geschlecht ist in `S1` erfasst)
-  + Befragte, die jünger als 30 Jahre alt sind oder älter als 60 Jahre alt sind  
   + Befragte, die zwischen 30 und 60 Jahre alt sind
+  + Befragte, die jünger als 30 Jahre alt sind oder älter als 60 Jahre alt sind  
   
-(@) Lassen Sie sich die Wohngröße (`gkpol`) für alle Befragte mit fehlender Altersangabe ausgeben.
   
 (@) Löschen Sie alle Beobachtungen von Befragten aus Städten mit 500.000 Einwohnern und mehr aus dem Speicher. Denken Sie an die Unterscheidung zwischen Labels und Zahlenwerten.
 

@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-11-23" />
+<meta name="date" content="2021-11-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -349,15 +349,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.0.5" data-path="bg_reg.html"><a href="bg_reg.html#resid2"><i class="fa fa-check"></i><b>10.0.5</b> Residuen Teil 2</a></li>
 <li class="chapter" data-level="10.0.6" data-path="bg_reg.html"><a href="bg_reg.html#r2"><i class="fa fa-check"></i><b>10.0.6</b> Modellgüte</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>11</b> Literatur</a>
+<li class="chapter" data-level="11" data-path="anova.html"><a href="anova.html"><i class="fa fa-check"></i><b>11</b> ANOVA</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="lit.html"><a href="lit.html#stata-1"><i class="fa fa-check"></i><b>11.1</b> Stata</a></li>
-<li class="chapter" data-level="11.2" data-path="lit.html"><a href="lit.html#statistik-lehrbücher"><i class="fa fa-check"></i><b>11.2</b> Statistik-Lehrbücher</a></li>
+<li class="chapter" data-level="11.0.1" data-path="anova.html"><a href="anova.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>11.0.1</b> ANOVA vs. t-Tests</a></li>
+<li class="chapter" data-level="11.0.2" data-path="anova.html"><a href="anova.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>11.0.2</b> ANOVA vs. lineare Regression</a></li>
+<li class="chapter" data-level="11.1" data-path="anova.html"><a href="anova.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>11.1</b> ANOVA mehrere Gruppen</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>12</b> Anhang - fortgeschrittene Themen</a>
+<li class="chapter" data-level="12" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>12</b> Literatur</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>12.1</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
-<li class="chapter" data-level="12.2" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>12.2</b> Index bilden</a></li>
+<li class="chapter" data-level="12.1" data-path="lit.html"><a href="lit.html#stata-1"><i class="fa fa-check"></i><b>12.1</b> Stata</a></li>
+<li class="chapter" data-level="12.2" data-path="lit.html"><a href="lit.html#statistik-lehrbücher"><i class="fa fa-check"></i><b>12.2</b> Statistik-Lehrbücher</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="appendix.html"><a href="appendix.html"><i class="fa fa-check"></i><b>13</b> Anhang - fortgeschrittene Themen</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>13.1</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
+<li class="chapter" data-level="13.2" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>13.2</b> Index bilden</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -681,6 +687,7 @@ weiblich |  47.90402        50  114.8336  .2236982
 ------------------------</code></pre>
 <p>In unseren Datensatz beträgt der Varianz des Alters also 128,5417 Jahre². Auf der Varianz beruhen noch zwei weitere Streuungsmaße. Die <strong>Standardabweichung</strong> entspricht der Wurzel der Varianz und hat somit die gleiche Maßeinheit wie die Variable (hier also Jahre):</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="desc1.html#cb17-1" aria-hidden="true" tabindex="-1"></a>dis <span class="fu">sqrt</span>(128.5417)</span></code></pre></div>
+<pre><code></code></pre>
 <p>Wir können die Standardabweichung auch mit <code>tabstat , s(sd)</code> berechnen:</p>
 <pre><code>r(111);
 
@@ -691,13 +698,13 @@ r(111);</code></pre>
      zpalter |  11.33762
 ------------------------</code></pre>
 <p>Der <strong>Variationskoeffizient</strong> entspricht <code>sd</code>/<code>mean</code> und dient dem Vergleich verschiedener Streuungen relativ zum jeweiligen Mittelwert, <code>tabstat , s(cv)</code> übernimmt die Berechnung für uns:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="desc1.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(cv)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="desc1.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(cv)</span></code></pre></div>
 <pre><code>    variable |        cv
 -------------+----------
      zpalter |  .2402432
 ------------------------</code></pre>
 <p>Somit können wir bspw. mit Hilfe von <code>,by(S1)</code> die Streuung des Alters bei männlichen und weiblichen Befragten vergleichen:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="desc1.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(cv) <span class="kw">by</span>(S1)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="desc1.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> zpalter, <span class="fu">s</span>(cv) <span class="kw">by</span>(S1)</span></code></pre></div>
 <pre><code>Summary for variables: zpalter
      by categories of: S1 (Geschlecht)
 
@@ -720,13 +727,13 @@ weiblich |  .2236982
 <p><img src="StataBIBB1_files/figure-html/gini_plot1-1.png" width="75%" height="75%" style="display: block; margin: auto;" /></p>
 <p><img src="StataBIBB1_files/figure-html/gini_plot-1.png" width="75%" height="75%" style="display: block; margin: auto;" />
 Den Gini-Koeffizienten können wir mit <code>fastgini</code> berechnen, allerdings müssen wir diesen Befehl erst (einmalig) installieren:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="desc1.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install fastgini</span>
-<span id="cb24-2"><a href="desc1.html#cb24-2" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb25-1"><a href="desc1.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ssc</span> install fastgini</span>
+<span id="cb25-2"><a href="desc1.html#cb25-2" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3543509</code></pre>
 <p>Leider funktioniert <code>by(S1)</code> bei <code>fastgini</code> nicht, wir müssen hier auf die Variante mit <a href="#if_vgl"><code>if</code></a> zurückgreifen:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="desc1.html#cb26-1" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF <span class="kw">if</span> S1 == 1</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb27-1"><a href="desc1.html#cb27-1" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF <span class="kw">if</span> S1 == 1</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3361488</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="desc1.html#cb28-1" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF <span class="kw">if</span> S1 == 2</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="desc1.html#cb29-1" aria-hidden="true" tabindex="-1"></a>fastgini F518_SUF <span class="kw">if</span> S1 == 2</span></code></pre></div>
 <pre><code>Gini coefficient = 0.3403522</code></pre>
 <p><span class="math inline">\(\Rightarrow\)</span> <em>Wo sind die Einkommen also ungleicher verteilt?</em><a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>Anmerkung: hier wurden die Missings in <code>F518_SUF</code> mit <code>mvdecode F518_SUF, mv(99998/ 99999)</code> ausgeschlossen.</p>
@@ -821,7 +828,7 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 <div id="kennzahlvergleich-mit-tabulate-und-der-option-summarize" class="section level3" number="3.3.6">
 <h3><span class="header-section-number">3.3.6</span> Kennzahlvergleich mit <code>tabulate</code> und der Option <code>summarize()</code></h3>
 <p>Wir können aber auch zwei Variablen für den Kennzahlenvergleich verwenden. Bspw. sind neben Ost-West-Vergleichen auch häufig Geschlechterunterschiede von Interesse. Stata stellt uns damit mit der <code>summarise</code>-Option eine einfache Möglichkeit zur Verfügung:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="desc1.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> gkpol S1, <span class="kw">summarize</span>(zpalter)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb31-1"><a href="desc1.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> gkpol S1, <span class="kw">summarize</span>(zpalter)</span></code></pre></div>
 <pre><code>    Means, Standard Deviations and Frequencies of Alter der Zielperson
 
 Gemeindeke |
@@ -832,21 +839,27 @@ Gemeindeke |
            | 11.895558  10.125739 | 11.045336
            |       524        553 |      1077
 -----------+----------------------+----------
+ 2.000 bis | 47.105583  48.097239 | 47.604104
            | 11.528812  10.123345 | 10.853112
            |       824        833 |      1657
 -----------+----------------------+----------
+ 5.000 bis | 46.950241  48.454472 | 47.697496
            | 11.767926  10.325446 | 11.099255
            |      2492       2460 |      4952
 -----------+----------------------+----------
+ 20.000 bi | 46.828571  48.448415 | 47.626989
            | 11.927508  10.376175 | 11.217466
            |      1785       1735 |      3520
 -----------+----------------------+----------
+ 50.000 bi | 47.419082  48.321019 | 47.858029
            | 11.652443  10.927936 | 11.311145
            |       828        785 |      1613
 -----------+----------------------+----------
+ 100.000 b | 46.102136  47.590244 | 46.830208
            | 12.102087  11.040658 | 11.616799
            |      1498       1435 |      2933
 -----------+----------------------+----------
+ 500.000 u | 45.084846    46.4978 |  45.79236
            | 11.910822  11.391779 | 11.673784
            |      2039       2045 |      4084
 -----------+----------------------+----------

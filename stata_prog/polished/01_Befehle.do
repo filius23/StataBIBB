@@ -1,3 +1,6 @@
+* -------------------------------- *
+* Session 1: erste Schritte
+* -------------------------------- *
 ﻿// Taschenrechnerfunktion
 display 3 + 12
 display sqrt(9)

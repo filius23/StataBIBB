@@ -3,8 +3,8 @@
 
 ```{r setup1, echo = F, message=F, warning = F}
 if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
-# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
-stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+# stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 library(Statamarkdown)
 library(tidyverse)
@@ -291,6 +291,7 @@ knitr::include_graphics("./pics/01_Stata8_Datensatz_suche2.PNG")
   + In welchem Arbeitsverzeichnis befindet sich Stata aktuell? Wo können Sie das erkennen? 
   + In welchem Ordner haben Sie den Erwerbstätigenbefragung Datensatz abgelegt? 
   + Navigieren Sie Stata mit `cd` in diesen Ordner, in dem der Datensatz abgelegt ist! 
+  + Lesen Sie den Datensatz mit  `use` ein
   
 (@) Nutzen Sie `describe` und `browse`, um sich einen Überblick über den Datensatz zu verschaffen.
 (@) Wie viele Variablen und wie viele Fälle enthält der Datensatz?

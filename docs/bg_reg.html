@@ -53,6 +53,8 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -386,8 +388,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="bg_reg" class="section level1" number="10">
 <h1><span class="header-section-number">10</span> Regression Hintergründe</h1>
 <p>Zum Einstieg betrachten wir zunächst einen (fiktiven) Datensatz mit lediglich 4 Fällen und lediglich zwei Variablen: <code>var1</code> und <code>var2</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="bg_reg.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb1-2"><a href="bg_reg.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb260-1"><a href="bg_reg.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb260-2"><a href="bg_reg.html#cb260-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2
 1    1    2
 2    2    4
@@ -395,8 +397,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 4    8    6</code></pre>
 <p><img src="StataBIBB1_files/figure-html/regplot1-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Ziel der Regression ist es, den Zusammenhang zwischen diesen beiden Variablen zu bestimmen. Gibt es einen Trend, in dem Sinn, dass ein höherer Wert von <code>var1</code> mit einem höheren oder niedrigeren Wert von <code>var2</code> einhergeht?</p>
-<p>Etwas anders gesagt könnte man auch fragen, welchen Wert für <code>var2</code> wir vorhersagen würden, wenn wir <code>var1</code> kennen. Ein Ausgangspunkt ist das arithmetische Mittel. Dieses können wir mit <code>mean</code> zB für <code>var2</code> berechnen.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Diesen Wert fügen wir als neue Spalte <code>mean_var2</code> in den Datensatz ein:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="bg_reg.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> mean_var2 = <span class="kw">mean</span>(var2)</span></code></pre></div>
+<p>Etwas anders gesagt könnte man auch fragen, welchen Wert für <code>var2</code> wir vorhersagen würden, wenn wir <code>var1</code> kennen. Ein Ausgangspunkt ist das arithmetische Mittel. Dieses können wir mit <code>mean</code> zB für <code>var2</code> berechnen.<a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a> Diesen Wert fügen wir als neue Spalte <code>mean_var2</code> in den Datensatz ein:</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb262-1"><a href="bg_reg.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> mean_var2 = <span class="kw">mean</span>(var2)</span></code></pre></div>
 <pre><code>  var1 var2 mean_var2
 1    1    2      4.75
 2    2    4      4.75
@@ -412,14 +414,14 @@ Müssten wir eine Prognose für die Werte von <code>var2</code> abgeben, wäre d
 Als Formel wird das in der Regel wie folgt dargestellt:
 <span class="math display">\[\epsilon_{\text{i}} = \text{y}_{i} - \hat{\text{y}}_{i}\]</span></p>
 <p>Wir können also die Residuen als Differenz zwischen <code>var2</code> und <code>mean</code> berechnen und in <code>df</code> ablegen:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="bg_reg.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> m_abw = var2 - mean_var2</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb264-1"><a href="bg_reg.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> m_abw = var2 - mean_var2</span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw
 1    1    2      4.75 -2.75
 2    2    4      4.75 -0.75
 3    7    7      4.75  2.25
 4    8    6      4.75  1.25</code></pre>
 <p><img src="StataBIBB1_files/figure-html/res_pl1-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><span class="math inline">\(\rightarrow\)</span> Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p><span class="math inline">\(\rightarrow\)</span> Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?<a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a></p>
 <p>Die horizontale Linie für das arithm. Mittel ist aber sehr deutlich nicht die beste Methode, um die Werte für <code>var2</code> vorherzusagen. In der Graphik können wir deutlich sehen, dass die Werte “weiter links,” also mit geringeren Werten für <code>var1</code>, auch geringere Werte für <code>var2</code> aufweisen. Wir könnten also unseren Vorhersagefehler bzw. das <em>Residuum</em> minimieren indem wir die Linie drehen. Die Idee der Regressionsanalyse ist es dabei, die Residuuen zu minimieren. Was würde aber passieren wenn wir die Residuen aus der Mittelwertsvorhersage aufsummieren, um Sie dann zu minimieren?</p>
 </div>
 <div id="quad_res" class="section level3" number="10.0.2">
@@ -432,8 +434,8 @@ Als Formel wird das in der Regel wie folgt dargestellt:
 <p><strong>Die Summe der Resiuden auf Basis des arith. Mittels ist immer Null!</strong><br />
 Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang wie gestrichelten Linien nach unten.
 Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="bg_reg.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> m_abw2 = m_abw^2 </span>
-<span id="cb8-2"><a href="bg_reg.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> m_abw2, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb267-1"><a href="bg_reg.html#cb267-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> m_abw2 = m_abw^2 </span>
+<span id="cb267-2"><a href="bg_reg.html#cb267-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> m_abw2, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw m_abw2
 1    1    2      4.75 -2.75 7.5625
 2    2    4      4.75 -0.75 0.5625
@@ -444,8 +446,11 @@ Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wi
 <div id="interpretation-der-regression" class="section level3" number="10.0.3">
 <h3><span class="header-section-number">10.0.3</span> Interpretation der Regression</h3>
 <p>Die Minimierung erledigt <code>reg</code> für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die <em>abhängige</em> Variable) und dann das Merkmal für die x-Achse (<em>unabhängige</em> Variable) an. Ein positiver Wert unter <code>Coef.</code> in der Zeile von <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>. Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="bg_reg.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =         4
+<div class="sourceCode" id="cb270"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb270-1"><a href="bg_reg.html#cb270-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<pre><code> | is not a valid command name
+r(199);
+
+      Source |       SS           df       MS      Number of obs   =         4
 -------------+----------------------------------   F(1, 2)         =     11.07
        Model |  12.4932432         1  12.4932432   Prob &gt; F        =    0.0797
     Residual |  2.25675676         2  1.12837838   R-squared       =    0.8470
@@ -459,14 +464,27 @@ Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wi
        _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
 ------------------------------------------------------------------------------</code></pre>
 <p>In unserer Grafik sieht diese Gerade so aus:
-<img src="StataBIBB1_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<img src="StataBIBB1_files/figure-html/unnamed-chunk-34-1.png" width="80%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="reg_pred" class="section level3" number="10.0.4">
 <h3><span class="header-section-number">10.0.4</span> Vorhergesagte Werte</h3>
 <p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade?
-Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert neben <code>_cons</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="bg_reg.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
-<pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert neben <code>_cons</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a></p>
+<div class="sourceCode" id="cb272"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb272-1"><a href="bg_reg.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
+<pre><code> | is not a valid command name
+r(199);
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
         var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
        _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
@@ -475,54 +493,68 @@ Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der S
 <p><span class="math display">\[\widehat{var2}=\texttt{Intercept} + 0.5811 \times \texttt{var1}\]</span><br />
 Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811*1= 2.7162</p>
 <p>Die vorhergesagten Werte können wir auch mit <code>predict</code> berechnen und in einer neuen Variable <code>pred_vorher</code> ablegen:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="bg_reg.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> pred_vorher, <span class="kw">xb</span></span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb274-1"><a href="bg_reg.html#cb274-1" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> pred_vorher, <span class="kw">xb</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher
 1    1    2      4.75 -2.75 7.5625         2.7162    2.716216
 2    2    4      4.75 -0.75 0.5625         3.2973    3.297297
 3    7    7      4.75  2.25 5.0625         6.2028    6.202703
 4    8    6      4.75  1.25 1.5625         6.7839    6.783784</code></pre>
 <p>Die Grafik zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für <code>var1</code>.
-<img src="StataBIBB1_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
+<img src="StataBIBB1_files/figure-html/unnamed-chunk-39-1.png" width="80%" style="display: block; margin: auto;" />
 Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des <code>mean</code>.</p>
 </div>
 <div id="resid2" class="section level3" number="10.0.5">
 <h3><span class="header-section-number">10.0.5</span> Residuen Teil 2</h3>
 <p>Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlichen Werten. Es gibt also auch hier wieder <a href="bg_reg.html#resid">Residuen</a>, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="bg_reg.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> res = var2 - pred_vorher </span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb276-1"><a href="bg_reg.html#cb276-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> res = var2 - pred_vorher </span></code></pre></div>
 <p>Oder wir können Sie mit <code>predict neue_variable , residuals</code> erstellen:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="bg_reg.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1 <span class="co">// zunächst nochmal die regression laufen lassen</span></span>
-<span id="cb18-2"><a href="bg_reg.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> p_res , residuals</span>
-<span id="cb18-3"><a href="bg_reg.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb277"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb277-1"><a href="bg_reg.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1 <span class="co">// zunächst nochmal die regression laufen lassen</span></span>
+<span id="cb277-2"><a href="bg_reg.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> p_res , residuals</span>
+<span id="cb277-3"><a href="bg_reg.html#cb277-3" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher        res      p_res
 1    1    2      4.75 -2.75 7.5625         2.7162    2.716216 -0.7162162 -0.7162162
 2    2    4      4.75 -0.75 0.5625         3.2973    3.297297  0.7027027  0.7027027
 3    7    7      4.75  2.25 5.0625         6.2028    6.202703  0.7972973  0.7972973
 4    8    6      4.75  1.25 1.5625         6.7839    6.783784 -0.7837838 -0.7837838</code></pre>
 <p>Hier sind die Residuen für <code>p_res</code> als hellblaue Linien eingezeichnet:
-<img src="StataBIBB1_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
-<span class="math inline">\(\rightarrow\)</span> <em>Wie groß ist die (einfache) Summe der Residuen für <code>pred_vorher</code>?</em><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<img src="StataBIBB1_files/figure-html/unnamed-chunk-43-1.png" width="80%" style="display: block; margin: auto;" />
+<span class="math inline">\(\rightarrow\)</span> <em>Wie groß ist die (einfache) Summe der Residuen für <code>pred_vorher</code>?</em><a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a></p>
 </div>
 <div id="r2" class="section level3" number="10.0.6">
 <h3><span class="header-section-number">10.0.6</span> Modellgüte</h3>
 <p>Um zu beurteilen, um wieviel besser unsere Gerade aus <code>reg</code> die Werte vorhersagen kann als der <code>mean</code> können wir die Summe der quadrierten Residuen vergleichen. Dazu quadrieren wir also die Residuen:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="bg_reg.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> res2 = res^2</span>
-<span id="cb20-2"><a href="bg_reg.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
+<div class="sourceCode" id="cb279"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb279-1"><a href="bg_reg.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> res2 = res^2</span>
+<span id="cb279-2"><a href="bg_reg.html#cb279-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
 <pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher        res      res2
 1    1    2      4.75 -2.75 7.5625         2.7162    2.716216 -0.7162162 0.5129657
 2    2    4      4.75 -0.75 0.5625         3.2973    3.297297  0.7027027 0.4937911
 3    7    7      4.75  2.25 5.0625         6.2028    6.202703  0.7972973 0.6356830
 4    8    6      4.75  1.25 1.5625         6.7839    6.783784 -0.7837838 0.6143170</code></pre>
 <p>Dann können wir die Summen der quadierten Abweichungen aus der Mittelwertregel und dem Regressionsmodell vergleichen:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="bg_reg.html#cb22-1" aria-hidden="true" tabindex="-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="bg_reg.html#cb23-1" aria-hidden="true" tabindex="-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
-<span id="cb23-2"><a href="bg_reg.html#cb23-2" aria-hidden="true" tabindex="-1"></a>2.2567568</span></code></pre></div>
+<div class="sourceCode" id="cb281"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb281-1"><a href="bg_reg.html#cb281-1" aria-hidden="true" tabindex="-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span>
+<span id="cb281-2"><a href="bg_reg.html#cb281-2" aria-hidden="true" tabindex="-1"></a> | is <span class="kw">not</span> a valid command <span class="bn">name</span></span>
+<span id="cb281-3"><a href="bg_reg.html#cb281-3" aria-hidden="true" tabindex="-1"></a><span class="fu">r</span>(199);</span>
+<span id="cb281-4"><a href="bg_reg.html#cb281-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-5"><a href="bg_reg.html#cb281-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb281-6"><a href="bg_reg.html#cb281-6" aria-hidden="true" tabindex="-1"></a>14.75</span></code></pre></div>
+<div class="sourceCode" id="cb282"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb282-1"><a href="bg_reg.html#cb282-1" aria-hidden="true" tabindex="-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
+<span id="cb282-2"><a href="bg_reg.html#cb282-2" aria-hidden="true" tabindex="-1"></a> | is <span class="kw">not</span> a valid command <span class="bn">name</span></span>
+<span id="cb282-3"><a href="bg_reg.html#cb282-3" aria-hidden="true" tabindex="-1"></a><span class="fu">r</span>(199);</span>
+<span id="cb282-4"><a href="bg_reg.html#cb282-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb282-5"><a href="bg_reg.html#cb282-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb282-6"><a href="bg_reg.html#cb282-6" aria-hidden="true" tabindex="-1"></a>2.2567568</span></code></pre></div>
 <p>Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des <code>mean</code> unser <code>reg</code>-Modell verwenden.
 Wenn wir diese Veränderung ins Verhältnis mit dem “Ausgangswert,” also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das <span class="math inline">\(R^{2}\)</span> für unser <code>reg</code>-Modell.
 Dieses gibt die prozentuale Verringerung der Residuen durch das <code>reg</code>-Modell im Vergleich zur Mittelwertregel an:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="bg_reg.html#cb24-1" aria-hidden="true" tabindex="-1"></a>dis (14.75 -  2.256757) / 14.75</span>
-<span id="cb24-2"><a href="bg_reg.html#cb24-2" aria-hidden="true" tabindex="-1"></a>.84699953</span></code></pre></div>
+<div class="sourceCode" id="cb283"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb283-1"><a href="bg_reg.html#cb283-1" aria-hidden="true" tabindex="-1"></a>dis (14.75 -  2.256757) / 14.75</span>
+<span id="cb283-2"><a href="bg_reg.html#cb283-2" aria-hidden="true" tabindex="-1"></a> | is <span class="kw">not</span> a valid command <span class="bn">name</span></span>
+<span id="cb283-3"><a href="bg_reg.html#cb283-3" aria-hidden="true" tabindex="-1"></a><span class="fu">r</span>(199);</span>
+<span id="cb283-4"><a href="bg_reg.html#cb283-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb283-5"><a href="bg_reg.html#cb283-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb283-6"><a href="bg_reg.html#cb283-6" aria-hidden="true" tabindex="-1"></a>.84699953</span></code></pre></div>
 <p>Unser Regressionsmodell kann also 84,7% der Streuung um den Mittelwert erklären. Dieser Wert wird auch als <span class="math inline">\(R^2\)</span> bezeichnet. Im Regressionsoutput können wir das <span class="math inline">\(R^2\)</span> oben rechts neben <code>R-squared</code> ablesen.</p>
-<pre><code>&gt; ta&quot;, clear
+<pre><code> | is not a valid command name
+r(199);
 
       Source |       SS           df       MS      Number of obs   =         4
 -------------+----------------------------------   F(1, 2)         =     11.07
@@ -543,11 +575,11 @@ Dieses gibt die prozentuale Verringerung der Residuen durch das <code>reg</code>
 </div>
 <div class="footnotes">
 <hr />
-<ol start="1">
-<li id="fn1"><p>Mehr zu <code>egen</code> in Kapitel <a href="egen.html#egen">6</a><a href="bg_reg.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>Ein positiver Wert des Residuums bedeutet, dass der beobachtete Wert größer als der vorhergesagte Wert ist. Die Regressionsgerade <em>unterschätzt</em> also den Wert. Ein negatives Residuum bedeutet dementsprechend, dass die Regressionsgerade den Wert überschätzt - der wahre Wert ist niedriger als der vorhergesagte Wert. Siehe <a href="bg_reg.html#resid">Formeln</a><a href="bg_reg.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Die Option <code>noheader</code> macht den Output von <code>reg</code> etwas übersichtlicher.<a href="bg_reg.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>Die (einfache, unquadrierte) Summe der Resiuden beträgt auch hier Null.<a href="bg_reg.html#fnref4" class="footnote-back">↩︎</a></p></li>
+<ol start="6">
+<li id="fn6"><p>Mehr zu <code>egen</code> in Kapitel <a href="egen.html#egen">6</a><a href="bg_reg.html#fnref6" class="footnote-back">↩︎</a></p></li>
+<li id="fn7"><p>Ein positiver Wert des Residuums bedeutet, dass der beobachtete Wert größer als der vorhergesagte Wert ist. Die Regressionsgerade <em>unterschätzt</em> also den Wert. Ein negatives Residuum bedeutet dementsprechend, dass die Regressionsgerade den Wert überschätzt - der wahre Wert ist niedriger als der vorhergesagte Wert. Siehe <a href="bg_reg.html#resid">Formeln</a><a href="bg_reg.html#fnref7" class="footnote-back">↩︎</a></p></li>
+<li id="fn8"><p>Die Option <code>noheader</code> macht den Output von <code>reg</code> etwas übersichtlicher.<a href="bg_reg.html#fnref8" class="footnote-back">↩︎</a></p></li>
+<li id="fn9"><p>Die (einfache, unquadrierte) Summe der Resiuden beträgt auch hier Null.<a href="bg_reg.html#fnref9" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

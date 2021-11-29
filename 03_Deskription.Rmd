@@ -176,9 +176,14 @@ var <- var(baua$zpalter[baua$zpalter<100])
 ```
 
 In unseren Datensatz beträgt der Varianz des Alters also `r format(var,big.mark = ".",decimal.mark = ",")` Jahre². Auf der Varianz beruhen noch zwei weitere Streuungsmaße. Die **Standardabweichung** entspricht der Wurzel der Varianz und hat somit die gleiche Maßeinheit wie die Variable (hier also Jahre): 
-```{stata std2, echo=T}
+```{stata std2, eval=F}
 dis sqrt(128.5417)
 ```
+
+```{stata std2T, echo=F}
+dis sqrt(128.5417)
+```
+
 Wir können die Standardabweichung auch mit `tabstat , s(sd)` berechnen:
 ```{stata stdF, echo = F}
 tabstat zpalter, s(sd)
@@ -503,7 +508,6 @@ Der Rest der Formel gibt dann an, dass alle quadrierten Differenzen aufsummiert 
 Die Schiefe (skewness) ist ein Maß für die Asymmetrie einer Verteilung. Bei einer symmetrischen Verteilung beträgt die Schiefe 0. Ein negativer Wert für die Schiefe deutet darauf hin, dass Median > Mean und Verteilung wird als links-schief/rechts-steil bezeichnet. Bei einem positiven Wert der Schiefe ist Median < Mean und die Verteilung ist rechts-schief/links-steil. 
 
 
-
 ```{r skewplot1, echo=F, warning=F, message=F, out.height="25%", out.width="100%", fig.align="center"}
 sk_df <-  
   data.frame(x= 1:10) %>%
@@ -518,7 +522,7 @@ skew1 <-
   sk_df %>% 
   ggplot(aes(x=x,y=y2)) +
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[1]) +
-  labs(title = "negative Schiefe (rechtssteil/linksschief)" ) + 
+  labs(title = "negative Schiefe:\n(rechtssteil/linksschief)" ) + 
   theme_minimal(base_size = 11) +
   theme(panel.grid= element_blank(),
         axis.title = element_blank(), axis.text = element_blank(),
@@ -528,7 +532,7 @@ skew2 <-
   ggplot(aes(x=x,y=y3)) +
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[3]) +
   coord_cartesian(ylim=c(0,19)) +
-  labs(title = paste0("Schiefe = 0")) +
+  labs(title = paste0("Schiefe = 0:\nsymmetrisch")) +
   theme_minimal(base_size = 11) +
   theme(panel.grid= element_blank(),
         axis.title = element_blank(), axis.text = element_blank(),
@@ -538,7 +542,7 @@ skew3 <-
   sk_df %>% 
   ggplot(aes(x=x,y=y1)) +
   geom_col(fill = paletteer::paletteer_d("dutchmasters::pearl_earring")[4]) +
-  labs(title = "positive Schiefe (linkssteil/rechtsschief)") +
+  labs(title = "positive Schiefe:\n(linkssteil/rechtsschief)") +
   theme_minimal(base_size = 11) +
   theme(panel.grid= element_blank(),
         axis.title = element_blank(), axis.text = element_blank(),

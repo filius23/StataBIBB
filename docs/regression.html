@@ -349,11 +349,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.0.5" data-path="bg_reg.html"><a href="bg_reg.html#resid2"><i class="fa fa-check"></i><b>10.0.5</b> Residuen Teil 2</a></li>
 <li class="chapter" data-level="10.0.6" data-path="bg_reg.html"><a href="bg_reg.html#r2"><i class="fa fa-check"></i><b>10.0.6</b> Modellgüte</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="hypo.html"><a href="hypo.html"><i class="fa fa-check"></i><b>11</b> ANOVA</a>
+<li class="chapter" data-level="11" data-path="anova.html"><a href="anova.html"><i class="fa fa-check"></i><b>11</b> ANOVA</a>
 <ul>
-<li class="chapter" data-level="11.0.1" data-path="hypo.html"><a href="hypo.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>11.0.1</b> ANOVA vs. t-Tests</a></li>
-<li class="chapter" data-level="11.0.2" data-path="hypo.html"><a href="hypo.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>11.0.2</b> ANOVA vs. lineare Regression</a></li>
-<li class="chapter" data-level="11.1" data-path="hypo.html"><a href="hypo.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>11.1</b> ANOVA mehrere Gruppen</a></li>
+<li class="chapter" data-level="11.0.1" data-path="anova.html"><a href="anova.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>11.0.1</b> ANOVA vs. t-Tests</a></li>
+<li class="chapter" data-level="11.0.2" data-path="anova.html"><a href="anova.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>11.0.2</b> ANOVA vs. lineare Regression</a></li>
+<li class="chapter" data-level="11.1" data-path="anova.html"><a href="anova.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>11.1</b> ANOVA mehrere Gruppen</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>12</b> Literatur</a>
 <ul>
@@ -395,12 +395,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="StataBIBB1_files/figure-html/regp1-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Mit Regressionsmodellen können wir lineare Zusammenhänge zwischen zwei metrischen Merkmalen untersuchen. In Stata können wir eine Regression mit dem <code>reg</code> Befehl berechnen:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb2-1"><a href="regression.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =         4
--------------+----------------------------------   F(1, 2)         =     11.07
-       Model |  12.4932432         1  12.4932432   Prob &gt; F        =    0.0797
-    Residual |  2.25675676         2  1.12837838   R-squared       =    0.8470
--------------+----------------------------------   Adj R-squared   =    0.7705
-       Total |       14.75         3  4.91666667   Root MSE        =    1.0623
+<pre><code>      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623
 
 ------------------------------------------------------------------------------
         var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
@@ -434,7 +434,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">9.1.1</span> vorhergesagte Werte</h3>
 <p>Die vorhergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert neben <code>_cons</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>. Wir starten also sozusagen bei <code>var2</code>=0 und gehen dann eben x Schritte entlang der Geraden.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb4-1"><a href="regression.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span> <span class="co">/// noheader macht den Output übersichtlicher</span></span></code></pre></div>
-<pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------
+        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
         var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
        _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
@@ -446,7 +458,12 @@ Wir könnten also auch einen vorhergesagten Wert für einen beliebigen Wert von 
 <p>Wir können dafür <code>display 2.1351+0.5811*5</code> nutzen.
 Alternativ können wir uns die Tipparbeit auch sparen, indem wir erst <code>reg</code> laufen lassen und dann mit <code>_b</code> auf die Ergebnisse zugreifen:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="regression.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">display</span> _b[<span class="dt">_cons</span>] + _b[var1] * 5</span></code></pre></div>
-<pre><code>5.0405405</code></pre>
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+
+
+
+5.0405405</code></pre>
 <p>Mit <code>predict</code> können wir jeweils die vorhergesagten Werte für die Ausprägungen von <code>var1</code> im Datensatz berechnen und in einer neuen Variable <code>pred_vorher</code> ablegen:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="regression.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> pred_vorher, <span class="kw">xb</span></span></code></pre></div>
 <p>Hier wird also gerechnet:</p>
@@ -471,21 +488,31 @@ Alternativ können wir uns die Tipparbeit auch sparen, indem wir erst <code>reg<
 <p><img src="StataBIBB1_files/figure-html/reg_korr-1.png" width="100%" style="display: block; margin: auto;" /></p>
 <p>Außerdem entspricht der Korrelationskoeffizient der Wurzel von <span class="math inline">\(R^2\)</span> oder umgekfehrt: <span class="math inline">\((R^2)^2\)</span> entspricht dem quadrierten Korrelationskoeffizienten:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="regression.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1, notable <span class="co">// notable um regtabelle auszublenden</span></span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =         4
--------------+----------------------------------   F(1, 2)         =     11.07
-       Model |  12.4932432         1  12.4932432   Prob &gt; F        =    0.0797
-    Residual |  2.25675676         2  1.12837838   R-squared       =    0.8470
--------------+----------------------------------   Adj R-squared   =    0.7705
-       Total |       14.75         3  4.91666667   Root MSE        =    1.0623</code></pre>
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+      Source |       SS       df       MS              Number of obs =       4
+-------------+------------------------------           F(  1,     2) =   11.07
+       Model |  12.4932432     1  12.4932432           Prob &gt; F      =  0.0797
+    Residual |  2.25675676     2  1.12837838           R-squared     =  0.8470
+-------------+------------------------------           Adj R-squared =  0.7705
+       Total |       14.75     3  4.91666667           Root MSE      =  1.0623</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="regression.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">pwcorr</span> var2 var1</span></code></pre></div>
-<pre><code>             |     var2     var1
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+             |     var2     var1
 -------------+------------------
         var2 |   1.0000 
         var1 |   0.9203   1.0000 </code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="regression.html#cb14-1" aria-hidden="true" tabindex="-1"></a>dis <span class="fu">sqrt</span>(0.8470) <span class="co">// R² zu corr</span></span>
-<span id="cb14-2"><a href="regression.html#cb14-2" aria-hidden="true" tabindex="-1"></a>.92032603</span></code></pre></div>
+<span id="cb14-2"><a href="regression.html#cb14-2" aria-hidden="true" tabindex="-1"></a>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.<span class="kw">do</span> ...</span>
+<span id="cb14-3"><a href="regression.html#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="regression.html#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="regression.html#cb14-5" aria-hidden="true" tabindex="-1"></a>.92032603</span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="regression.html#cb15-1" aria-hidden="true" tabindex="-1"></a>dis 0.9203^2 <span class="co">// corr zu R²</span></span>
-<span id="cb15-2"><a href="regression.html#cb15-2" aria-hidden="true" tabindex="-1"></a>.84695209</span></code></pre></div>
+<span id="cb15-2"><a href="regression.html#cb15-2" aria-hidden="true" tabindex="-1"></a>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.<span class="kw">do</span> ...</span>
+<span id="cb15-3"><a href="regression.html#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="regression.html#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="regression.html#cb15-5" aria-hidden="true" tabindex="-1"></a>.84695209</span></code></pre></div>
 <hr />
 <p><strong><a href="regression.html#regue1">Übung 1</a></strong></p>
 <hr />
@@ -501,12 +528,14 @@ Alternativ können wir uns die Tipparbeit auch sparen, indem wir erst <code>reg<
 <img src="StataBIBB1_files/figure-html/dummyplot-1.png" width="70%" height="70%" style="display: block; margin: auto;" /></p>
 <p>In einem Regressionsmodell müssen wir Stata mit dem Präfix <code>i.</code> mitteilen, dass es sich bei der Variable um eine kategoriale Variable handelt:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="regression.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.S1</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =    16,635
--------------+----------------------------------   F(1, 16633)     =    712.78
-       Model |  8.5219e+09         1  8.5219e+09   Prob &gt; F        =    0.0000
-    Residual |  1.9886e+11    16,633  11955853.8   R-squared       =    0.0411
--------------+----------------------------------   Adj R-squared   =    0.0410
-       Total |  2.0738e+11    16,634  12467451.9   Root MSE        =    3457.7
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+      Source |       SS       df       MS              Number of obs =   16635
+-------------+------------------------------           F(  1, 16633) =  712.78
+       Model |  8.5219e+09     1  8.5219e+09           Prob &gt; F      =  0.0000
+    Residual |  1.9886e+11 16633  11955853.8           R-squared     =  0.0411
+-------------+------------------------------           Adj R-squared =  0.0410
+       Total |  2.0738e+11 16634  12467451.9           Root MSE      =  3457.7
 
 ------------------------------------------------------------------------------
     F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
@@ -528,18 +557,20 @@ Alternativ können wir uns die Tipparbeit auch sparen, indem wir erst <code>reg<
 <p>Wir können die Referenzkategorie natürlich auch ändern auf <code>S1 = 2</code>.
 Dazu geben wir <code>ib2.</code> an:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="regression.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF ib2.S1</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =    16,635
--------------+----------------------------------   F(1, 16633)     =    712.78
-       Model |  8.5219e+09         1  8.5219e+09   Prob &gt; F        =    0.0000
-    Residual |  1.9886e+11    16,633  11955853.8   R-squared       =    0.0411
--------------+----------------------------------   Adj R-squared   =    0.0410
-       Total |  2.0738e+11    16,634  12467451.9   Root MSE        =    3457.7
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+      Source |       SS       df       MS              Number of obs =   16635
+-------------+------------------------------           F(  1, 16633) =  712.78
+       Model |  8.5219e+09     1  8.5219e+09           Prob &gt; F      =  0.0000
+    Residual |  1.9886e+11 16633  11955853.8           R-squared     =  0.0411
+-------------+------------------------------           Adj R-squared =  0.0410
+       Total |  2.0738e+11 16634  12467451.9           Root MSE      =  3457.7
 
 ------------------------------------------------------------------------------
     F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
           S1 |
-   mÃ¤nnlich  |   1431.809      53.63    26.70   0.000     1326.689     1536.93
+  mÃ¤nnlich  |   1431.809      53.63    26.70   0.000     1326.689     1536.93
        _cons |   2800.926   38.32464    73.08   0.000     2725.806    2876.046
 ------------------------------------------------------------------------------</code></pre>
 <p>Wie hier ist dann also die Interpretation “umgekehrt”:</p>
@@ -549,12 +580,14 @@ Dazu geben wir <code>ib2.</code> an:</p>
 <h3><span class="header-section-number">9.2.2</span> Vergleich mit <code>ttest</code></h3>
 <div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="regression.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.S1</span>
 <span id="cb20-2"><a href="regression.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> F518_SUF,<span class="kw">by</span>(S1)</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =    16,635
--------------+----------------------------------   F(1, 16633)     =    712.78
-       Model |  8.5219e+09         1  8.5219e+09   Prob &gt; F        =    0.0000
-    Residual |  1.9886e+11    16,633  11955853.8   R-squared       =    0.0411
--------------+----------------------------------   Adj R-squared   =    0.0410
-       Total |  2.0738e+11    16,634  12467451.9   Root MSE        =    3457.7
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+      Source |       SS       df       MS              Number of obs =   16635
+-------------+------------------------------           F(  1, 16633) =  712.78
+       Model |  8.5219e+09     1  8.5219e+09           Prob &gt; F      =  0.0000
+    Residual |  1.9886e+11 16633  11955853.8           R-squared     =  0.0411
+-------------+------------------------------           Adj R-squared =  0.0410
+       Total |  2.0738e+11 16634  12467451.9           Root MSE      =  3457.7
 
 ------------------------------------------------------------------------------
     F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
@@ -569,14 +602,14 @@ Two-sample t test with equal variances
 ------------------------------------------------------------------------------
    Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
 ---------+--------------------------------------------------------------------
-mÃ¤nnlich |   8,495    4232.735    42.87073    3951.324    4148.698    4316.772
-weiblich |   8,140    2800.926    31.62129    2852.935     2738.94    2862.912
+mÃ¤nnlic |    8495    4232.735    42.87073    3951.324    4148.698    4316.772
+weiblich |    8140    2800.926    31.62129    2852.935     2738.94    2862.912
 ---------+--------------------------------------------------------------------
-combined |  16,635    3532.109    27.37647    3530.928    3478.448    3585.769
+combined |   16635    3532.109    27.37647    3530.928    3478.448    3585.769
 ---------+--------------------------------------------------------------------
     diff |            1431.809       53.63                1326.689     1536.93
 ------------------------------------------------------------------------------
-    diff = mean(mÃ¤nnlich) - mean(weiblich)                        t =  26.6979
+    diff = mean(mÃ¤nnlic) - mean(weiblich)                        t =  26.6979
 Ho: diff = 0                                     degrees of freedom =    16633
 
     Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
@@ -633,12 +666,14 @@ max. mittlere Reife
 </table>
 <p>Wir müssen Stata wieder mit <code>i.</code> mitteilen, dass es sich um Gruppencodes (eine kategoriale Variable) handelt:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="regression.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.educ</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =    16,428
--------------+----------------------------------   F(2, 16425)     =    366.95
-       Model |  8.7409e+09         2  4.3704e+09   Prob &gt; F        =    0.0000
-    Residual |  1.9562e+11    16,425  11910111.4   R-squared       =    0.0428
--------------+----------------------------------   Adj R-squared   =    0.0427
-       Total |  2.0436e+11    16,427  12440764.2   Root MSE        =    3451.1
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+      Source |       SS       df       MS              Number of obs =   16428
+-------------+------------------------------           F(  2, 16425) =  366.95
+       Model |  8.7409e+09     2  4.3704e+09           Prob &gt; F      =  0.0000
+    Residual |  1.9562e+11 16425  11910111.4           R-squared     =  0.0428
+-------------+------------------------------           Adj R-squared =  0.0427
+       Total |  2.0436e+11 16427  12440764.2           Root MSE      =  3451.1
 
 ------------------------------------------------------------------------------
     F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
@@ -659,12 +694,14 @@ max. mittlere Reife
 <p>Auch hier können wir die Referenzkategorie natürlich auch ändern auf <code>educ = 3</code>.
 Dazu geben wir <code>ib3.</code> an:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="regression.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF ib3.educ</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =    16,428
--------------+----------------------------------   F(2, 16425)     =    366.95
-       Model |  8.7409e+09         2  4.3704e+09   Prob &gt; F        =    0.0000
-    Residual |  1.9562e+11    16,425  11910111.4   R-squared       =    0.0428
--------------+----------------------------------   Adj R-squared   =    0.0427
-       Total |  2.0436e+11    16,427  12440764.2   Root MSE        =    3451.1
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+      Source |       SS       df       MS              Number of obs =   16428
+-------------+------------------------------           F(  2, 16425) =  366.95
+       Model |  8.7409e+09     2  4.3704e+09           Prob &gt; F      =  0.0000
+    Residual |  1.9562e+11 16425  11910111.4           R-squared     =  0.0428
+-------------+------------------------------           Adj R-squared =  0.0427
+       Total |  2.0436e+11 16427  12440764.2           Root MSE      =  3451.1
 
 ------------------------------------------------------------------------------
     F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
@@ -681,12 +718,14 @@ Dazu geben wir <code>ib3.</code> an:</p>
 <h2><span class="header-section-number">9.3</span> mehrere unabhängige Variablen</h2>
 <p>Natürlich können wir auch mehrere unabhängige Variablen in unser Modell aufnehmen. Beispielsweise können wir so für die Wochenarbeitszeiten kontrollieren:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="regression.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.educ F200</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =    14,480
--------------+----------------------------------   F(3, 14476)     =    742.37
-       Model |  2.0190e+10         3  6.7301e+09   Prob &gt; F        =    0.0000
-    Residual |  1.3124e+11    14,476  9065696.61   R-squared       =    0.1333
--------------+----------------------------------   Adj R-squared   =    0.1332
-       Total |  1.5143e+11    14,479  10458269.1   Root MSE        =    3010.9
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+      Source |       SS       df       MS              Number of obs =   14480
+-------------+------------------------------           F(  3, 14476) =  742.37
+       Model |  2.0190e+10     3  6.7301e+09           Prob &gt; F      =  0.0000
+    Residual |  1.3124e+11 14476  9065696.61           R-squared     =  0.1333
+-------------+------------------------------           Adj R-squared =  0.1332
+       Total |  1.5143e+11 14479  10458269.1           Root MSE      =  3010.9
 
 ------------------------------------------------------------------------------
     F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
@@ -707,12 +746,14 @@ Dazu geben wir <code>ib3.</code> an:</p>
 <h3><span class="header-section-number">9.3.1</span> Interaktionsterme</h3>
 <p>Wenn wir uns aber fragen, ob sich der Zusammenhang zwischen der Schulbildung und dem Einkommen mit der Wochenarbeitszeit verändert, benötigen wir einen Interaktionsterm:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="regression.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.educ##c.F200</span></code></pre></div>
-<pre><code>      Source |       SS           df       MS      Number of obs   =    14,480
--------------+----------------------------------   F(5, 14474)     =    465.76
-       Model |  2.0987e+10         5  4.1974e+09   Prob &gt; F        =    0.0000
-    Residual |  1.3044e+11    14,474  9011913.45   R-squared       =    0.1386
--------------+----------------------------------   Adj R-squared   =    0.1383
-       Total |  1.5143e+11    14,479  10458269.1   Root MSE        =      3002
+<pre><code>running D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB&gt; rofile.do ...
+
+      Source |       SS       df       MS              Number of obs =   14480
+-------------+------------------------------           F(  5, 14474) =  465.76
+       Model |  2.0987e+10     5  4.1974e+09           Prob &gt; F      =  0.0000
+    Residual |  1.3044e+11 14474  9011913.45           R-squared     =  0.1386
+-------------+------------------------------           Adj R-squared =  0.1383
+       Total |  1.5143e+11 14479  10458269.1           Root MSE      =    3002
 
 ------------------------------------------------------------------------------
     F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
