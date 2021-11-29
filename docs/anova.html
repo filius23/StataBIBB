@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10 Regression Hintergründe | Stata Fortbildungen am BIBB</title>
+  <title>11 ANOVA | Stata Fortbildungen am BIBB</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10 Regression Hintergründe | Stata Fortbildungen am BIBB" />
+  <meta property="og:title" content="11 ANOVA | Stata Fortbildungen am BIBB" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10 Regression Hintergründe | Stata Fortbildungen am BIBB" />
+  <meta name="twitter:title" content="11 ANOVA | Stata Fortbildungen am BIBB" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="regression.html"/>
-<link rel="next" href="anova.html"/>
+<link rel="prev" href="bg_reg.html"/>
+<link rel="next" href="lit.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -383,68 +383,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="bg_reg" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Regression Hintergründe</h1>
-<p>Zum Einstieg betrachten wir zunächst einen (fiktiven) Datensatz mit lediglich 4 Fällen und lediglich zwei Variablen: <code>var1</code> und <code>var2</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="bg_reg.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span>
-<span id="cb1-2"><a href="bg_reg.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
-<pre><code>  var1 var2
-1    1    2
-2    2    4
-3    7    7
-4    8    6</code></pre>
-<p><img src="StataBIBB1_files/figure-html/regplot1-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Ziel der Regression ist es, den Zusammenhang zwischen diesen beiden Variablen zu bestimmen. Gibt es einen Trend, in dem Sinn, dass ein höherer Wert von <code>var1</code> mit einem höheren oder niedrigeren Wert von <code>var2</code> einhergeht?</p>
-<p>Etwas anders gesagt könnte man auch fragen, welchen Wert für <code>var2</code> wir vorhersagen würden, wenn wir <code>var1</code> kennen. Ein Ausgangspunkt ist das arithmetische Mittel. Dieses können wir mit <code>mean</code> zB für <code>var2</code> berechnen.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> Diesen Wert fügen wir als neue Spalte <code>mean_var2</code> in den Datensatz ein:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="bg_reg.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">egen</span> mean_var2 = <span class="kw">mean</span>(var2)</span></code></pre></div>
-<pre><code>  var1 var2 mean_var2
-1    1    2      4.75
-2    2    4      4.75
-3    7    7      4.75
-4    8    6      4.75</code></pre>
-<p><img src="StataBIBB1_files/figure-html/plot_mittelwe-1.png" width="80%" style="display: block; margin: auto;" />
-Müssten wir eine Prognose für die Werte von <code>var2</code> abgeben, wäre das arith. Mittel eine gute Wahl. Die <strong>vorhergesagten Werte</strong> werden jeweils auf der Linie für das arith. Mittel liegen.</p>
-<p><img src="StataBIBB1_files/figure-html/mittelw2-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div id="resid" class="section level3" number="10.0.1">
-<h3><span class="header-section-number">10.0.1</span> Residuen</h3>
-<p>Allerdings liegen wir mit dem arith. Mittel dann immer auch Stück daneben. Diese Abweichung zwischen dem tatsächlichen und dem vorhergesagten Wert wird als <strong>Residuum</strong> bezeichnet, in unserem Beispiel ist das jeweils die Differenz zwischen <code>var2</code> und <code>mean</code>:
-<span class="math display">\[Residuum = beobachteter\, Wert \; - \; vorhergesagter\,Wert\]</span>
-Als Formel wird das in der Regel wie folgt dargestellt:
-<span class="math display">\[\epsilon_{\text{i}} = \text{y}_{i} - \hat{\text{y}}_{i}\]</span></p>
-<p>Wir können also die Residuen als Differenz zwischen <code>var2</code> und <code>mean</code> berechnen und in <code>df</code> ablegen:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="bg_reg.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> m_abw = var2 - mean_var2</span></code></pre></div>
-<pre><code>  var1 var2 mean_var2 m_abw
-1    1    2      4.75 -2.75
-2    2    4      4.75 -0.75
-3    7    7      4.75  2.25
-4    8    6      4.75  1.25</code></pre>
-<p><img src="StataBIBB1_files/figure-html/res_pl1-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><span class="math inline">\(\rightarrow\)</span> Was bedeutet also ein negativer oder ein positiver Wert für das Residuum?<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
-<p>Die horizontale Linie für das arithm. Mittel ist aber sehr deutlich nicht die beste Methode, um die Werte für <code>var2</code> vorherzusagen. In der Graphik können wir deutlich sehen, dass die Werte “weiter links,” also mit geringeren Werten für <code>var1</code>, auch geringere Werte für <code>var2</code> aufweisen. Wir könnten also unseren Vorhersagefehler bzw. das <em>Residuum</em> minimieren indem wir die Linie drehen. Die Idee der Regressionsanalyse ist es dabei, die Residuuen zu minimieren. Was würde aber passieren wenn wir die Residuen aus der Mittelwertsvorhersage aufsummieren, um Sie dann zu minimieren?</p>
-</div>
-<div id="quad_res" class="section level3" number="10.0.2">
-<h3><span class="header-section-number">10.0.2</span> Quadrierte Residuen</h3>
-<pre><code>  var1 var2 mean_var2 m_abw
-1    1    2      4.75 -2.75
-2    2    4      4.75 -0.75
-3    7    7      4.75  2.25
-4    8    6      4.75  1.25</code></pre>
-<p><strong>Die Summe der Resiuden auf Basis des arith. Mittels ist immer Null!</strong><br />
-Anders formuliert: die gestrichelten Linien nach oben sind in Summe genauso lang wie gestrichelten Linien nach unten.
-Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wir minimieren können:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="bg_reg.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> m_abw2 = m_abw^2 </span>
-<span id="cb8-2"><a href="bg_reg.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tabstat</span> m_abw2, <span class="fu">s</span>(<span class="kw">sum</span>)</span></code></pre></div>
-<pre><code>  var1 var2 mean_var2 m_abw m_abw2
-1    1    2      4.75 -2.75 7.5625
-2    2    4      4.75 -0.75 0.5625
-3    7    7      4.75  2.25 5.0625
-4    8    6      4.75  1.25 1.5625</code></pre>
-<pre><code>[1] 14.75</code></pre>
-</div>
-<div id="interpretation-der-regression" class="section level3" number="10.0.3">
-<h3><span class="header-section-number">10.0.3</span> Interpretation der Regression</h3>
-<p>Die Minimierung erledigt <code>reg</code> für uns. Hier geben wir zuerst das Merkmal an, das auf der y-Achse liegt (die <em>abhängige</em> Variable) und dann das Merkmal für die x-Achse (<em>unabhängige</em> Variable) an. Ein positiver Wert unter <code>Coef.</code> in der Zeile von <code>var1</code> bedeutet, dass unsere Gerade von links nach rechts ansteigt und ein negativer eine fallende Linie bedeuten würde. Der Wert unter <code>var1</code> gibt an, um <em>wieviel sich die Gerade pro “Schritt nach rechts” nach oben/unten verändert</em>. Die Gerade steigt also pro Einheit von <code>var1</code> um 0.5810811:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="bg_reg.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
+<div id="anova" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> ANOVA</h1>
+<p>ANOVA steht für <strong>an</strong>alysis <strong>o</strong>f <strong>v</strong>ariance und wird auch als univariate Varianzanalyse bezeichnet.</p>
+<p>ANOVA wird verwendet, um Mittelwertunterschiede zwischen 2 oder mehr Gruppen zu vergleichen. Dies geschieht, indem die Varianz in den Daten betrachtet wird (daher der Name). Insbesondere vergleicht ANOVA das Ausmaß der Variation zwischen den Gruppen (<em>between variance</em>) mit dem Ausmaß der Variation innerhalb der Gruppen (<em>within variance</em>). Wir hatten diese Logik der Varianzzerlegung schon bei Regressionsmodellen kennengelernt:</p>
+<p><img src="StataBIBB1_files/figure-html/anova_plt1-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Hier hatten wir die Gesamtvarianz in erklärte und unerklärte Varianz zerlegt. Diese Sum of Squares bezeichnet Stata <code>Model</code> und <code>Residual</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="anova.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb1-2"><a href="anova.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1</span></code></pre></div>
 <pre><code>      Source |       SS           df       MS      Number of obs   =         4
 -------------+----------------------------------   F(1, 2)         =     11.07
        Model |  12.4932432         1  12.4932432   Prob &gt; F        =    0.0797
@@ -458,105 +404,187 @@ Die Lösung ist die Residuen zu quadrieren. So ergibt sich eine Kennzahl, die wi
         var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
        _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
 ------------------------------------------------------------------------------</code></pre>
-<p>In unserer Grafik sieht diese Gerade so aus:
-<img src="StataBIBB1_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" /></p>
-</div>
-<div id="reg_pred" class="section level3" number="10.0.4">
-<h3><span class="header-section-number">10.0.4</span> Vorhergesagte Werte</h3>
-<p>Wie hoch ist nun der vorhergesagte Wert auf Basis der blauen Gerade?
-Die vohergesagten Werte aus <code>reg var2 var1</code> entsprechen einfach der Summe aus dem Wert neben <code>_cons</code> und dem Koeffizienten neben <code>var1</code> multipliziert mit dem jeweiligen Wert für <code>var1</code>.<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="bg_reg.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1, <span class="kw">noheader</span></span></code></pre></div>
-<pre><code>        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
-       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
-------------------------------------------------------------------------------</code></pre>
-<p>Vorhergesagte Werte werden mit <span class="math inline">\(\widehat{var2}\)</span> bezeichnet - der ^ steht dabei für “vorhergesagt”:</p>
-<p><span class="math display">\[\widehat{var2}=\texttt{Intercept} + 0.5811 \times \texttt{var1}\]</span><br />
-Für die erste Zeile ergibt sich also folgender vorhergesagter Wert: 2.1351+0.5811*1= 2.7162</p>
-<p>Die vorhergesagten Werte können wir auch mit <code>predict</code> berechnen und in einer neuen Variable <code>pred_vorher</code> ablegen:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="bg_reg.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> pred_vorher, <span class="kw">xb</span></span></code></pre></div>
-<pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher
-1    1    2      4.75 -2.75 7.5625         2.7162    2.716216
-2    2    4      4.75 -0.75 0.5625         3.2973    3.297297
-3    7    7      4.75  2.25 5.0625         6.2028    6.202703
-4    8    6      4.75  1.25 1.5625         6.7839    6.783784</code></pre>
-<p>Die Grafik zeigt wie Vorhersagen auf Basis des Regressionsmodells aussehen: Sie entsprechen den Werten auf der blauen Geraden (der sog. Regressionsgeraden) an den jeweiligen Stellen für <code>var1</code>.
-<img src="StataBIBB1_files/figure-html/unnamed-chunk-15-1.png" width="80%" style="display: block; margin: auto;" />
-Wir können erkennen, dass die hellblauen Punkte (also die Vorhersagen des Regressionsmodells) deutlich näher an den tatsächlichen Punkten liegen als die orangen Vorhersagen auf Basis des <code>mean</code>.</p>
-</div>
-<div id="resid2" class="section level3" number="10.0.5">
-<h3><span class="header-section-number">10.0.5</span> Residuen Teil 2</h3>
-<p>Trotzdem sind auch die hellblauen Punkte nicht deckungsgleich mit den tatsächlichen Werten. Es gibt also auch hier wieder <a href="bg_reg.html#resid">Residuen</a>, also Abweichungen des beobachteten vom vorhergesagten Wert. Wir können diese per Hand berechnen als Differenz zwischen dem tatsächlichen und dem vorhergesagten Wert:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="bg_reg.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> res = var2 - pred_vorher </span></code></pre></div>
-<p>Oder wir können Sie mit <code>predict neue_variable , residuals</code> erstellen:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="bg_reg.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> var2 var1 <span class="co">// zunächst nochmal die regression laufen lassen</span></span>
-<span id="cb18-2"><a href="bg_reg.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">predict</span> p_res , residuals</span>
-<span id="cb18-3"><a href="bg_reg.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
-<pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher        res      p_res
-1    1    2      4.75 -2.75 7.5625         2.7162    2.716216 -0.7162162 -0.7162162
-2    2    4      4.75 -0.75 0.5625         3.2973    3.297297  0.7027027  0.7027027
-3    7    7      4.75  2.25 5.0625         6.2028    6.202703  0.7972973  0.7972973
-4    8    6      4.75  1.25 1.5625         6.7839    6.783784 -0.7837838 -0.7837838</code></pre>
-<p>Hier sind die Residuen für <code>p_res</code> als hellblaue Linien eingezeichnet:
-<img src="StataBIBB1_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" />
-<span class="math inline">\(\rightarrow\)</span> <em>Wie groß ist die (einfache) Summe der Residuen für <code>pred_vorher</code>?</em><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
-</div>
-<div id="r2" class="section level3" number="10.0.6">
-<h3><span class="header-section-number">10.0.6</span> Modellgüte</h3>
-<p>Um zu beurteilen, um wieviel besser unsere Gerade aus <code>reg</code> die Werte vorhersagen kann als der <code>mean</code> können wir die Summe der quadrierten Residuen vergleichen. Dazu quadrieren wir also die Residuen:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="bg_reg.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> res2 = res^2</span>
-<span id="cb20-2"><a href="bg_reg.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span></span></code></pre></div>
-<pre><code>  var1 var2 mean_var2 m_abw m_abw2 manual_vorhers pred_vorher        res      res2
-1    1    2      4.75 -2.75 7.5625         2.7162    2.716216 -0.7162162 0.5129657
-2    2    4      4.75 -0.75 0.5625         3.2973    3.297297  0.7027027 0.4937911
-3    7    7      4.75  2.25 5.0625         6.2028    6.202703  0.7972973 0.6356830
-4    8    6      4.75  1.25 1.5625         6.7839    6.783784 -0.7837838 0.6143170</code></pre>
-<p>Dann können wir die Summen der quadierten Abweichungen aus der Mittelwertregel und dem Regressionsmodell vergleichen:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="bg_reg.html#cb22-1" aria-hidden="true" tabindex="-1"></a>dis 7.5625+0.5625+5.0625+1.5625 <span class="co">// abw2 aus Mittelwertsregel</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="bg_reg.html#cb23-1" aria-hidden="true" tabindex="-1"></a>dis 0.5129657+0.4937911+0.6356830+0.6143170 <span class="co">// res2 aus regressionsmodell</span></span>
-<span id="cb23-2"><a href="bg_reg.html#cb23-2" aria-hidden="true" tabindex="-1"></a>2.2567568</span></code></pre></div>
-<p>Zum Beispiel können wir uns fragen, um wieviel sich die Summe der quadrierten Residuen verringert wenn wir statt des <code>mean</code> unser <code>reg</code>-Modell verwenden.
-Wenn wir diese Veränderung ins Verhältnis mit dem “Ausgangswert,” also den Residuen aus der Mittelwertregel setzen, dann erhalten wir das <span class="math inline">\(R^{2}\)</span> für unser <code>reg</code>-Modell.
-Dieses gibt die prozentuale Verringerung der Residuen durch das <code>reg</code>-Modell im Vergleich zur Mittelwertregel an:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="bg_reg.html#cb24-1" aria-hidden="true" tabindex="-1"></a>dis (14.75 -  2.256757) / 14.75</span>
-<span id="cb24-2"><a href="bg_reg.html#cb24-2" aria-hidden="true" tabindex="-1"></a>.84699953</span></code></pre></div>
-<p>Unser Regressionsmodell kann also 84,7% der Streuung um den Mittelwert erklären. Dieser Wert wird auch als <span class="math inline">\(R^2\)</span> bezeichnet. Im Regressionsoutput können wir das <span class="math inline">\(R^2\)</span> oben rechts neben <code>R-squared</code> ablesen.</p>
-<pre><code>&gt; ta&quot;, clear
+<p>Diese Logik überträgt ANOVA auf kategoriale Variablen, indem hier die Varianz in eine Streuung zwischen (<code>between</code>) und innerhalb der (<code>within</code>) der Gruppen aufgeteilt wird:</p>
+<p><img src="StataBIBB1_files/figure-html/anova_plot1-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p>Aus diesen beiden Streuungen berechnen wir wieder <code>Sum of squares</code>, welche dann ins Verhältnis gesetzt werden, um den sog. F-Wertb zu berechnen:</p>
+<p><span class="math display">\[F=\frac{\textbf{between}\;\texttt{Sum of Squares}}{\textbf{within}\;\texttt{Sum of Squares}}\]</span></p>
+<p>Wenn der durchschnittliche Unterschied zwischen den Gruppen ähnlich ist wie innerhalb der Gruppen, beträgt das F-Verhältnis etwa 1. Wenn der durchschnittliche Unterschied zwischen den Gruppen größer wird als der innerhalb der Gruppen, wird das F-Verhältnis größer als 1. Um einen P-Wert zu erhalten, kann er gegen die F-Verteilung einer Zufallsvariablen mit den mit dem Zähler und Nenner des Verhältnisses verbundenen Freiheitsgraden getestet werden (ähnlich wie beim F-Test oben). Der P-Wert ist die Wahrscheinlichkeit, dieses oder ein größeres F-Verhältnis zu erhalten. Größere F-Verhältnisse ergeben kleinere P-Werte.</p>
+<p>Mit <code>oneway F518_SUF S1, tabulate</code> bekommen wir bspw. die Varianzzerlegung der Einkommensangaben (<code>F518_SUF</code>) nach Geschlechtern (<code>S1</code>):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="anova.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">oneway</span> F518_SUF S1, <span class="kw">tabulate</span></span></code></pre></div>
+<pre><code> variable F518_SUF not found
+r(111);
 
-      Source |       SS           df       MS      Number of obs   =         4
--------------+----------------------------------   F(1, 2)         =     11.07
-       Model |  12.4932432         1  12.4932432   Prob &gt; F        =    0.0797
-    Residual |  2.25675676         2  1.12837838   R-squared       =    0.8470
--------------+----------------------------------   Adj R-squared   =    0.7705
-       Total |       14.75         3  4.91666667   Root MSE        =    1.0623
+            |     Summary of Wie hoch ist Ihr
+            |           monatlicher Bru
+ Geschlecht |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+   mÃ¤nnlich |   4232.7354   3951.3236       8,495
+   weiblich |    2800.926   2852.9348       8,140
+------------+------------------------------------
+      Total |   3532.1085   3530.9279      16,635
+
+                        Analysis of Variance
+    Source              SS         df      MS            F     Prob &gt; F
+------------------------------------------------------------------------
+Between groups      8.5219e+09      1   8.5219e+09    712.78     0.0000
+ Within groups      1.9886e+11  16633   11955853.8
+------------------------------------------------------------------------
+    Total           2.0738e+11  16634   12467451.9
+
+Bartlett&#39;s test for equal variances:  chi2(1) = 862.7132  Prob&gt;chi2 = 0.000</code></pre>
+<p>Die deskriptive Zusammenfassung oben liefert einige Deskriptionen: das arith. Mittel (<code>Mean</code>), die Standardabweichung (<code>Std. Dev.</code>) und die Stichprobengrößen (<code>Freq.</code>) für die abhängige Variable (Einkommen in unserem Beispiel) für jede Gruppe der unabhängigen Variable <code>S1</code> (also Frauen und Männer) sowie wenn alle Gruppen kombiniert werden (<code>Total</code>).</p>
+<p>Die Stata-Ausgabe der einseitige ANOVA findet sich in der unteren Tabelle und zeigt an, ob wir einen statistisch signifikanten Unterschied zwischen unseren beiden Gruppenmittelwerten haben. Das Verhältnis von <code>between</code> und <code>within</code> wird unter <code>F</code> angegeben. Wir können sehen, dass das Signifikanzniveau <code>Prob &gt; F</code> deutlich unter 0,05 liegt. Das legt einen statistisch signifikanten Unterschied im mittleren Einkommen den beiden Gruppen nahe.</p>
+<p>Außerdem werden uns die Sum of Squares für die Unterschiede innerhalb und zwischen den Gruppen angezeigt. Wir sehen hier, dass die Varianz innerhalb der Gruppen die Gruppendifferenz deutlich übersteigt: die Sum of Squares zwischen den Gruppen sind mit <code>1.9886e+11</code> deutlich geringer als die Within-group SS <code>8.5219e+09</code>.
+(<code>8.5219e+09</code> steht für <code>8,521,900,000</code>, also <code>4.883*10^9</code> “,<code>1.9886e+11</code> entspricht <code>198,860,000,000</code>).
+Wir können aus den Zahlen für die Sum of Squares auch die Varianzaufklärung durch die Variable <code>S1</code> berechnen (<code>between</code>/<code>Total</code>):</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="anova.html#cb5-1" aria-hidden="true" tabindex="-1"></a>dis  (8.5219e+09/ 2.0738e+11)</span></code></pre></div>
+<pre><code> variable F518_SUF not found
+r(111);
+
+
+.04109316</code></pre>
+<p>Durch Kenntnis der Varibale <code>S1</code> können also 4.11% der gesamten Varianz (“Unterschiede”) des Einkommens erklärt werden.</p>
+<div id="anova-vs.-t-tests" class="section level3" number="11.0.1">
+<h3><span class="header-section-number">11.0.1</span> ANOVA vs. t-Tests</h3>
+<p>Der t-Test wird beim Vergleich zweier Gruppen verwendet, während die ANOVA für den Vergleich von mehr als 2 Gruppen verwendet wird. Wenn wir den p-Wert unter Verwendung der ANOVA für 2 Gruppen berechnen, erhalten wir die gleichen Ergebnisse wie beim t-Test - hier also einen signifikanten Gruppenunterschied:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="anova.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> F518_SUF, <span class="kw">by</span>(S1) unequ</span></code></pre></div>
+<pre><code> variable F518_SUF not found
+r(111);
+
+
+
+
+
+Two-sample t test with unequal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+mÃ¤nnlich |   8,495    4232.735    42.87073    3951.324    4148.698    4316.772
+weiblich |   8,140    2800.926    31.62129    2852.935     2738.94    2862.912
+---------+--------------------------------------------------------------------
+combined |  16,635    3532.109    27.37647    3530.928    3478.448    3585.769
+---------+--------------------------------------------------------------------
+    diff |            1431.809    53.27106                1327.392    1536.227
+------------------------------------------------------------------------------
+    diff = mean(mÃ¤nnlich) - mean(weiblich)                        t =  26.8778
+Ho: diff = 0                     Satterthwaite&#39;s degrees of freedom =  15471.3
+
+    Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
+ Pr(T &lt; t) = 1.0000         Pr(|T| &gt; |t|) = 0.0000          Pr(T &gt; t) = 0.0000</code></pre>
+</div>
+<div id="anova-vs.-lineare-regression" class="section level3" number="11.0.2">
+<h3><span class="header-section-number">11.0.2</span> ANOVA vs. lineare Regression</h3>
+<p>Die lineare Regression wird zur Analyse kontinuierlicher Beziehungen verwendet; die Regression ist jedoch im Wesentlichen die gleiche wie die ANOVA. Bei der ANOVA berechnen wir Mittelwerte und Abweichungen unserer Daten von den Mittelwerten. Bei der linearen Regression berechnen wir die beste Linie durch die Daten und berechnen die Abweichungen der Daten von dieser Linie. Stata gibt uns das F-Verhältnis bei Regressionsmodellen direkt mit aus. Zu beachten ist aber hier, dass wir für eine kategoriale unabhängige Variable <code>i.</code> voranstellen müssen:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="anova.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.S1</span></code></pre></div>
+<pre><code> variable F518_SUF not found
+r(111);
+
+      Source |       SS           df       MS      Number of obs   =    16,635
+-------------+----------------------------------   F(1, 16633)     =    712.78
+       Model |  8.5219e+09         1  8.5219e+09   Prob &gt; F        =    0.0000
+    Residual |  1.9886e+11    16,633  11955853.8   R-squared       =    0.0411
+-------------+----------------------------------   Adj R-squared   =    0.0410
+       Total |  2.0738e+11    16,634  12467451.9   Root MSE        =    3457.7
 
 ------------------------------------------------------------------------------
-        var2 |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
 -------------+----------------------------------------------------------------
-        var1 |   .5810811   .1746331     3.33   0.080    -.1703044    1.332467
-       _cons |   2.135135   .9485004     2.25   0.153    -1.945933    6.216203
+          S1 |
+   weiblich  |  -1431.809      53.63   -26.70   0.000     -1536.93   -1326.689
+       _cons |   4232.735   37.51532   112.83   0.000     4159.201    4306.269
 ------------------------------------------------------------------------------</code></pre>
-<p>Außerdem sehen wir oben links in der Spalte <code>SS</code> die “Sum of Squares.” Hier finden wir auch die Werte von oben wieder: unter Total ist die Summe der quadrierten Abweichungen der beobachteten Werte vom arith. Mittel angegeben (<code>14.75</code>, sozusagen die Summe der <code>m_abw2</code> von oben). Residual gibt die Summe der Abweichungsquadrate zwischen den beobachteten Werten und den vorhergesagten Werten der Regression (<code>2.256..</code>, Die Summe von <code>res2</code>).</p>
+<ul>
+<li>die obere Tabelle entspricht dem Output von <code>oneway</code>:
+<ul>
+<li>die Sum of Squares innerhalb von <code>S1</code> betragen <code>1.9886e+11</code>, zwischen <code>S1</code> ist die Sum of Squares (<code>8.5219e+09</code>)</li>
+<li>Das Verhältnis der within und between Streuung beträgt <code>F(  1, 16633) =  712.78</code> (siehe Spalte <code>F</code> in <code>oneway</code>)</li>
+<li>die Variable <code>S1</code> kann 4,11% der Streuung der Einkommen erklären (<code>R-squared =  0.0411</code>), siehe unsere Berechnung oben</li>
+</ul></li>
+<li>die untere Tabelle entspricht dem <code>ttest</code>:
+<ul>
+<li>Frauen verdienen im Mittel <code>1431.809</code> weniger als Männer und dieser Unterschied ist statistisch signifikant (vgl. <code>diff</code> bei <code>ttest</code>)</li>
+</ul></li>
+</ul>
+<hr />
+<p><a href="#anova1">Übungen 3</a></p>
+<hr />
+</div>
+<div id="anova-mehrere-gruppen" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> ANOVA mehrere Gruppen</h2>
+<p>Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede für Variablen mit mehr als zwei Ausprägungen untersuchen lassen, bspw. Schulbildungsniveaus:</p>
+<p><img src="StataBIBB1_files/figure-html/anova_plot2-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="anova.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">oneway</span> F518_SUF m1202, <span class="kw">tabulate</span></span></code></pre></div>
+<pre><code> variable F518_SUF not found
+r(111);
+
+
+
+
+
+   HÃ¶chster |     Summary of Wie hoch ist Ihr
+Ausbildungs |           monatlicher Bru
+  abschluss |        Mean   Std. Dev.       Freq.
+------------+------------------------------------
+   Ohne Ber |   2150.7608   2745.4126         899
+   duale o. |   2736.7646   2080.3431       7,723
+   Aufstieg |   3633.9973    3143.504       1,469
+   Fachhoch |   4643.9031   4599.5648       6,522
+------------+------------------------------------
+      Total |   3533.1033   3532.8102      16,613
+
+                        Analysis of Variance
+    Source              SS         df      MS            F     Prob &gt; F
+------------------------------------------------------------------------
+Between groups      1.4678e+10      3   4.8926e+09    421.80     0.0000
+ Within groups      1.9265e+11  16609   11599279.8
+------------------------------------------------------------------------
+    Total           2.0733e+11  16612   12480748.1
+
+Bartlett&#39;s test for equal variances:  chi2(3) =  4.3e+03  Prob&gt;chi2 = 0.000</code></pre>
+<p>Wir erkennen:</p>
+<ul>
+<li>dass signifikante Gruppenunterschiede bestehen: <code>Prob &gt; F</code> ist deutlich &lt; 0,05</li>
+<li>Kenntnis von <code>m1202</code> kann</li>
+<li>dass Befragte mit einem Abschluss der Fachhochschule, Universität/ geh., höhere Beamte die höchsten Durchschnittseinkommen haben (<code>Mean</code> = <code>4643.9031</code>), Befatgte ohne Berufsabschluss die niedrigsten (<code>Mean</code> = <code>2150.7608</code>) usw.</li>
+</ul>
+<p>Auch hier der Vergleich zu Regressionsmodellen einer kategorialen UV:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="anova.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.m1202</span></code></pre></div>
+<pre><code> variable F518_SUF not found
+r(111);
+
+      Source |       SS           df       MS      Number of obs   =    16,613
+-------------+----------------------------------   F(3, 16609)     =    421.80
+       Model |  1.4678e+10         3  4.8926e+09   Prob &gt; F        =    0.0000
+    Residual |  1.9265e+11    16,609  11599279.8   R-squared       =    0.0708
+-------------+----------------------------------   Adj R-squared   =    0.0706
+       Total |  2.0733e+11    16,612  12480748.1   Root MSE        =    3405.8
+
+------------------------------------------------------------------------------
+    F518_SUF |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+       m1202 |
+   duale o.  |   586.0038   120.0181     4.88   0.000     350.7555     821.252
+   Aufstieg  |   1483.236   144.2167    10.28   0.000     1200.556    1765.917
+   Fachhoch  |   2493.142   121.1648    20.58   0.000     2255.646    2730.638
+             |
+       _cons |   2150.761   113.5888    18.93   0.000     1928.115    2373.407
+------------------------------------------------------------------------------</code></pre>
+<p><span class="math inline">\(\rightarrow\)</span> hier sind die Koeffizienten jeweils auf den Vergleich zu <code>m1202=1</code> zu interpretieren:</p>
+<ul>
+<li>Befragte mit dualer o. schulischer Berufsausbildung/einf.,mittl. Beamte verdienen im Schnitt 586.0038 EUR mehr als Befragte ohne Abschluss (<code>m1202 = 1</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+<li>Befragte mit Aufstiegsfortbildung verdienen im Schnitt 1483.236 EUR mehr als Befragte ohne Abschluss (<code>m1202 = 1</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+<li>Befragte mit Abschluss einer Fachhochschule, Universität/ geh., höhere Beamte verdienen im Schnitt 2493.142 EUR mehr als Befragte ohne Abschluss (<code>m1202 = 1</code>). Der Unterschied ist statistisch signifikant (<code>P&gt;|t|</code> &lt; 0,05).</li>
+</ul>
 
 </div>
-</div>
-<div class="footnotes">
-<hr />
-<ol start="1">
-<li id="fn1"><p>Mehr zu <code>egen</code> in Kapitel <a href="egen.html#egen">6</a><a href="bg_reg.html#fnref1" class="footnote-back">↩︎</a></p></li>
-<li id="fn2"><p>Ein positiver Wert des Residuums bedeutet, dass der beobachtete Wert größer als der vorhergesagte Wert ist. Die Regressionsgerade <em>unterschätzt</em> also den Wert. Ein negatives Residuum bedeutet dementsprechend, dass die Regressionsgerade den Wert überschätzt - der wahre Wert ist niedriger als der vorhergesagte Wert. Siehe <a href="bg_reg.html#resid">Formeln</a><a href="bg_reg.html#fnref2" class="footnote-back">↩︎</a></p></li>
-<li id="fn3"><p>Die Option <code>noheader</code> macht den Output von <code>reg</code> etwas übersichtlicher.<a href="bg_reg.html#fnref3" class="footnote-back">↩︎</a></p></li>
-<li id="fn4"><p>Die (einfache, unquadrierte) Summe der Resiuden beträgt auch hier Null.<a href="bg_reg.html#fnref4" class="footnote-back">↩︎</a></p></li>
-</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="anova.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="bg_reg.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lit.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,4 +1,4 @@
-# ANOVA {#hypo}
+# ANOVA {#anova}
 
 ```{r setup22, include=F}
 .libPaths("D:/R-library4") 
@@ -7,7 +7,7 @@ library(ggplot2)
 library(LaCroixColoR)
 library(patchwork)
 library(Statamarkdown)
-stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
 stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 knitr::opts_chunk$set(collapse = F)
@@ -168,7 +168,7 @@ Mit `oneway F518_SUF S1, tabulate` bekommen wir bspw. die Varianzzerlegung der E
 oneway F518_SUF S1, tabulate
 ```
 
-```{stata anova2, echo =F }
+```{stata anova2, echo =F ,  collectcode=F}
 set linesize 200
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta",clear
 oneway F518_SUF S1, tabulate
@@ -181,7 +181,7 @@ Außerdem werden uns die Sum of Squares für die Unterschiede innerhalb und zwis
 (`8.5219e+09` steht für `8,521,900,000`, also `4.883*10^9` ",`1.9886e+11` entspricht `198,860,000,000`).
 Wir können aus den Zahlen für die Sum of Squares auch die Varianzaufklärung durch die Variable `S1` berechnen (`between`/`Total`):
 
-```{stata dipl1r2}
+```{stata dipl1r2, collectcode=F}
 dis  (8.5219e+09/ 2.0738e+11)
 ```
 Durch Kenntnis der Varibale `S1` können also 4.11% der gesamten Varianz ("Unterschiede") des Einkommens erklärt werden.
@@ -328,7 +328,7 @@ tot_plt3 / (bet_plt3 | wit_plt3 )
 oneway F518_SUF m1202, tabulate
 ```
 
-```{stata anova3groupts2, echo = F,,collectcode = F }
+```{stata anova3groupts2, echo = F,collectcode = F }
 set linesize 200
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta",clear
 oneway F518_SUF m1202, tabulate
@@ -346,18 +346,19 @@ Auch hier der Vergleich zu Regressionsmodellen einer kategorialen UV:
 reg F518_SUF i.m1202
 ```
 
-```{stata  reg_anova4, echo =F , collectcode = F}
+```{stata  reg_anova4, echo =F , collectcode = T,warning = F}
+clear all
 set linesize 200
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0_clean.dta"
 reg F518_SUF i.m1202
 ```
 
 
-$\rightarrow$ hier sind die Koeffizienten jeweils auf den Vergleich zu `educ=1` zu interpretieren:
+$\rightarrow$ hier sind die Koeffizienten jeweils auf den Vergleich zu `m1202=1` zu interpretieren:
 
-+ Befragte mit dualer o. schulischer Berufsausbildung/einf.,mittl. Beamte verdienen im Schnitt  586.0038 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist aber statistisch signifikant (`P>|t|` < 0,05).
-+ Befragte mit  Aufstiegsfortbildung verdienen im Schnitt 1483.236 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist aber statistisch signifikant (`P>|t|` < 0,05).
-+ Befragte mit Abschluss einer Fachhochschule, Universität/ geh., höhere Beamte verdienen im Schnitt 2493.142 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist aber statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit dualer o. schulischer Berufsausbildung/einf.,mittl. Beamte verdienen im Schnitt  586.0038 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit  Aufstiegsfortbildung verdienen im Schnitt 1483.236 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
++ Befragte mit Abschluss einer Fachhochschule, Universität/ geh., höhere Beamte verdienen im Schnitt 2493.142 EUR mehr als Befragte ohne Abschluss (`m1202 = 1`). Der Unterschied ist statistisch signifikant (`P>|t|` < 0,05).
 
 
 

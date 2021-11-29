@@ -147,3 +147,4 @@ hypo
 anova-vs.-t-tests
 anova-vs.-lineare-regression
 anova-mehrere-gruppen
+anova
