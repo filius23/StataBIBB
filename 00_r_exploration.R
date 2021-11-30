@@ -38,12 +38,12 @@ unique(baua$zpalter) %>% length(.)
 
 
 #run render in background -------------------
- bookdown::preview_chapter("08_zshg.Rmd")
+ bookdown::preview_chapter("09_mreg.Rmd")
 
 rm(baua)
-chap <- "08_zshg.Rmd"
+chap <- "09_mreg.Rmd"
 rstudioapi::jobRunScript(path = "00_build.R",importEnv = T)
 
 
 # befehle ----
-knitr::purl(input = "05_gen.Rmd",output = "./stata_prog/05_Befehle.do")
+knitr::purl(input = "07_gewichtung.Rmd",output = "./stata_prog/07_Befehle.do")
