@@ -1,4 +1,10 @@
-*05 Aufgaben Lösung
+* -------------------------------- *
+* 05 Befehle: Variablen erstellen 
+* Lösungen
+* -------------------------------- *
+
+cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
+use "BIBBBAuA_2018_suf1.0.dta", clear
 
 * 5-1: AO-WO NUTS-2 -----------------------------------
 d nuts2 F233_nuts2

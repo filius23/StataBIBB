@@ -1,4 +1,8 @@
-* Kapitel 6 - Lösungen, final
+* -------------------------------- *
+* Session 6: egen
+* Lösungen
+* -------------------------------- *
+
 cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
 use "BIBBBAuA_2018_suf1.0.dta", clear
 mvdecode F518_SUF, mv( 99995/  99999)
@@ -28,8 +32,6 @@ describe F21?
 describe F2*4
 describe F2?4
 
-// Öffnen Sie die Hilfe für `egen` und lassen Sie ein Beispiel Schritt für Schritt durchlaufen - beobachten Sie was passiert, indem Sie mit `browse` den Datensatz betrachten.
-
 * ---------------- *
 * 4 Berechnen Sie das Durchschnittseinkommen (basierend auf `F518_SUF`) getrennt für Männer und Frauen und legen Sie es in einer neuen Variable `m_inc_byS1` ab.
 * ---------------- *
@@ -40,3 +42,8 @@ bysort S1: egen m_inc_byS1 = mean(F518_SUF)
 * 5 Wie würden Sie jetzt für jede\*n Befragten berechnen, um wieviel ihr\*sein Einkommen vom geschlechtsspezifischen Durchschnittswert unterscheidet?
 * ---------------- *
 gen abw_m_inc = F518_SUF - m_inc_byS1
+
+
+
+// Öffnen Sie die Hilfe für `egen` und lassen Sie ein Beispiel Schritt für Schritt durchlaufen - beobachten Sie was passiert, indem Sie mit `browse` den Datensatz betrachten.
+

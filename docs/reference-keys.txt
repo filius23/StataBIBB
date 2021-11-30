@@ -143,3 +143,7 @@ statistik-lehrbücher
 appendix
 beobachtungen-markieren-mit-gen-if
 index-bilden
+profiaufgabe
+weight
+quadratische-terme
+regue3

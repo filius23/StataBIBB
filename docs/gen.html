@@ -214,13 +214,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="iflab.html"><a href="iflab.html"><i class="fa fa-check"></i><b>4</b> if-Bedingungen</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="iflab.html"><a href="iflab.html#if-bedingungen---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>4.1</b> if-Bedingungen - nur manche Zeilen ansehen</a>
-<ul>
-<li class="chapter" data-level="4.1.1" data-path="iflab.html"><a href="iflab.html#labels"><i class="fa fa-check"></i><b>4.1.1</b> Labels</a></li>
-<li class="chapter" data-level="4.1.2" data-path="iflab.html"><a href="iflab.html#miss_if"><i class="fa fa-check"></i><b>4.1.2</b> Fehlende Werte</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="iflab.html"><a href="iflab.html#keep-drop-fälle-dauerhaft-löschen"><i class="fa fa-check"></i><b>4.2</b> keep &amp; drop: Fälle dauerhaft löschen</a></li>
-<li class="chapter" data-level="4.3" data-path="iflab.html"><a href="iflab.html#ifue"><i class="fa fa-check"></i><b>4.3</b> Übungen 4</a></li>
+<li class="chapter" data-level="4.1" data-path="iflab.html"><a href="iflab.html#if-bedingungen---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>4.1</b> if-Bedingungen - nur manche Zeilen ansehen</a></li>
+<li class="chapter" data-level="4.2" data-path="iflab.html"><a href="iflab.html#labels"><i class="fa fa-check"></i><b>4.2</b> Labels</a></li>
+<li class="chapter" data-level="4.3" data-path="iflab.html"><a href="iflab.html#miss_if"><i class="fa fa-check"></i><b>4.3</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="4.4" data-path="iflab.html"><a href="iflab.html#keep-drop-fälle-dauerhaft-löschen"><i class="fa fa-check"></i><b>4.4</b> keep &amp; drop: Fälle dauerhaft löschen</a></li>
+<li class="chapter" data-level="4.5" data-path="iflab.html"><a href="iflab.html#ifue"><i class="fa fa-check"></i><b>4.5</b> Übungen 4</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="gen.html"><a href="gen.html"><i class="fa fa-check"></i><b>5</b> Variablen erstellen und verändern</a>
 <ul>
@@ -388,53 +386,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="gen" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Variablen erstellen und verändern</h1>
 <p>Natürlich sind wir nicht nur darauf beschränkt, bestehende Variablen anzusehen, sondern wir können auch neue Variablen erstellen. Das geht mit <code>gen</code>. Dazu geben wir erst den neuen Variablennamen an und nach <code>=</code>, wie die neue Variable bestimmt werden soll:</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb136-1"><a href="gen.html#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> alter_mon = zpalter * 12</span>
-<span id="cb136-2"><a href="gen.html#cb136-2" aria-hidden="true" tabindex="-1"></a>su zpalter</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-
-
-
-
-(176 missing values generated)
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="gen.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> alter_mon = zpalter * 12</span>
+<span id="cb1-2"><a href="gen.html#cb1-2" aria-hidden="true" tabindex="-1"></a>su zpalter</span></code></pre></div>
+<pre><code>(176 missing values generated)
 
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
    alter_mon |     19,836    566.3073    136.0515        180       1044</code></pre>
 <p>Wenn wir eine Variable überschreiben möchten, dann müssen wir diese erst mit <code>drop</code> löschen, bevor wir sie überschreiben. Würden wir den <code>gen</code> Befehl von gerade nochmal verwenden, dann bekommen wir eine Fehlermeldung:</p>
-<div class="sourceCode" id="cb138"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb138-1"><a href="gen.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> alter_mon = zpalter * 12</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-
-
-
-
-
-variable alter_mon already defined
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="gen.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> alter_mon = zpalter * 12</span></code></pre></div>
+<pre><code>variable alter_mon already defined
 r(110);
 
 end of do-file
 r(110);</code></pre>
 <p>Wir müssen den Namen <code>age_mon</code> also erst wieder frei machen, dann funktioniert der Befehl auch:</p>
-<div class="sourceCode" id="cb140"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb140-1"><a href="gen.html#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> alter_mon</span>
-<span id="cb140-2"><a href="gen.html#cb140-2" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> alter_mon = zpalter * 12</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="gen.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> alter_mon</span>
+<span id="cb5-2"><a href="gen.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> alter_mon = zpalter * 12</span></code></pre></div>
 <div id="gen-ist-gut-kontrolle-ist-besser" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> gen ist gut, Kontrolle ist besser</h2>
 <p>Wie gerade gesehen gibt uns Stata aber keinerlei Erfolgsmeldungen. Nach der Bearbeitung oder Neuurstellung von Variablen sollte ein Blick in die Daten folgen. Dazu empfiehlt es sich, wieder auf den <code>browse</code> Befehl zurückzugreifen:</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb141-1"><a href="gen.html#cb141-1" aria-hidden="true" tabindex="-1"></a>browse intnr zpalter alter_mon </span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb6-1"><a href="gen.html#cb6-1" aria-hidden="true" tabindex="-1"></a>browse intnr zpalter alter_mon </span></code></pre></div>
 <p><img src="pics/05_stata_browse_kontrolle.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>In Kombination mit <code>if</code> können wir auch einige Spezialfälle betrachten, z.B. ob die Missings richtig verarbeitet wurden:</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb142-1"><a href="gen.html#cb142-1" aria-hidden="true" tabindex="-1"></a>browse intnr zpalter alter_mon  <span class="kw">if</span> <span class="fu">missing</span>(zpalter)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="gen.html#cb7-1" aria-hidden="true" tabindex="-1"></a>browse intnr zpalter alter_mon  <span class="kw">if</span> <span class="fu">missing</span>(zpalter)</span></code></pre></div>
 <p><img src="pics/05_stata_browse_kontrolle2.png" width="90%" style="display: block; margin: auto;" /></p>
 <p>Häufig empfiehlt sich auch ein <code>summarize</code> und ein Vergleich der Missingszahl der alten und neuen Variable mit <code>mdesc</code>:</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb143-1"><a href="gen.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="kw">summarize</span> zpalter alter_mon</span>
-<span id="cb143-2"><a href="gen.html#cb143-2" aria-hidden="true" tabindex="-1"></a>mdesc zpalter alter_mon</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-    Variable |        Obs        Mean    Std. Dev.       Min        Max
+<div class="sourceCode" id="cb8"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb8-1"><a href="gen.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">summarize</span> zpalter alter_mon</span>
+<span id="cb8-2"><a href="gen.html#cb8-2" aria-hidden="true" tabindex="-1"></a>mdesc zpalter alter_mon</span></code></pre></div>
+<pre><code>    Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
      zpalter |     19,836    47.19228    11.33762         15         87
    alter_mon |     19,836    566.3073    136.0515        180       1044
@@ -448,23 +428,13 @@ r(199);
 <div id="dummyvar" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Dummy-Variablen erstellen</h2>
 <p>Wir können auch die Operatoren aus den if-Bedingungen verwenden, um eine Variable zu generieren. Beispielsweise könnten wir eine Dummy-Variable bilden, ob die Befraten im gleichen Bundesland wohnen (<code>Bula</code>) und arbeiten (<code>F233</code>), indem wir den <code>==</code> Operator verwenden. Die entstehende Variable enthält dann immer eine 1 wenn beide Werte gleich sind, unterschiedliche Werte ergeben eine 0:</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb145-1"><a href="gen.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mvdecode</span> Bula F233, mv(97/99)</span>
-<span id="cb145-2"><a href="gen.html#cb145-2" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ao_wo = Bula ==  F233</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb10-1"><a href="gen.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">mvdecode</span> Bula F233, mv(97/99)</span>
+<span id="cb10-2"><a href="gen.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ao_wo = Bula ==  F233</span></code></pre></div>
 <p><strong>Die Ergebnisse solcher Veränderungen sollten immer überprüft werden!</strong></p>
-<div class="sourceCode" id="cb146"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb146-1"><a href="gen.html#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> ao_wo</span>
-<span id="cb146-2"><a href="gen.html#cb146-2" aria-hidden="true" tabindex="-1"></a>browse Bula F233 ao_wo</span></code></pre></div>
-<div class="sourceCode" id="cb147"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb147-1"><a href="gen.html#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> Bula F233 ao_wo <span class="kw">in</span> 157/160</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-
-
-
-
-
-
-  +-----------------------------+
-  |     Bula       F233   ao_wo |
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="gen.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> ao_wo</span>
+<span id="cb11-2"><a href="gen.html#cb11-2" aria-hidden="true" tabindex="-1"></a>browse Bula F233 ao_wo</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb12-1"><a href="gen.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> Bula F233 ao_wo <span class="kw">in</span> 157/160</span></code></pre></div>
+<pre><code>  |     Bula       F233   ao_wo |
   |-----------------------------|
   | Rheinlan   Rheinlan       1 |
   | Rheinlan    Baden-W       0 |
@@ -472,11 +442,8 @@ r(199);
   | Rheinlan          .       0 |
   +-----------------------------+</code></pre>
 <p>Allerdings haben wir für <code>F233</code> doch missings definiert - was passiert mit denen?</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb149-1"><a href="gen.html#cb149-1" aria-hidden="true" tabindex="-1"></a>mdesc Bula F233 ao_wo </span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-    Variable    |     Missing          Total     Percent Missing
+<div class="sourceCode" id="cb14"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb14-1"><a href="gen.html#cb14-1" aria-hidden="true" tabindex="-1"></a>mdesc Bula F233 ao_wo </span></code></pre></div>
+<pre><code>    Variable    |     Missing          Total     Percent Missing
 ----------------+-----------------------------------------------
            Bula |           0         20,012           0.00
            F233 |         285         20,012           1.42
@@ -484,23 +451,17 @@ r(199);
 ----------------+-----------------------------------------------</code></pre>
 <p>Leider gleicht Stata auch Missings mit gültigen Werten ab und vergibt dann dementsprechend 0 oder 1.
 Um die Missings als Missing zu behalten, müssen wir mit entsprechenden <code>if</code>-Bedingungen die Zeilen mit Missings in <code>Bula</code> und <code>F233</code> ausschließen:</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb151-1"><a href="gen.html#cb151-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> ao_wo <span class="co">// löschen</span></span>
-<span id="cb151-2"><a href="gen.html#cb151-2" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ao_wo =  Bula ==  F233 <span class="kw">if</span> !<span class="fu">missing</span>(F233) &amp; !<span class="fu">missing</span>(Bula)</span>
-<span id="cb151-3"><a href="gen.html#cb151-3" aria-hidden="true" tabindex="-1"></a>mdesc Bula F233 ao_wo</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-    Variable    |     Missing          Total     Percent Missing
+<div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="gen.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> ao_wo <span class="co">// löschen</span></span>
+<span id="cb16-2"><a href="gen.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> ao_wo =  Bula ==  F233 <span class="kw">if</span> !<span class="fu">missing</span>(F233) &amp; !<span class="fu">missing</span>(Bula)</span>
+<span id="cb16-3"><a href="gen.html#cb16-3" aria-hidden="true" tabindex="-1"></a>mdesc Bula F233 ao_wo</span></code></pre></div>
+<pre><code>    Variable    |     Missing          Total     Percent Missing
 ----------------+-----------------------------------------------
            Bula |           0         20,012           0.00
            F233 |         285         20,012           1.42
           ao_wo |         285         20,012           1.42
 ----------------+-----------------------------------------------</code></pre>
-<div class="sourceCode" id="cb153"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb153-1"><a href="gen.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> ao_wo</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-      ao_wo |      Freq.     Percent        Cum.
+<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="gen.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> ao_wo</span></code></pre></div>
+<pre><code>      ao_wo |      Freq.     Percent        Cum.
 ------------+-----------------------------------
           0 |      1,769        8.97        8.97
           1 |     17,958       91.03      100.00
@@ -512,25 +473,19 @@ r(199);
 <p>Die so erstellte Dummy-Variable können wir auch labeln.
 Dazu definieren wir zunächst ein Wertelabel.
 Dazu verwenden wir <code>label define</code>, gefolgt von einem Objektnamen für dieses Label (hier <code>aowo_lab</code>) und dann jeweils die Ausprägungen zusammen mit dem entsprechenden Label in ““. Dieses Label-Objekt wenden wir dann mit <code>label values</code> auf die Variable <code>ao_wo</code> an:</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb155-1"><a href="gen.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="kw">label</span> <span class="kw">define</span> aowo_lab 0 <span class="st">&quot;ungleich&quot;</span> 1 <span class="st">&quot;gleich&quot;</span></span>
-<span id="cb155-2"><a href="gen.html#cb155-2" aria-hidden="true" tabindex="-1"></a><span class="kw">label</span> <span class="kw">values</span> ao_wo aowo_lab</span>
-<span id="cb155-3"><a href="gen.html#cb155-3" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> ao_wo</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-      ao_wo |      Freq.     Percent        Cum.
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="gen.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">label</span> <span class="kw">define</span> aowo_lab 0 <span class="st">&quot;ungleich&quot;</span> 1 <span class="st">&quot;gleich&quot;</span></span>
+<span id="cb20-2"><a href="gen.html#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="kw">label</span> <span class="kw">values</span> ao_wo aowo_lab</span>
+<span id="cb20-3"><a href="gen.html#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> ao_wo</span></code></pre></div>
+<pre><code>      ao_wo |      Freq.     Percent        Cum.
 ------------+-----------------------------------
    ungleich |      1,769        8.97        8.97
      gleich |     17,958       91.03      100.00
 ------------+-----------------------------------
       Total |     19,727      100.00</code></pre>
 <p>Wenn wir das Label verändern, sehen wir das anschließend auch in <code>tabulate</code>:</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb157-1"><a href="gen.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="kw">label</span> <span class="kw">define</span> aowo_lab 0 <span class="st">&quot;Ungleich&quot;</span> 1 <span class="st">&quot;Gleich&quot;</span>, <span class="kw">replace</span></span>
-<span id="cb157-2"><a href="gen.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> ao_wo</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-      ao_wo |      Freq.     Percent        Cum.
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="gen.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">label</span> <span class="kw">define</span> aowo_lab 0 <span class="st">&quot;Ungleich&quot;</span> 1 <span class="st">&quot;Gleich&quot;</span>, <span class="kw">replace</span></span>
+<span id="cb22-2"><a href="gen.html#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> ao_wo</span></code></pre></div>
+<pre><code>      ao_wo |      Freq.     Percent        Cum.
 ------------+-----------------------------------
    Ungleich |      1,769        8.97        8.97
      Gleich |     17,958       91.03      100.00
@@ -654,15 +609,9 @@ unter 2.000 Einwohner
 </tbody>
 </table>
 <p>Mit <code>recode</code> können wir diese Ausprägungen zusammenfassen, indem wir immer (<code>alt</code>=<code>neu</code>) angeben. Umcodierungen sollten immer mit <code>tab alt neu</code> überprüft werden:</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb159-1"><a href="gen.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> gkpol (2=1) (3=1) (4=2) (5=2) (6=3) (7=3), into(gkpol2)</span>
-<span id="cb159-2"><a href="gen.html#cb159-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> gkpol gkpol2</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-
-
-
-(18928 differences between gkpol and gkpol2)
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="gen.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> gkpol (2=1) (3=1) (4=2) (5=2) (6=3) (7=3), into(gkpol2)</span>
+<span id="cb24-2"><a href="gen.html#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> gkpol gkpol2</span></code></pre></div>
+<pre><code>(18928 differences between gkpol and gkpol2)
 
                       |         RECODE of gkpol
    Gemeindekennziffer |  (Gemeindekennziffer politisch)
@@ -679,15 +628,9 @@ unter 2.000 Einwohner |     1,084          0          0 |     1,084
                 Total |     7,756      5,174      7,082 |    20,012 </code></pre>
 <p>Nicht erwähnte Ausprägungen werden einfach übernommen - daher ist <code>1</code> hier nicht aufgeführt.</p>
 <p>Ein Vorteil von recode ist, dass wir direkt Labels vergeben können, die wir einfach in <code>""</code> anhängen - nochmal der gleich Befehl mit direkten Labels:</p>
-<div class="sourceCode" id="cb161"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb161-1"><a href="gen.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> gkpol2 <span class="co">// nochmal neu</span></span>
-<span id="cb161-2"><a href="gen.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> gkpol (2=1 <span class="st">&quot;Klein&quot;</span>) (3=1 <span class="st">&quot;Klein&quot;</span>) (4=2 <span class="st">&quot;Mittel&quot;</span>) (5=2 <span class="st">&quot;Mittel&quot;</span>) (6=3 <span class="st">&quot;Groß&quot;</span>) (7=3 <span class="st">&quot;Groß&quot;</span>), into(gkpol2)</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-
-
-
-(18928 differences between gkpol and gkpol2)
+<div class="sourceCode" id="cb26"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb26-1"><a href="gen.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> gkpol2 <span class="co">// nochmal neu</span></span>
+<span id="cb26-2"><a href="gen.html#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> gkpol (2=1 <span class="st">&quot;Klein&quot;</span>) (3=1 <span class="st">&quot;Klein&quot;</span>) (4=2 <span class="st">&quot;Mittel&quot;</span>) (5=2 <span class="st">&quot;Mittel&quot;</span>) (6=3 <span class="st">&quot;Groß&quot;</span>) (7=3 <span class="st">&quot;Groß&quot;</span>), into(gkpol2)</span></code></pre></div>
+<pre><code>(18928 differences between gkpol and gkpol2)
 
                       |         RECODE of gkpol
    Gemeindekennziffer |  (Gemeindekennziffer politisch)
@@ -704,11 +647,11 @@ unter 2.000 Einwohner |     1,084          0          0 |     1,084
                 Total |     7,756      5,174      7,082 |    20,012 </code></pre>
 <p><strong>Tricks</strong>, die alle aber zum gleichen Ergebnis führen:</p>
 <p>Wir können auch mehrere Werte vor dem <code>=</code> angeben:</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb163-1"><a href="gen.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> gkpol2</span>
-<span id="cb163-2"><a href="gen.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> gkpol (1 2 3=1 <span class="st">&quot;Klein&quot;</span>) (4 5=2 <span class="st">&quot;Mittel&quot;</span>) (6 7=3 <span class="st">&quot;Groß&quot;</span>), into(gkpol2)</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb28-1"><a href="gen.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> gkpol2</span>
+<span id="cb28-2"><a href="gen.html#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> gkpol (1 2 3=1 <span class="st">&quot;Klein&quot;</span>) (4 5=2 <span class="st">&quot;Mittel&quot;</span>) (6 7=3 <span class="st">&quot;Groß&quot;</span>), into(gkpol2)</span></code></pre></div>
 <p>Außerdem können wir mit Hilfe von <code>/</code> auch Wertebereiche ansprechen:</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb164-1"><a href="gen.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> gkpol2</span>
-<span id="cb164-2"><a href="gen.html#cb164-2" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> gkpol (1/3=1 <span class="st">&quot;Klein&quot;</span>) (4/5=2 <span class="st">&quot;Mittel&quot;</span>) (6/7=3 <span class="st">&quot;Groß&quot;</span>), into(gkpol2)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb29-1"><a href="gen.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">drop</span> gkpol2</span>
+<span id="cb29-2"><a href="gen.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> gkpol (1/3=1 <span class="st">&quot;Klein&quot;</span>) (4/5=2 <span class="st">&quot;Mittel&quot;</span>) (6/7=3 <span class="st">&quot;Groß&quot;</span>), into(gkpol2)</span></code></pre></div>
 Wir können in <code>recode</code> auch folgende Hilfsausdrücke verwenden, bspw. <code>recode gkpol .... (6/max =3 "Groß"),....</code>:
 <table class="table table-condensed" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -777,17 +720,17 @@ Manchmal liegt eine interessierende Information aufgeteilt auf mehrere Variablen
 <li>2 “verh. &amp; 2 Erwerbspersonen im HH”</li>
 <li>3 “verh. &amp; 1 Erwerbsperson”</li>
 </ul>
-<div class="sourceCode" id="cb165"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb165-1"><a href="gen.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> erw_hh = .          <span class="co">// leere Variable erstellen</span></span>
-<span id="cb165-2"><a href="gen.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> erw_hh = 1 <span class="kw">if</span> F1601 == 2 <span class="co">// alleine -&gt; leben nicht zusammen</span></span>
-<span id="cb165-3"><a href="gen.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> erw_hh = 2 <span class="kw">if</span> F1601 == 1 &amp; F1603 == 1 <span class="co">// zusammenlebend, Partner*in erwerbstätig</span></span>
-<span id="cb165-4"><a href="gen.html#cb165-4" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> erw_hh = 3 <span class="kw">if</span> F1601 == 1 &amp; F1603 == 2 <span class="co">// zusammenlebend, Partner*in nicht erwerbstätig</span></span>
-<span id="cb165-5"><a href="gen.html#cb165-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-6"><a href="gen.html#cb165-6" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> erw_hh = 1 <span class="kw">if</span> <span class="fu">inlist</span>(F1600,2,3,4) <span class="co">// keine Partnerschaft -&gt; auch auf 1</span></span>
-<span id="cb165-7"><a href="gen.html#cb165-7" aria-hidden="true" tabindex="-1"></a>*! unverheiratete werden hier nicht als Partnerschaften behandelt</span>
-<span id="cb165-8"><a href="gen.html#cb165-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb165-9"><a href="gen.html#cb165-9" aria-hidden="true" tabindex="-1"></a>lab <span class="kw">define</span> erw_lab 1 <span class="st">&quot;nicht verh./alleine lebend&quot;</span> 2 <span class="st">&quot;verh. &amp; 2 Erwerbspersonen im HH&quot;</span> 3 <span class="st">&quot;verh. &amp; 1 Erwerbsperson&quot;</span></span>
-<span id="cb165-10"><a href="gen.html#cb165-10" aria-hidden="true" tabindex="-1"></a>lab <span class="kw">values</span> erw_hh erw_lab</span>
-<span id="cb165-11"><a href="gen.html#cb165-11" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> erw_hh</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb30-1"><a href="gen.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> erw_hh = .          <span class="co">// leere Variable erstellen</span></span>
+<span id="cb30-2"><a href="gen.html#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> erw_hh = 1 <span class="kw">if</span> F1601 == 2 <span class="co">// alleine -&gt; leben nicht zusammen</span></span>
+<span id="cb30-3"><a href="gen.html#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> erw_hh = 2 <span class="kw">if</span> F1601 == 1 &amp; F1603 == 1 <span class="co">// zusammenlebend, Partner*in erwerbstätig</span></span>
+<span id="cb30-4"><a href="gen.html#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> erw_hh = 3 <span class="kw">if</span> F1601 == 1 &amp; F1603 == 2 <span class="co">// zusammenlebend, Partner*in nicht erwerbstätig</span></span>
+<span id="cb30-5"><a href="gen.html#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="gen.html#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="kw">replace</span> erw_hh = 1 <span class="kw">if</span> <span class="fu">inlist</span>(F1600,2,3,4) <span class="co">// keine Partnerschaft -&gt; auch auf 1</span></span>
+<span id="cb30-7"><a href="gen.html#cb30-7" aria-hidden="true" tabindex="-1"></a>*! unverheiratete werden hier nicht als Partnerschaften behandelt</span>
+<span id="cb30-8"><a href="gen.html#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-9"><a href="gen.html#cb30-9" aria-hidden="true" tabindex="-1"></a>lab <span class="kw">define</span> erw_lab 1 <span class="st">&quot;nicht verh./alleine lebend&quot;</span> 2 <span class="st">&quot;verh. &amp; 2 Erwerbspersonen im HH&quot;</span> 3 <span class="st">&quot;verh. &amp; 1 Erwerbsperson&quot;</span></span>
+<span id="cb30-10"><a href="gen.html#cb30-10" aria-hidden="true" tabindex="-1"></a>lab <span class="kw">values</span> erw_hh erw_lab</span>
+<span id="cb30-11"><a href="gen.html#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> erw_hh</span></code></pre></div>
 <hr />
 <p><a href="gen.html#ue53"><strong>Übung 5-3</strong></a></p>
 <hr />
@@ -795,12 +738,12 @@ Manchmal liegt eine interessierende Information aufgeteilt auf mehrere Variablen
 </div>
 <div id="genue" class="section level2" number="5.5">
 <h2><span class="header-section-number">5.5</span> Übungen 5</h2>
-<ol start="22" class="example" style="list-style-type: decimal">
+<ol class="example" style="list-style-type: decimal">
 <li>Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (<code>BIBBBAuA_2018_suf1.dta</code>).</li>
 </ol>
 <div id="ue51" class="section level3" number="5.5.1">
 <h3><span class="header-section-number">5.5.1</span> Übung 5-1</h3>
-<ol start="23" class="example" style="list-style-type: decimal">
+<ol start="2" class="example" style="list-style-type: decimal">
 <li>Erstellen Sie eine Dummy-Variable, die erfasst, ob die Befraten in der gleichen NUTS-2-Region leben und arbeiten</li>
 </ol>
 <ul>
@@ -810,7 +753,7 @@ Manchmal liegt eine interessierende Information aufgeteilt auf mehrere Variablen
 <li>Kontrollieren Sie das Ergebnis mit <code>browse</code></li>
 <li>Definieren Sie Labels für diese Dummyvariable: “Wohnort = Arbeitsort” “Wohnort != Arbeitsort”</li>
 </ul>
-<ol start="24" class="example" style="list-style-type: decimal">
+<ol start="3" class="example" style="list-style-type: decimal">
 <li>Verändern Sie das Label <code>S1</code> von 1 = “männlich” und 2= “weiblich” auf 1 = “Männer” und 2 = “Frauen.”</li>
 </ol>
 <ul>
@@ -821,7 +764,7 @@ Manchmal liegt eine interessierende Information aufgeteilt auf mehrere Variablen
 </div>
 <div id="ue52" class="section level3" number="5.5.2">
 <h3><span class="header-section-number">5.5.2</span> Übung 5-2</h3>
-<ol start="25" class="example" style="list-style-type: decimal">
+<ol start="4" class="example" style="list-style-type: decimal">
 <li>Fassen Sie die Variable “Gesamtnote Schulabschluss” (<code>F1108</code>) in drei Kategorien zusammen:
 <table class="table table-condensed" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -936,7 +879,7 @@ keine Angabe
 </div>
 <div id="ue53" class="section level3" number="5.5.3">
 <h3><span class="header-section-number">5.5.3</span> Übung 5-3</h3>
-<ol start="26" class="example" style="list-style-type: decimal">
+<ol start="5" class="example" style="list-style-type: decimal">
 <li><p>Fassen Sie die Variablen <code>F209</code> ( Arbeitszeit normalerweise zwischen 7 und 19 Uhr?) und <code>F223</code> (mindestens einmal im Monat Sonntagsarbeit) zu einer Variable <code>a_zeit</code> mit folgenden Ausprägungen zusammen:</p>
 <blockquote>
 <p>1 zwischen 7-19 Uhr &amp; keine Sonntagsarbeit<br />

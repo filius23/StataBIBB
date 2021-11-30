@@ -4,6 +4,9 @@
 * -------------------------------- *
 
 *  Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
+cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
+use "BIBBBAuA_2018_suf1.0.dta", clear
+
 
 *1 ----------
 	* In der Variable `intnr` ist die Interviewnummer abgelegt. Lassen Sie sich die Interviewnummer (`intnr`), Alter (`zpalter`), Geschlecht (`S1`) und die Wohnortgröße (`gkpol`) für den\*die Befragte mit der Interviewnummer 2388097 ausgeben. 

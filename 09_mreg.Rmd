@@ -8,8 +8,8 @@ library(Statamarkdown)
 library(tidyverse)
 library(kableExtra)
 library(scico)
-stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
-# stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 options(width = 200)
 df <- data.frame(var1 = c(1,2,7,8),
@@ -114,7 +114,7 @@ reg var2 var1, noheader /// noheader macht den Output übersichtlicher
 ```
 
 
-```{stata vorhw2, echo=F}
+```{stata vorhw2, echo=F, collectcode = F}
 use "regression_bsp.dta", clear
 qui egen mean_var2 = mean(var2)
 qui gen m_abw = var2 - mean_var2
@@ -519,10 +519,6 @@ Befragte mit mittlerer Reife haben ein um `r sprintf("%3.2f",m4$coefficients[2])
 
 Befragte mit (Fach-)Abitur verdienen `r sprintf("%3.2f",m4$coefficients[3])` Euro höheres Bruttoeinkommen als Befragte, die maximal Hauptschulabschluss haben. Der Zusammenhang ist am 0,001-Niveau signifikant. \   
 
-Formal sieht unser Modell also so aus:
-$$\widehat{\texttt{F518_SUF}} = \hat{\beta0} + \hat{\beta1}\times\texttt{educ=2} + \hat{\beta2} \times \texttt{educ=3}$$
-
-Für `educ=2` wird nur dann eine `1` eingesetzt, wenn der/die Befragte mittlere Reife hat - alle anderen Variablen sind dann notwendigerweise auf 0 gesetzt. Für eine(n) Befragte*n mit max Hauptschulabschluss (also eine Person aus der Referenzkategorie) wird für alle Variablen die Null eingesetzt. 
 
 ```{r,  echo=F, out.height="80%", out.width="80%", fig.align="center", message=F, warning=F}
 baua_e <- baua %>% filter(!is.na(educ)) %>% group_by(educ) %>% mutate(mean_inc = mean(F518_SUF,na.rm = T), n1 = 1:n() ) %>% ungroup(.)
@@ -539,8 +535,12 @@ baua_e %>%
   coord_cartesian(ylim = c(0,12500))
 ```  
 
-Auch hier können wir die Referenzkategorie natürlich auch ändern auf `educ = 3`. 
-Dazu geben wir `ib3.` an:
+Formal sieht unser Modell also so aus:
+$$\widehat{\texttt{F518_SUF}} = \hat{\beta0} + \hat{\beta1}\times\texttt{educ=2} + \hat{\beta2} \times \texttt{educ=3}$$
+
+Für `educ=2` wird nur dann eine `1` eingesetzt, wenn der/die Befragte mittlere Reife hat - alle anderen Variablen sind dann notwendigerweise auf 0 gesetzt. Für eine(n) Befragte*n mit max Hauptschulabschluss (also eine Person aus der Referenzkategorie) wird für alle Variablen die Null eingesetzt. 
+
+Wir können die Referenzkategorie natürlich auch ändern, bspw. auf `educ = 3` - dazu geben wir `ib3.` an:
 ```{stata reg8, eval = F}
 reg F518_SUF ib3.educ
 ```
@@ -555,10 +555,19 @@ qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 reg F518_SUF ib2.educ
 ```
 
+***
+
+**[Übung 2](#regue2)**
+
+***
+
 
 ## mehrere unabhängige Variablen
 
 Natürlich können wir auch mehrere unabhängige Variablen in unser Modell aufnehmen. Beispielsweise können wir so für die Wochenarbeitszeiten kontrollieren:
+$$\hat{\texttt{F518_SUF}} = \beta0 + \beta1\times\texttt{educ2} + \beta2\times\texttt{educ3} + \beta3\times\texttt{F200} + \beta4\times\texttt{educ2}\times\texttt{F200}$$
+
+
 ```{stata mreg1, eval = F}
 reg F518_SUF i.educ F200
 ```
@@ -577,7 +586,7 @@ qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 reg F518_SUF i.educ F200
 ```
 
-Hier ändert sich dann die Interpretation: unter konstanthaltung der Wochenarbeitszeit geben Befagte mit (Fach-)Abitur ein um 1632.40EUR höheres Einkommen als Befragte mit maximal Hauptschulabschluss an.
+Hier ändert sich dann die Interpretation: unter Konstanthaltung der Wochenarbeitszeit geben Befagte mit (Fach-)Abitur ein um 1632.40EUR höheres Einkommen als Befragte mit maximal Hauptschulabschluss an.
 
 Ein äußerst hilfreicher Befehl in diesem Zusammenhang ist `margins` bzw. `marginsplot`:
 ```{stata mar1, eval =F}
@@ -592,6 +601,8 @@ knitr::include_graphics("./pics/09_mplot1.png")
 ### Interaktionsterme
 
 Wenn wir uns aber fragen, ob sich der Zusammenhang zwischen der Schulbildung und dem Einkommen mit der Wochenarbeitszeit verändert, benötigen wir einen Interaktionsterm:
+
+$$\hat{\texttt{F518_SUF}} = \beta0 + \beta1\times\texttt{educ2} + \beta2\times\texttt{educ3} + \beta3\times\texttt{F200} + \beta4\times\texttt{educ2}\times\texttt{F200} + \beta5\times\texttt{educ3}\times\texttt{F200}$$
 
 ```{stata mreg13, eval = F}
 reg F518_SUF i.educ##c.F200
@@ -621,18 +632,64 @@ marginsplot
 knitr::include_graphics("./pics/09_mplot2.png")
 ```
 
+### Quadratische Terme
+
+Wenn wir uns aber fragen, ob sich der Zusammenhang zwischen der Wochenarbeitszeit und dem Einkommen nicht-linear verläuft, also sich abflacht oder eine zusätzliche Stunde Arbeitszeit mit höheren zusätzlichen Einkommen einhergeht (keine kausale Aussage!):
+
+$$\hat{\texttt{F518_SUF}} = \beta0 + \beta1\times\texttt{educ2} + \beta2\times\texttt{educ3} + \beta3\times\texttt{F200} + \beta4\times\texttt{F200}\times\texttt{F200}$$
+
+$$\hat{\texttt{F518_SUF}} = \beta0 + \beta1\times\texttt{educ2} + \beta2\times\texttt{educ3} + \beta3\times\texttt{F200} + \beta4\times\texttt{F200}^2$$
+
+```{stata mreg13Q, eval = F}
+reg F518_SUF i.educ c.F200##c.F200
+```
+
+```{stata mreg4Q, echo = F}
+quietly{
+set linesize 120
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+	mvdecode S3, mv(1 10/12 99)
+	cap drop educ
+	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "m. Reife") (7/9 = 3 "(Fach-)Abi"), into(educ)
+	mvdecode F518_SUF, mv(99998/99999)
+	lab var educ "educ"
+	mvdecode F200, mv(97/99)
+}
+reg F518_SUF i.educ c.F200##c.F200
+```
+
+Bei quadratischen Termen empfiehlt sich ganz besonders, einen `marginsplot` zu erstellen:
+```{stata marginQ, eval = F}
+margins, at( F200 = (15(5)45) educ = (1(1)3))
+marginsplot
+```
+
+```{r marplot3, echo = F,out.width = "90%", fig.align="center"}
+knitr::include_graphics("./pics/09_mplot3.png")
+```
+
+
 ## Übungen 9
 
-### Übung 9-1 {#regue1}
+Laden Sie die Erwerbstätigenbefragung. 
 
-(@)
+### Übung 1 {#regue1}
+
+Berechnen Sie ein Regressionsmodell mit der Arbeitszeit (`az`) aus der Hauptbeschäftigung als abh. Variable und dem Alter der Befragten (`zpalter`) als unabh. Variable.
+  + Denken Sie daran, die Missings in `zupalter` zu überschreiben: `mvdecode zpalter, mv(9999)`
+  + Weclhe Richtung hat der Zusammenhang? Arbeiten ältere Befragte eher mehr oder eher weniger? 
+  + Wie ist der Koeffizient zu interpretieren? Was können Sie über die Varianzaufklärung sagen?
+
+### Übung 2 {#regue2}
+
+3. Berechnen Sie ein Regressionsmodell mit der Arbeitszeit (`az`) aus der Hauptbeschäftigung als abh. Variable und der Ausbildung der Befragten (`m1202`) als unabh. Variable: wie sind die Koeffizienten zu interpretieren? 
+`mvdecode m1202,mv(-1)`
 
 
-### Übung 9-2 {#regue2}
+### Übung 3 {#regue3}
+4. Erstellen Sie ein multivariates Modell mit `az` als abhängiger Variable hat und der Ausbildung (`m1202`)  und dem Alter der Befragten (`zpalter`) als unabhängiger Variable.
 
-
-(@) Lassen Sie mal `i.` weg - was verändert sich?
-
+5. Verändern Sie das multivariate Modell aus 4. um eine Interaktion zwischen der Ausbildung (`m1202`)  und dem Alter der Befragten (`zpalter`)
 
 
 ## Anhang
@@ -641,7 +698,7 @@ knitr::include_graphics("./pics/09_mplot2.png")
 
 ```{stata marp2_cost, eval = F}
 marginsplot, /// 
-		graphregion(fcolor("250 250 250")) /// Hintergundfarbe (außerhalb des eigentlichen Plots)
+		graphregion(fcolor(white)) /// Hintergundfarbe (außerhalb des eigentlichen Plots)
     plot1(color("57 65 101")  msize(small)) /// Farbe & Größe für erste Gruppe
 		ci1opts(color("57 65 101")) /// Farbe für Konfidenzintervalle der ersten Gruppe
 		plot2(color("177 147 74") msize(small)) ///

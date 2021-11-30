@@ -1,6 +1,8 @@
+* -------------------------------- *
 * Kapitel 8 - Zusammenhangsmaße
+* -------------------------------- *
 cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
-use "BIBBBAuA_2018_suf1.0 - Kopie.dta", clear
+use "BIBBBAuA_2018_suf1.0.dta", clear
 
 * ---------------------- *
 * metrische Variablen: korrelation

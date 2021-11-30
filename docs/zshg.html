@@ -214,13 +214,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4" data-path="iflab.html"><a href="iflab.html"><i class="fa fa-check"></i><b>4</b> if-Bedingungen</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="iflab.html"><a href="iflab.html#if-bedingungen---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>4.1</b> if-Bedingungen - nur manche Zeilen ansehen</a>
-<ul>
-<li class="chapter" data-level="4.1.1" data-path="iflab.html"><a href="iflab.html#labels"><i class="fa fa-check"></i><b>4.1.1</b> Labels</a></li>
-<li class="chapter" data-level="4.1.2" data-path="iflab.html"><a href="iflab.html#miss_if"><i class="fa fa-check"></i><b>4.1.2</b> Fehlende Werte</a></li>
-</ul></li>
-<li class="chapter" data-level="4.2" data-path="iflab.html"><a href="iflab.html#keep-drop-fälle-dauerhaft-löschen"><i class="fa fa-check"></i><b>4.2</b> keep &amp; drop: Fälle dauerhaft löschen</a></li>
-<li class="chapter" data-level="4.3" data-path="iflab.html"><a href="iflab.html#ifue"><i class="fa fa-check"></i><b>4.3</b> Übungen 4</a></li>
+<li class="chapter" data-level="4.1" data-path="iflab.html"><a href="iflab.html#if-bedingungen---nur-manche-zeilen-ansehen"><i class="fa fa-check"></i><b>4.1</b> if-Bedingungen - nur manche Zeilen ansehen</a></li>
+<li class="chapter" data-level="4.2" data-path="iflab.html"><a href="iflab.html#labels"><i class="fa fa-check"></i><b>4.2</b> Labels</a></li>
+<li class="chapter" data-level="4.3" data-path="iflab.html"><a href="iflab.html#miss_if"><i class="fa fa-check"></i><b>4.3</b> Fehlende Werte</a></li>
+<li class="chapter" data-level="4.4" data-path="iflab.html"><a href="iflab.html#keep-drop-fälle-dauerhaft-löschen"><i class="fa fa-check"></i><b>4.4</b> keep &amp; drop: Fälle dauerhaft löschen</a></li>
+<li class="chapter" data-level="4.5" data-path="iflab.html"><a href="iflab.html#ifue"><i class="fa fa-check"></i><b>4.5</b> Übungen 4</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="gen.html"><a href="gen.html"><i class="fa fa-check"></i><b>5</b> Variablen erstellen und verändern</a>
 <ul>
@@ -435,11 +433,8 @@ Die Standardabweichung hatten wir in Session 4 kennengelernt, die Kovarianz erfa
 <p><img src="StataBIBB1_files/figure-html/s07_15b-1.png" width="100%" height="80%" style="display: block; margin: auto;" />
 In der Grafik sind der Übersichtlichkeit halber nur 150 Beobachtungen dargestellt, für diese Auswahl ist liegt der Korrelationskoeffizient bei 0.232.</p>
 <p>In Stata können wir den Korrelationskoeffizienten mit <code>pwcorr</code> berechnen. Mit der Option <code>,sig</code> werden :</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb206-1"><a href="zshg.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="kw">pwcorr</span> zpalter F231, sig</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-             |  zpalter     F231
+<div class="sourceCode" id="cb1"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb1-1"><a href="zshg.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">pwcorr</span> zpalter F231, sig</span></code></pre></div>
+<pre><code>             |  zpalter     F231
 -------------+------------------
      zpalter |   1.0000 
              |
@@ -541,14 +536,8 @@ nie
 </tbody>
 </table>
 <p>So sieht die Verteilung zunächst in einer Kreuztabelle aus:</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb208-1"><a href="zshg.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F600_12 educ</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-
-
-
- HÃ¤ufigkeit: |
+<div class="sourceCode" id="cb3"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb3-1"><a href="zshg.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F600_12 educ</span></code></pre></div>
+<pre><code> HÃ¤ufigkeit: |
   unter LÃ¤rm |               educ
     arbeiten |     Haupt   m. Reife  (Fach-)Ab |     Total
 -------------+---------------------------------+----------
@@ -562,14 +551,8 @@ r(199);
 <div id="spear" class="section level3" number="8.2.1">
 <h3><span class="header-section-number">8.2.1</span> Spearman- Rangkorrelation</h3>
 <p>Eine Möglichkeit, zur Bestimmung eines Zusammenhangs zwischen zwei <em>ordinal</em> skalierten Variablen ist der Spearman-Rangkorrelationskoeffizient (<span class="math inline">\(\rho\)</span>). Für den Rangkorrelationskoeffizienten werden die Werte der Variablen in Ränge überführt und dann mit diesen Rängen den Korrelationskoeffizient berechnet. Wir können den Rangkorrelationskoeffizienten mit <code>spearman</code> berechnen:</p>
-<div class="sourceCode" id="cb210"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb210-1"><a href="zshg.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="kw">spearman</span> educ F600_12</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-
-
-
- Number of obs =   19725
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="zshg.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">spearman</span> educ F600_12</span></code></pre></div>
+<pre><code> Number of obs =   19725
 Spearman&#39;s rho =       0.1713
 
 Test of Ho: educ and F600_12 are independent
@@ -580,11 +563,8 @@ Da höhere Werte in <code>F600_12</code> seltenere Belastung angeben sind also B
 </div>
 <div id="tau" class="section level3" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Konkordanzmaße</h3>
-<div class="sourceCode" id="cb212"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb212-1"><a href="zshg.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> educ mi02</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-           |       HÃ¤ufigkeit: unter LÃ¤rm arbeiten
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="zshg.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> educ mi02</span></code></pre></div>
+<pre><code>           |       HÃ¤ufigkeit: unter LÃ¤rm arbeiten
       educ |    hÃ¤ufig   manchmal     selten        nie |     Total
 -----------+--------------------------------------------+----------
      Haupt |       927        522        437        912 |     2,798 
@@ -611,14 +591,8 @@ Nachteil: Bei Bindungen in X o. Y Maximalwerte (-1; +1) nicht zu erreichen</p>
 </ul>
 <p><span class="math display">\[\gamma=\frac{C-D}{C+D}\]</span></p>
 <p>Zur Berechnung in Stata können wir <code>ktau</code> verwenden:</p>
-<div class="sourceCode" id="cb214"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb214-1"><a href="zshg.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ktau</span>  educ F600_12</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-
-
-
-  Number of obs =   19725
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="zshg.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ktau</span>  educ F600_12</span></code></pre></div>
+<pre><code>  Number of obs =   19725
 Kendall&#39;s tau-a =       0.0965
 Kendall&#39;s tau-b =       0.1517
 Kendall&#39;s score = 18770040
@@ -628,11 +602,8 @@ Test of Ho: educ and F600_12 are independent
      Prob &gt; |z| =       0.0000  (continuity corrected)</code></pre>
 <p>Auch hier zeigt sich eine Zusammenhangsstärke in der gleichen Größenordnung wie beim Rangkorrelationskoeffizienten (<span class="math inline">\(\tau_a\)</span> = <code>-0.2151</code> und <span class="math inline">\(\tau_b\)</span> = <code>-0.3350</code>). Zudem ist auch hier das Vorzeichen negativ: <code>educ</code> korreliert negativ mit <code>mi02</code>. Der Wert von Kendall’s <span class="math inline">\(\tau_a\)</span> ist deutlich niedriger als von Kendall’s <span class="math inline">\(\tau_b\)</span>, da hier der Nenner durch die Berücksichtigung <em>aller</em> möglichen Paarvergleiche größer wird, der Zähler aber für beide Varianten von Kendall’s <span class="math inline">\(\tau\)</span> gleich definiert ist.</p>
 <p>Ein weiteres Maß ist Goodman &amp; Kruskal’s <span class="math inline">\(\gamma\)</span>, dieses bekommen wir mit der Option <code>,gamma</code> in <code>tab</code>:</p>
-<div class="sourceCode" id="cb216"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb216-1"><a href="zshg.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> educ F600_12, <span class="kw">gamma</span></span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-           |       HÃ¤ufigkeit: unter LÃ¤rm arbeiten
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="zshg.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> educ F600_12, <span class="kw">gamma</span></span></code></pre></div>
+<pre><code>           |       HÃ¤ufigkeit: unter LÃ¤rm arbeiten
       educ |    hÃ¤ufig   manchmal     selten        nie |     Total
 -----------+--------------------------------------------+----------
      Haupt |       927        522        437        912 |     2,798 
@@ -732,11 +703,8 @@ weiblich
 </tbody>
 </table>
 <p>Ausgangspunkt der Zusammenhangsmaße für nominale Merkmale ist die Kontingenztabelle der beiden Variablen (Vorbereitungen im DoFile):</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb218-1"><a href="zshg.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> S1 F204</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-        Wie wird Ihre |
+<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="zshg.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> S1 F204</span></code></pre></div>
+<pre><code>        Wie wird Ihre |
   Mehrarbeit bzw. wie |
           werden Ihre |      Geschlecht
         Ãœberstunden a |  mÃ¤nnlich   weiblich |     Total
@@ -750,11 +718,8 @@ durch Freizeitausglei |     1,924      2,308 |     4,232
 <div id="chi2" class="section level3" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> Chi²-basierte Maße</h3>
 <p><span class="math inline">\(\chi^2\)</span> basiert auf dem Vergleich der beobachteten Häufigkeit mit einer (theoretischen) Verteilung, welche statistische Unabhängigkeit abbildet (Indifferenztabelle - <a href="zshg.html#indiff">mehr dazu</a>). Wir bleiben bei <code>aq03</code> und <code>dh01</code>. Den <span class="math inline">\(\chi^2\)</span>-Wert für diese Häufigkeitstabelle bekommen wir mit <code>, chi2</code>:</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb220-1"><a href="zshg.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F204 S1, chi </span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-        Wie wird Ihre |
+<div class="sourceCode" id="cb15"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb15-1"><a href="zshg.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F204 S1, chi </span></code></pre></div>
+<pre><code>        Wie wird Ihre |
   Mehrarbeit bzw. wie |
           werden Ihre |      Geschlecht
         Ãœberstunden a |  mÃ¤nnlich   weiblich |     Total
@@ -773,11 +738,8 @@ durch Freizeitausglei |     1,924      2,308 |     4,232
 <p>Auf Basis dieses <span class="math inline">\(\chi^2\)</span>-Werts von 225.446 können wir Cramér’s <span class="math inline">\(\upsilon\)</span> berechnen. Dieses ist definiert als der Quotient aus dem <span class="math inline">\(\chi^2\)</span>-Wert und der Fallzahl multipliziert mit dem Minimum der Zeilen- und Spaltenzahl. <code>n</code>, erkennen wir aus dem <code>Total</code> rechts unten in der Tabelle. Außerdem hat unsere Tabelle 2 Zeilen und 4 Spalten, dementsprechend entspricht das Minimum hier 2:</p>
 <p><span class="math display">\[ Cramer&#39;s\,\,\upsilon = \sqrt{\frac{\chi^2}{n \times min(k-1,m-1)}}=\sqrt{\frac{225.4461}{9359\times(2-1)}} = 0.1552\]</span></p>
 <p>Das geht auch einfacher mit der Option <code>, V</code>:</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb222-1"><a href="zshg.html#cb222-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F204 S1, <span class="kw">V</span> </span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-        Wie wird Ihre |
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="zshg.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F204 S1, <span class="kw">V</span> </span></code></pre></div>
+<pre><code>        Wie wird Ihre |
   Mehrarbeit bzw. wie |
           werden Ihre |      Geschlecht
         Ãœberstunden a |  mÃ¤nnlich   weiblich |     Total
@@ -823,18 +785,18 @@ durch Freizeitausglei |     1,924      2,308 |     4,232
 </div>
 <div id="übungen-8" class="section level2" number="8.5">
 <h2><span class="header-section-number">8.5</span> Übungen 8</h2>
-<ol start="37" class="example" style="list-style-type: decimal">
+<ol class="example" style="list-style-type: decimal">
 <li>Laden Sie die Erwerbstätigenbefragung in Stata.</li>
 </ol>
 <div id="met_ord" class="section level3" number="8.5.1">
 <h3><span class="header-section-number">8.5.1</span> Übung 8-1</h3>
-<ol start="38" class="example" style="list-style-type: decimal">
+<ol start="2" class="example" style="list-style-type: decimal">
 <li>Untersuchen Sie den Zusammenhang zwischen der Wochenarbeitszeit und dem Einkommen der Befragten. Welches Maß ist das richtige?</li>
 </ol>
 <ul>
 <li>Denken Sie daran, die Missings mit <code>mv</code></li>
 </ul>
-<ol start="39" class="example" style="list-style-type: decimal">
+<ol start="3" class="example" style="list-style-type: decimal">
 <li>Untersuchen Sie den Zusammenhang zwischen der Häufigkeit von starkem Termin- oder Leistungsdruck <code>F411_01</code> und der dreistufigen Schulbildungsvariable <code>educ</code>.</li>
 </ol>
 <ul>
@@ -845,7 +807,7 @@ durch Freizeitausglei |     1,924      2,308 |     4,232
 </div>
 <div id="auf_nom" class="section level3" number="8.5.2">
 <h3><span class="header-section-number">8.5.2</span> Übung 8-2</h3>
-<ol start="40" class="example" style="list-style-type: decimal">
+<ol start="4" class="example" style="list-style-type: decimal">
 <li>Untersuchen Sie den Zusammenhang zwischen der Frage, ob der*die Befragte teiweise von zu Hause aus arbeitet (<code>F228</code>) und ob die Befragten gerne eine andere als ihre aktuelle Tätigkeit (<code>F103</code>) ausüben würden.</li>
 </ol>
 <ul>
@@ -858,11 +820,8 @@ durch Freizeitausglei |     1,924      2,308 |     4,232
 <div id="indiff" class="section level3" number="8.6.1">
 <h3><span class="header-section-number">8.6.1</span> Indifferenztabelle</h3>
 <p><a href="zshg.html#chi2"><span class="math inline">\(\chi^2\)</span></a> ergibt sich aus der Differenz zwischen der Indifferenztabelle und den beobachteten Häufigkeiten. Die Indifferenztabelle können wir mit <code>,expected</code> aufrufen (mit <code>nofreq</code> blenden wir die tatsächlichen Häufigkeiten aus):</p>
-<div class="sourceCode" id="cb224"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb224-1"><a href="zshg.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F204 S1, expected nofreq</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-                      |      Geschlecht
+<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="zshg.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F204 S1, expected nofreq</span></code></pre></div>
+<pre><code>                      |      Geschlecht
                  F204 |  mÃ¤nnlich   weiblich |     Total
 ----------------------+----------------------+----------
      durch Auszahlung |     503.9      432.1 |     936.0 
@@ -872,11 +831,8 @@ durch Freizeitausglei |   2,278.1    1,953.9 |   4,232.0
 ----------------------+----------------------+----------
                 Total |   5,038.0    4,321.0 |   9,359.0 </code></pre>
 <p>Ausgangspunkt für diese Indifferenztabelle sind die relativen Häufigkeiten der tatsächlich beoachteten Werte:</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb226-1"><a href="zshg.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F204 S1, cell nofreq</span></code></pre></div>
-<pre><code> | is not a valid command name
-r(199);
-
-                      |      Geschlecht
+<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="zshg.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> F204 S1, cell nofreq</span></code></pre></div>
+<pre><code>                      |      Geschlecht
                  F204 |  mÃ¤nnlich   weiblich |     Total
 ----------------------+----------------------+----------
      durch Auszahlung |      5.73       4.27 |     10.00 

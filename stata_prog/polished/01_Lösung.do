@@ -1,5 +1,6 @@
 * -------------------------------- *
-* Session 1: erste Schritte - Lösungen
+* Session 1: erste Schritte 
+* Lösungen
 * -------------------------------- *
 
 *2 ------------

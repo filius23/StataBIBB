@@ -1,12 +1,17 @@
+* ---------------------- *
 * Kapitel 9 - Regressionsmodelle
+* ---------------------- *
 
+* ---------------------- *
+* zwei metrische Variablen
+use "https://github.com/filius23/Stata_Skript/raw/master/regression_bsp.dta", clear
+scatter var1 var2
 
 
 * ---------------------- *
 * kategoriale unabh. Variablen
-* ---------------------- *
 	cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
-	use "BIBBBAuA_2018_suf1.0 - Kopie.dta", clear
+	use "BIBBBAuA_2018_suf1.0.dta", clear
 	mvdecode F518_SUF, mv(99998/99999)
 
 reg F518_SUF i.S1 // i.  für kategoriale Variablen
@@ -14,6 +19,7 @@ reg F518_SUF i.S1 // i.  für kategoriale Variablen
 	reg F518_SUF S1
 	ttest F518_SUF, by(S1) 
 
+* ---------------------- *
 * mehrere Kategorien in der UV:
 recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "mittlere Reife") (7/9 = 3 "(Fach-)Abi") (else = .), into(educ)
 tab S3 educ , m
@@ -22,7 +28,6 @@ reg F518_SUF i.educ
 
 * ---------------------- *
 * mehrere unabh. Variablen
-* ---------------------- *
 		
 	mvdecode F200, mv(97/99)
 	reg F518_SUF i.educ F200
@@ -31,21 +36,20 @@ reg F518_SUF i.educ
 	marginsplot
 	graph export "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1/pics/09_mplot1.png", replace
 	
+	
 	reg F518_SUF i.educ##c.F200
 	margins, at( F200 = (15(5)45) educ = (1(1)3))
 	marginsplot
 	graph export "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1/pics/09_mplot2.png", replace
 	
 	
-	reg F518_SUF i.educ##c.F200 i.S1 zpalter
-	margins, at( F200 = (15(5)45) educ = (1(1)3))
-	marginsplot
-	
-	reg F518_SUF i.educ##c.F200##c.F200
+	reg F518_SUF i.educ c.F200##c.F200
 	margins, at( F200 = (15(5)45) educ = (1(1)3))
 	marginsplot
 	graph export "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1/pics/09_mplot3.png", replace
 	
+* ---------------------- *
+* marginsplot anpassen
 	
 	marginsplot, /// scheme(s1mono)  ///
 				graphregion(fcolor(white)) /// Hintergundfarbe (außerhalb des eigentlichen Plots)

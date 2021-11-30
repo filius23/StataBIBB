@@ -1,4 +1,7 @@
-* Kapitel 6 - egen & Hilfe + by
+* -------------------------------- *
+* Session 6: egen & Hilfe + by
+* -------------------------------- *
+
 cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
 use "BIBBBAuA_2018_suf1.0.dta", clear
 mvdecode zpalter, mv(9999)

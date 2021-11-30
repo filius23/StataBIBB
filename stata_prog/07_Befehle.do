@@ -1,47 +1,45 @@
-* Kapitel 7 - Gewichtung
-cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
-use "BIBBBAuA_2018_suf1.0.dta", clear
+* -------------------------------- *
+* Kapitel 7: Inferenz - Hypothesentests und Gewichtung
+* -------------------------------- *
+
+use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 mvdecode zpalter, mv(9999)
+summarize zpalter
+
+* konfidenzintervall berechnen
+dis 47.19228 + 1.960084* 11.33762 / sqrt(19836) // obere Grenze
+dis 47.19228 - 1.960084* 11.33762 / sqrt(19836) // untere Grenze
+
+mean zpalter
 
 
+* t-test  vs. hypothetischen Wert
+ttest zpalter==47.4
 
-// pweight
+* t-Test Gruppenvergleich
+ttest zpalter, by(S1) unequal
+
+
+* verbundener t-Test
+webuse bpwide, clear
+browse bp_before bp_after
+ttest bp_before==bp_after
+
+* -------------------------------- *
+* Gewichtung 
+* zurück zur ETB18
+use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tabulate S1 // ungewichtet
+
+
 svyset _n [pweight=gew2018]
-tabulate S1
-svy: tabulate S1
-svy: tabulate S1, count format(%11.0g)
-svy: tabulate S1, 	col count format(%11.0g)
-svy: tabulate F1600, col count format(%11.0g)
-svy: tabulate Mig, 	col count format(%11.0g)
-svy: tabulate S1 Mig, 	row col count format(%11.0g)
-
-svyset _n [fweight=c]
-tab S1
-svy: tab S1, 	col count format(%11.0g)
-
-su gew2018
-d gew2018
-tabulate S1 [fweight=round(gew2018)] 
-svy: tabulate S1, count col format(%11.0g)
-
-tabulate S1 [fweight=round(gew2018_hr17)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis
-tabulate S1 [fweight=round(gew2018_hr17*100)] 
+svy: tabulate S1 , col count
 
 
-
-tab S1 [weight=gew2018] // problem: Nachkommastellen
+tabulate S1 [weight=gew2018] // Fehlermeldung
 tabulate S1 [weight=round(gew2018)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis
 
-tabulate S1 [weight=round(gew2018*100 000)] // work-around: multiplizieren und runden
+tabulate S1 [weight=round(gew2018*100 000)]
 
 
-
-
-cd D:\oCloud\Home-Cloud\Lehre\Methodenseminar
-use  Allbus_1980-2018.dta   , clear
-keep if year == 2012
-svyset _n [pweight=wghtpew]
-svy: tabulate eastwest , col count
-tab eastwest [weight = wghtpew]
-tab eastwest [weight = round(wghtpew*100 000)]
 

@@ -131,7 +131,7 @@ list S1 zpalter mean_byS1 in 1/5, noobs abbrev(10)
 > Anmerkung für die Ausgabe der Fälle wurde nach `by S1,sort: egen mean_byS1 = mean(zpalter)` mit `sort intnr` wieder die ursprüngliche Reihenfolge hergestellt.
 
 
-Wir könnten
+Wir könnten aber auch die geschlechts- und schulbildungsspezifischen Durchschnittseinkommen berechnen, indem wir beide Variablen im `by`-Befehl angeben:
 ```{stata bys3, eval = F}
 bysort S1 S3: egen mean_byS1S3 = mean(zpalter)
 ```
@@ -175,7 +175,7 @@ list S1 S3 zpalter mean_byS1 mean_byS1S3 in 1/5, noobs abbrev(14)
 
 (@) Wie würden Sie jetzt für jede\*n Befragten berechnen, um wieviel ihr\*sein Einkommen vom geschlechtsspezifischen Durchschnittswert unterscheidet?
 
-### Bonusaufgabe 
+### Profiaufgabe 
 
 (@) Öffnen Sie die Hilfe für `egen` und lassen Sie ein Beispiel Schritt für Schritt durchlaufen - beobachten Sie was passiert, indem Sie mit `browse` den Datensatz betrachten.
 
@@ -195,5 +195,4 @@ qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 qui mvdecode zpalter, mv(9999)
 bys S1: summarize zpalter 
 ```
-In den neuen Bundesländern sind die Befragten im Schnitt also um 53.90083 - 50.66093 = `r 53.90083 - 50.66093` Jahre älter.
 

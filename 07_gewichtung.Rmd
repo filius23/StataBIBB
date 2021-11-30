@@ -388,7 +388,7 @@ ggplot(data = data1, aes(x=z, y =t.var)) +
 
 ***
 
-[**Übung 7.1**](#tvsmu)
+[**Übung 1**](#tvsmu)
 
 ***
 
@@ -492,11 +492,6 @@ Auch hier sehen wir wieder die Ergebnisse für einen links- (` Ha: mean(diff) < 
   + nach dem Treatment signifikant niedriger ist - rechtsseitiger Test (*bp_before > bp_after*), rechte Spalte
 
     
-***
-
-[**Übung 7.3**](#tpaired)
-
-***
 
 
 ## Übersicht zu Varianten für `ttest`
@@ -554,53 +549,80 @@ svyset _n [pweight=gew2018]
 svy: tabulate S1 , col count
 ```
 
+Mit `format(%10.3f)` können wir die Darstellung als *scientific notation* (`1.1e+04`) umgehen: 
+```{stata weight1a1, eval = F}
+svy: tabulate S1 , col count format(%10.3f)
+```
+
+```{stata weight1ab1, echo = F}
+set linesize 100
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+qui svyset _n [pweight=gew2018]
+svy: tabulate S1 , col count format(%10.3f)
+```
+
 Allerdings steht das `svy`-Präfix  nicht für jeden Befehl zur Verfügung. 
 Außerdem können kein weiteren Präfixe neben `svy` verwendet werden - beispielsweise [`by`](#by). 
 Daher steht auch eine Alternative zur Verfügung, bei der wir die Gewichtung bei jedem Auswertungsschritt einzeln angeben. 
 In unserem Beispiel also 
 ```{stata weight2, eval = F}
-tabulate S1 [weight=gew2018]
+tabulate S1 [fweight=gew2018]
 ```
 <span style="color:red">`may not use noninteger frequency weights`</span>  
 <span style="color:blue">`r(401);`</span>
 
-Allerdings akzeptiert Stata bei einigen Gewichtungsverfahren (z.B. Häufigkeitsgewichten "frequency weights"), keine Gewichtungswerte mit Nachkommastellen.
+Allerdings akzeptiert Stata bei Häufigkeitsgewichten "frequency weights", keine Gewichtungswerte mit Nachkommastellen.
 Leider führt ein einfaches Auf- oder Abrunden führt aber häufig zu falschen Ergebnissen: 
 ```{stata weight2b, eval = F}
-tabulate S1 [weight=round(gew2018)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis
+tabulate S1 [fweight=round(gew2018)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis
 ```
 
 ```{stata weight2ab, echo = F}
 qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
-tabulate S1 [weight=round(gew2018)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis
+tabulate S1 [fweight=round(gew2018)] // runden führt zu Abweichung - Vergleich mit svy: Ergebnis
 ```
 Eine mögliche Lösung dieser Problematik ist es, zunächst die Gewichtungsvariable mit einer hohen Zahl (bspw.100 000) zu multiplizieren
 und anschließend auf ganze Werte zu runden:
 
 ```{stata weight3, eval =F}
-tabulate S1 [weight=round(gew2018*100 000)]
+tabulate S1 [fweight=round(gew2018*100 000)]
 ```
 
 Das führt zu korrekten Verteilungen. 
 Allerdings ist für die Ergebnisse jedoch zu beachten, dass die zu Grunde liegende Fallzahl anschließend wieder korrigiert werden muss (also in diesem Beispiel durch 100 000 geteilt werden muss).
 
+Der eigentliche Zweck von `fweight` ist aber, die Auszählung "hochzugewichten".
+In der Erwerbstätigenbefragung können wir das mit `gew2018_hr17`, dem Hochrechnungsfaktor auf dem Mikrozensus 2017 erreichen:
+```{stata fweight1a1, eval = F}
+tabulate S1 [fweight = round(gew2018_hr17)]
+```
+
+```{stata fweight1ab1, echo = F}
+set linesize 100
+qui use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
+tabulate S1 [fweight = round(gew2018_hr17)]
+```
+
+Die Fallzahl ist also hier dann deutlich größer als die im Datensatz vorhandenen Fälle $\Rightarrow$ jeder Fall im Datensatz steht für eine Vielzahl an Fällen.
 
 ## Übungen 7 
 
-(@) Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
+Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). 
 
-### Übung 7.1 {#tvsmu}
+##### Übung 7.1 {#tvsmu}
 
-(@) 
+(@) Berechnen Sie das Konfidenzintervall für die durchschnittliche Arbeitszeit (`az`)
 
-### Übung 7.2 {#tgroup}
+(@) Testen Sie die Hypothese, dass die eigentliche durchschnittliche Arbeitszeit 38.5 Stunden beträgt. Interpretieren Sie die Ergebnisse im Sinne einen rechts-, links- und beidseitigen Tests!
 
-(@) 
 
-### Übung 7.3 {#tpaired}
+##### Übung 7.2 {#tgroup}
 
-(@) 
+(@) Testen Sie die Hypothese, dass ein signifikanter Unterschied in der Arbeitszeit zwischen Männern und Frauen besteht (`S1`)
 
+##### Übung 7.3 {#weight}
+
+(@) Erstellen Sie eine Häufigkeitsauszählung der Ausbildungsabschlüsse (`m1202`) - zunächst ohne und dann mit Gewichtung. Verwenden Sie sowohl die `pweights`  als auch die `fweights` an.
 
 
 ## Anhang

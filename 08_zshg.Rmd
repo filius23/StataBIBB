@@ -380,8 +380,8 @@ Ausschlaggebend ist dabei die Variable mit dem niedrigeren Skalenniveau! Ggf. k�
 
 ### Übung 8-1 {#met_ord}
 
-(@) Untersuchen Sie den Zusammenhang zwischen der Wochenarbeitszeit und dem Einkommen der Befragten. Welches Maß ist das richtige?
-  + Denken Sie daran, die Missings mit `mv`
+(@) Untersuchen Sie den Zusammenhang zwischen der Wochenarbeitszeit (`az`) und dem Einkommen (`F518_SUF`) der Befragten. Welches Maß ist das richtige?
+  + Denken Sie daran, die Missings in `F518_SUF` auszuschließen: `mvdecode F518_SUF, mv(99998/99999)`, `az` hat keine Missings.
 
 (@) Untersuchen Sie den Zusammenhang zwischen der Häufigkeit von starkem Termin- oder Leistungsdruck `F411_01` und der dreistufigen Schulbildungsvariable `educ`.
   + So können Sie `educ` erstellen: `recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "mittlere Reife") (7/9 = 3 "(Fach-)Abi") (else = .), into(educ)` 

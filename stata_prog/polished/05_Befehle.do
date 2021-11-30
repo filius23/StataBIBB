@@ -1,4 +1,7 @@
-*Session 5
+* -------------------------------- *
+* 05 Befehle: Variablen erstellen 
+* -------------------------------- *
+
 cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
 use "BIBBBAuA_2018_suf1.0.dta", clear
 mvdecode zpalter, mv(9999)
@@ -58,7 +61,7 @@ tab ao_wo,m
 
 * -------------------------------- *
 * Labeln
-* -------------------------------- *
+
 label define aowo_lab 0 "ungleich" 1 "gleich"
 label values ao_wo aowo_lab
 tab ao_wo, m
@@ -68,90 +71,41 @@ tab ao_wo, nol // ohne labels
 label define aowo_lab 0 "Ungleich" 1 "Gleich", replace
 tab ao_wo 
 
-
 * -------------------------------- *
-* recode 
-* -------------------------------- *
-/*
-alt   neu
-1-3  -> 1
-4-5  -> 2
-6-7   -> 3
-*/
+* bestehende Variablen verändern
 
 recode gkpol (2=1) (3=1) (4=2) (5=2) (6=3) (7=3), into(gkpol2)
 tab gkpol gkpol2
 
-* direkt labeln:
+
 drop gkpol2 // nochmal neu
 recode gkpol (2=1 "Klein") (3=1 "Klein") (4=2 "Mittel") (5=2 "Mittel") (6=3 "Groß") (7=3 "Groß"), into(gkpol2)
 tab gkpol gkpol2
 
-* mehrere Werte auf einmal angeben
 drop gkpol2
 recode gkpol (1 2 3=1 "Klein") (4 5=2 "Mittel") (6 7=3 "Groß"), into(gkpol2)
-tab gkpol gkpol2
 
-*Wertebereiche ansprechen:
-drop gkpol2
-recode gkpol (1/3=1 "Klein") (4/5=2 "Mittel") (6/7=3 "Groß"), into(gkpol2)
-tab gkpol gkpol2
-
+/*
+	min 	  		Minimalwert
+	max 	  		Maximalwert (missings werden hier ausnahmsweise nicht mit eingeschlossen)
+	else or * 		alle anderen Werte
+	miss 	  		alle missing Werte die nicht von einer anderen Regeln angesprochen werden
+	nonmiss 		alle nicht-missing Werte die nicht von einer anderen Regeln angesprochen werden
+*/
 
 * -------------------------------- *
-* replace 
-* -------------------------------- *
-// Beispiel1: Erwerbskonstellation
-* F1600	// Familienstand
-* F1601 // zusammenlebend?
-* F1603 // Partner*in berufstätig
-tab F1601 F1603
-labelbook F1601 F1603
-// 
+* infos aus mehreren Variablen
+
 gen erw_hh = . 			// leere Variable erstellen
 replace erw_hh = 1 if F1601 == 2 // alleine -> leben nicht zusammen
 replace erw_hh = 2 if F1601 == 1 & F1603 == 1 // zusammenlebend, Partner*in erwerbstätig
 replace erw_hh = 3 if F1601 == 1 & F1603 == 2 // zusammenlebend, Partner*in nicht erwerbstätig
-
 replace erw_hh = 1 if inlist(F1600,2,3,4) // keine Partnerschaft -> auch auf 1
 *! unverheiratete werden hier nicht als Partnerschaften behandelt
 
 lab define erw_lab 1 "nicht verh./alleine lebend" 2 "verh. & 2 Erwerbspersonen im HH" 3 "verh. & 1 Erwerbsperson"
 lab values erw_hh erw_lab
 tab erw_hh
-
-
-
-
-
-
-
-// F600_02 F602_03	// -> sitzend arbeiten, 20kg heben
-
-
-
-	
-	// F233_Bula F233 Bundesland ao wo
-	
-
-
-// Beispiel1: Erwerbskonstellation
-
-// 
-gen erw_hh = .
-replace 
-
-tab F1601 F1603
-
-* F1601 // zusammenlebend?
-* F1603 // Partner*in berufstätig
-
-// F220 F223 // Wochenendarbeit
-
-
-// metrische AVs -> Wochenarbeitszeit?
-// F231 Stunden von ZuHause aus
-
 
 
 

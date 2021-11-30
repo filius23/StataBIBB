@@ -1,10 +1,15 @@
-* Kapitel 7 - Gewichtung
+* -------------------------------- *
+* Kapitel 8 - Zusammenhangsmaße
+* Lösungen
+* -------------------------------- *
 cd "D:\Datenspeicher\BIBB_BAuA" // wo liegt der Datensatz?
-use "BIBBBAuA_2018_suf1.0 - Kopie.dta", clear
+use "BIBBBAuA_2018_suf1.0.dta", clear
 
 * ---------------------- *
 *1:  Untersuchen Sie den Zusammenhang zwischen der Wochenarbeitszeit und dem Einkommen der Befragten. Welches Maß ist das richtige?
 * ---------------------- *
+	d	F518_SUF
+	labelbook F518
 	mvdecode F518_SUF, mv(99998/99999)
 	
 *Korrelationskoeffizient
@@ -12,7 +17,7 @@ pwcorr F518_SUF az, sig
 // (Praktisch) kein Zusammenhang, stat. signifikant
 
 * ---------------------- *
-* 
+* 2: Untersuchen Sie den Zusammenhang zwischen der Häufigkeit von starkem Termin- oder Leistungsdruck `F411_01` und der dreistufigen Schulbildungsvariable `educ`.
 * ---------------------- *
 * Vorbereitungen
 	recode S3 (2/4 = 1 "Haupt")(5/6 = 2 "mittlere Reife") (7/9 = 3 "(Fach-)Abi") (else = .), into(educ)
