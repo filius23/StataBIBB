@@ -34,6 +34,11 @@ library(ggthemes)
 
 **Hier entsteht das Begleitskript für die Stata-Weiterbildungen am BIBB von Andreas Filser vom 02.12. bis zum 03.12.2021.** 
 
+
+```{r index_illustration, echo = F,out.width = "80%",fig.height= 3.5, fig.align="center"}
+knitr::include_graphics("pics/09_mplot4.png")
+```
+
 <!-- ```{r kapitel, ft.align = "center",message=F,warning=F, echo = F} -->
 <!-- library(kableExtra) -->
 <!-- opts <- options(knitr.kable.NA = "") -->
