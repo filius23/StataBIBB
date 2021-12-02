@@ -38,11 +38,23 @@ unique(baua$zpalter) %>% length(.)
 
 
 #run render in background -------------------
- bookdown::preview_chapter("09_mreg.Rmd")
+ bookdown::preview_chapter("00_build.R")
 
 rm(baua)
 chap <- "09_mreg.Rmd"
-rstudioapi::jobRunScript(path = "00_build.R",importEnv = T)
+chp1 <- c('index.Rmd','01-IntroI.Rmd','02-Datensaetze.Rmd','03_Deskription.Rmd','04_if_label.Rmd','05_gen.Rmd','06_egen.Rmd','07_gewichtung.Rmd',
+          '08_zshg.Rmd', '09_mreg.Rmd',
+          '21_bgregression.Rmd',
+          '22_anova.Rmd',
+          '30_literatur.Rmd',
+          '31_appendix.Rmd')
+
+
+map(1:length(chp1), function(x){
+  chap <- chp1[x]
+  rstudioapi::jobRunScript(path = "00_build.R",importEnv = T) 
+  Sys.sleep(60*3)
+})
 
 
 # befehle ----

@@ -366,8 +366,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1.5" data-path="appendix.html"><a href="appendix.html#exportieren"><i class="fa fa-check"></i><b>13.1.5</b> exportieren</a></li>
 </ul></li>
 <li class="chapter" data-level="13.2" data-path="appendix.html"><a href="appendix.html#adopath"><i class="fa fa-check"></i><b>13.2</b> <code>adopath</code></a></li>
-<li class="chapter" data-level="13.3" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>13.3</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
-<li class="chapter" data-level="13.4" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>13.4</b> Index bilden</a></li>
+<li class="chapter" data-level="13.3" data-path="appendix.html"><a href="appendix.html#log-file"><i class="fa fa-check"></i><b>13.3</b> log file</a></li>
+<li class="chapter" data-level="13.4" data-path="appendix.html"><a href="appendix.html#beobachtungen-markieren-mit-gen-if"><i class="fa fa-check"></i><b>13.4</b> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></a></li>
+<li class="chapter" data-level="13.5" data-path="appendix.html"><a href="appendix.html#index-bilden"><i class="fa fa-check"></i><b>13.5</b> Index bilden</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -634,13 +635,34 @@ Mit <code>which</code> können wir den Speicherort eines <code>ado</code> ansehe
 <p>Mit <code>adopath ++ PFAD</code> können wir <code>ado</code> aus zusätzlichen Ordner verwenden:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb16-1"><a href="appendix.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">adopath</span> ++ <span class="st">&quot;D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1\Stata_Einführung_BIBB/u&quot;</span></span></code></pre></div>
 </div>
-<div id="beobachtungen-markieren-mit-gen-if" class="section level2" number="13.3">
-<h2><span class="header-section-number">13.3</span> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></h2>
+<div id="log-file" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> log file</h2>
+<p>Mit log-Files können wir alles mitprotokollieren, was im Outputfenster passiert. Wir starten ein log-File mit <code>log using dateiname</code>. Ab dann wird alles in dieser Datei mitgeschrieben, was wir uns im Outputfenster anzeigen lassen:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="appendix.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span> <span class="kw">using</span> <span class="st">&quot;C:\Pfad\zum\Ordner/log/logfile.txt&quot;</span>, <span class="bn">text</span> <span class="kw">replace</span> <span class="co">// mit replace wird die Datei ggf überschrieben</span></span>
+<span id="cb17-2"><a href="appendix.html#cb17-2" aria-hidden="true" tabindex="-1"></a>* ------------------------------------------------ *</span>
+<span id="cb17-3"><a href="appendix.html#cb17-3" aria-hidden="true" tabindex="-1"></a>* Alter, Bildung, Geschlecht <span class="kw">in</span> der ETB 2018</span>
+<span id="cb17-4"><a href="appendix.html#cb17-4" aria-hidden="true" tabindex="-1"></a>* ------------------------------------------------ *</span>
+<span id="cb17-5"><a href="appendix.html#cb17-5" aria-hidden="true" tabindex="-1"></a>glo <span class="kw">data</span> <span class="st">&quot;D:\Datenspeicher\BIBB_BAuA/&quot;</span></span>
+<span id="cb17-6"><a href="appendix.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="kw">use</span> <span class="st">&quot;${data}/BIBBBAuA_2018_suf1.0.dta&quot;</span>, <span class="kw">clear</span></span>
+<span id="cb17-7"><a href="appendix.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="kw">mvdecode</span> zpalter, mv(9999)    <span class="co">// dieses log enthält auch kommentare</span></span>
+<span id="cb17-8"><a href="appendix.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="kw">mvdecode</span> m1202,mv(-1)   <span class="co">// noch einen </span></span>
+<span id="cb17-9"><a href="appendix.html#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="appendix.html#cb17-10" aria-hidden="true" tabindex="-1"></a>* ------------------------ *</span>
+<span id="cb17-11"><a href="appendix.html#cb17-11" aria-hidden="true" tabindex="-1"></a>* Auswertung</span>
+<span id="cb17-12"><a href="appendix.html#cb17-12" aria-hidden="true" tabindex="-1"></a>* ------------------------ *</span>
+<span id="cb17-13"><a href="appendix.html#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="kw">tab</span> m1202 S1</span>
+<span id="cb17-14"><a href="appendix.html#cb17-14" aria-hidden="true" tabindex="-1"></a>su zpalter </span>
+<span id="cb17-15"><a href="appendix.html#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="appendix.html#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span> <span class="kw">close</span></span></code></pre></div>
+<p><img src="pics/10_logfile.png" width="100%" height="100%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="beobachtungen-markieren-mit-gen-if" class="section level2" number="13.4">
+<h2><span class="header-section-number">13.4</span> Beobachtungen markieren mit <code>gen</code> &amp; <code>if</code></h2>
 <p>Die Kombination aus <code>gen</code> und <code>if</code> hilft uns, wenn wir eine Variable nur für einige Zeilen erstellen wollen. Das hilft insbesondere, wenn wir bestimmte Beobachtungen markieren wollen. Beispielsweise Frauen (<code>S1</code> = 1), die einer Nebentätigkeit (<code>nt</code> = 1) nachgehen:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb17-1"><a href="appendix.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> nt_frauen = 1 <span class="kw">if</span> S1 == 1 &amp; nt == 1</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb18-1"><a href="appendix.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> nt_frauen = 1 <span class="kw">if</span> S1 == 1 &amp; nt == 1</span></code></pre></div>
 <pre><code>(19,136 missing values generated)</code></pre>
 <p>Nur wenn beide Bedingungen zutreffen, wird unter <code>nt_frauen</code> eine 1 abgelegt:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb19-1"><a href="appendix.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 nt nt_frauen <span class="kw">in</span> 19671/19675, <span class="kw">clean</span> <span class="kw">noobs</span> abb(12) </span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb20-1"><a href="appendix.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ot">list</span> S1 nt nt_frauen <span class="kw">in</span> 19671/19675, <span class="kw">clean</span> <span class="kw">noobs</span> abb(12) </span></code></pre></div>
 <pre><code>          S1         nt   nt_frauen  
     weiblich   keine Ne           .  
      mÃ¤nnlic   mindeste           1  
@@ -649,8 +671,8 @@ Mit <code>which</code> können wir den Speicherort eines <code>ado</code> ansehe
     weiblich   keine Ne           .  </code></pre>
 <p>In der alltäglichen Arbeit hilft das manchmal, wenn man spezielle Fälle immer wieder aufrufen möchte und nicht immer die “ausgeschriebenen” <code>if</code>-Bedingungen verwenden möchte.</p>
 </div>
-<div id="index-bilden" class="section level2" number="13.4">
-<h2><span class="header-section-number">13.4</span> Index bilden</h2>
+<div id="index-bilden" class="section level2" number="13.5">
+<h2><span class="header-section-number">13.5</span> Index bilden</h2>
 <p>In Kapitel 5 hatten wir mit <a href="gen.html#recode"><code>recode</code></a> eine Möglichkeit kennen gelernt, wie Codierungen verändert werden können.
 Ein typischer Fall ist das “Umdrehen” von Skalen in einer Item-Batterie, sodass in beiden/allen Variablen höhere Werte auch inhaltlich das gleiche bedeuten.
 In der BIBB/BAuA 2018 könnten wir bspw. einen Index für die Autonomie/Einbindung am Arbeitsplatz erstellen, indem wir die Antworten aus den folgenden beiden Fragen addieren:
@@ -658,15 +680,15 @@ In der BIBB/BAuA 2018 könnten wir bspw. einen Index für die Autonomie/Einbindu
 + <code>F700_08</code>: Wie oft kommt es vor, dass Sie nicht rechtzeitig über einschneidende Entscheidungen, Veränderungen oder Pläne für die Zukunft informiert werden?</p>
 <p>Hier wäre es also so, dass der niedrigste Wert (1 = Häufig) jeweils etwas anderes bedeutet. Im Fall von <code>F700_08</code>
 Variable betrachten, sehen wir</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb21-1"><a href="appendix.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> F700_02 (4=1) (3=2) (2=3) (1=4), into(F700_02_rev)</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="appendix.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="fu">index</span> = (F700_02_rev + F700_10)/2</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb22-1"><a href="appendix.html#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">recode</span> F700_02 (4=1) (3=2) (2=3) (1=4), into(F700_02_rev)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="appendix.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> <span class="fu">index</span> = (F700_02_rev + F700_10)/2</span></code></pre></div>
 <blockquote>
 <p><span style="color:#FFA500FF"><i>Inhaltlich ist das sicher nicht 100% überzeugend - hier geht’s um die technische Umsetzung</i></span></p>
 </blockquote>
 <hr />
 <p><strong>Tipp</strong></p>
 <p>Man kann in diesem speziellen Fall einer “umgedrehten” Skala können wir auch einfach “höchster Wert + 1 minus Variablenwert rechnen.” Im Fall von <code>F700_02</code> ist der höchste Wert 4, also würden wir 4-<code>F700_02</code> rechnen:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb23-1"><a href="appendix.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F700_02_rev2 = 5 - F700_02 </span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb24-1"><a href="appendix.html#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">gen</span> F700_02_rev2 = 5 - F700_02 </span></code></pre></div>
 <hr />
 
 </div>
