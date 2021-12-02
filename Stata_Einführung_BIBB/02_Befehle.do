@@ -43,11 +43,22 @@ mvdecode F100_wib1, mv(-4/-1)
 ssc install mdesc
 mdesc m1202 F100_kldb2010_BOF F1609_kldb2010_BOF F1610_kldb2010_BOF F100_wib1
 
+
+tabulate m1202 S1
+
+tabulate m1202 S1, cell nofreq
+tabulate m1202 S1, col nofreq
+tabulate m1202 S1, row nofreq
+
 // zeilen und spaltenprozente
 tabulate m1202 S1
 tabulate m1202 S1, cell nofreq 	// rel häufigkeiten
 tabulate m1202 S1, row nofreq 	// row -> Zeilenprozente
 tabulate m1202 S1, col nofreq 	// col -> Spaltenprozente
+
+
+
+
 
 // metrische Merkmale eher mit summarize:
 tab zpalter

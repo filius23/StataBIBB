@@ -11,18 +11,23 @@ d nuts2 F233_nuts2
 labelbook nuts2 
 mvdecode nuts2 F233_nuts2, mv(99996/99999)
 
-gen pendler =  nuts2 == F233_nuts2
+gen pendler =  nuts2 == F233_nuts2 if !missing(F233_nuts2)
 tab pendler, m
 
 	// check 1: in browse nachsehen
 	bro intnr nuts2 F233_nuts2 pendler
+	list intnr nuts2 F233_nuts2 pendler
 	//check 1b: missings 
 	bro intnr nuts2 F233_nuts2 pendler if missing(F233_nuts2)
 
-
+label define pend1 		0 "AO != WO" 1 "AO == WO"
+label values pendler 	pend1	
+tab pendler
+	
 * Label S1 ändern
 tab S1
-lab define S1 	1 "Männer" 2 "Frauen", replace
+describe S1
+label define S1 	1 "Männer" 2 "Frauen", replace
 tab S1
 	
 * 5-2: Schulabschluss zusammenfassen -----------

@@ -1,4 +1,4 @@
-# Arbeiten mit Datensätzen in Stata {#Stata2} 
+# Arbeiten mit Datensätzen in Stata {#stata2} 
 
 ```{r setup2, echo = F, message=F, warning = F}
 .libPaths("D:/R-library4")

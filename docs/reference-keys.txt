@@ -149,3 +149,13 @@ quadratische-terme
 regue3
 r-pl4-fig.caphere-is-a-nice-figure-out.width80-fig.asp.75-fig.aligncenter-echo-fmessagefwarningfalse-ggplotpalmerpenguinspenguinsaesx-bill_depth_mm-fill-factorisland-geom_histogramcolor-grey30-theme_stata-guidescolor-none-scale_fill_brewerpalette-ylgnbuname-facet_gridisland
 stata2
+import-und-aufbereitung-aus-excel
+datenimport-aus-excel-datei
+variablen-umbenennen---bezeichnungen-anpassen
+variablen-umbenennen-rename
+variablenbeschreibung-label-variable
+werte-labeln-label-values
+exportieren
+fortgeschrittene-programmierung-foreach-schleife
+xlsimport
+adopath

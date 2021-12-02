@@ -73,17 +73,21 @@ tab ao_wo
 
 * -------------------------------- *
 * bestehende Variablen verändern
+tab gkpol
+tab gkpol, nol
 
-recode gkpol (2=1) (3=1) (4=2) (5=2) (6=3) (7=3), into(gkpol2)
+recode gkpol (1=1) (2=1) (3=1) (4=2) (5=2) (6=3) (7=3), into(gkpol2)
 tab gkpol gkpol2
 
 
 drop gkpol2 // nochmal neu
-recode gkpol (2=1 "Klein") (3=1 "Klein") (4=2 "Mittel") (5=2 "Mittel") (6=3 "Groß") (7=3 "Groß"), into(gkpol2)
+recode gkpol (2=1 "Klein") (3=1 "Klein") (4=2 "Mittel") (5=2 "Mittel") ///
+				(6=3 "Groß") (7=3 "Groß"), into(gkpol2)
 tab gkpol gkpol2
-
+d gkpol
 drop gkpol2
 recode gkpol (1 2 3=1 "Klein") (4 5=2 "Mittel") (6 7=3 "Groß"), into(gkpol2)
+recode gkpol (1/3=1 "Klein") (4 5=2 "Mittel") (6 7=3 "Groß"), into(gkpol2)
 
 /*
 	min 	  		Minimalwert

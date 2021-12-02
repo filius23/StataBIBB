@@ -5,6 +5,10 @@
 
 use D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta, clear
 
+* für missings:
+d zpalter
+labelbook ZPALTER
+
 *  cut() -> metrisch zu kategorial
 mvdecode zpalter, mv(9999)
 egen age_cat = cut(zpalter), at(15 18 35 60 100 )  label

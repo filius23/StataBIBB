@@ -14,6 +14,225 @@ knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 ```
 
 
+## Import und Aufbereitung aus Excel {#xlsimport}
+
+
+```{r gendata, include=F,eval = F}
+set.seed(26131)
+data.frame(id = 1:15,
+           x1 = sample(c(1:2,-4), size = 15,replace = T),
+           x2 = sample(c(1,0,-4,-9),     15,replace = T),
+           x3 = sample(c(1,0,-4,-9),     15,replace = T),
+           x4 = sample(1:5,              15,replace = T)) %>% 
+  xlsx::write.xlsx("./Stata_Einführung_BIBB/Rohdaten.xlsx",row.names = F)
+```
+
+
+### Datenimport aus Excel-Datei
+
+Unter `file -> import -> excel spreadsheet` können wir einen Excel-Import erstellen, den Befehl aus dem Ausgabefenster können wir dann kopieren:
+
+```{stata xl1, eval =F }
+import excel "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1\Stata_Einführung_BIBB\Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
+// oder:
+cd "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1\Stata_Einführung_BIBB\"
+import excel "Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
+* Überblick gewinnen
+list
+browse
+```
+
+```{stata xl1b, echo = F}
+qui import excel "Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
+list, clean
+```
+
+Hier eine kleine (Fantasie-)Doku zum Datensatz:
+
+
+```{r xlsdoke,echo=F}
+tribble(
+    ~"Variablenname", ~"Beschreibung", ~"Details",
+	 "id" ,		"Befragten-Identifikationsnummer", "",
+	 "x1" ,		"Geschlecht", "1 = Frau, 2 = Mann, -4 keine Angabe",
+	 "x2" ,		"Haustiere?", "0 = nein, 1 =  ja, -4  keine Angabe, -9 Datenfehler",
+	 "x3" ,		"Frühaufsteher?", "0 = nein, 1 =  ja, -4  keine Angabe, -9 Datenfehler",
+	 "x4"	,		"5er Likert-Skala: Stata macht Spaß", "1 = trifft überhaupt nicht zu",
+	 ""	,		"", "5 = tifft voll zu"
+) %>% 
+  kable() %>% 
+  kable_styling(bootstrap_options = "condensed", full_width = F,font_size = 12) %>% 
+  column_spec(1,monospace = TRUE) 
+
+```
+	 
+				
+### Variablen umbenennen: `rename`
+
+Dann benennen wir die Variablen in sprechendere Namen um `rename alt neu`:
+```{stata xl2, eval = F}
+rename x1 gender
+rename x2 pets
+rename x3 earlybird
+rename x4 stata
+```
+
+```{stata xl2T, echo = F}
+qui import excel "Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
+rename x1 gender
+rename x2 pets
+rename x3 earlybird
+rename x4 stata
+list, clean
+```
+
+
+
+### Variablenbeschreibung: `label variable`
+
+```{stata xl3, eval = F}
+label variable gender		  "Geschlecht"
+label variable pets			  "Haustierbesitz?"
+label variable earlybird	"Frühaufsteher"
+label variable stata     	"Stata macht Spaß"
+```
+```{stata xl3T, echo = F}
+qui import excel "Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
+rename x1 gender
+rename x2 pets
+rename x3 earlybird
+rename x4 stata
+label variable gender		  "Geschlecht"
+label variable pets			  "Haustierbesitz?"
+label variable earlybird	"Frühaufsteher"
+label variable stata     	"Stata macht Spaß"
+d
+```
+
+### Werte labeln `label values`
+
+Mit  `.buchstabe` können wir fehlende Werte unterscheidbar halten, so können wir sowohl "keine Angabe" als auch "Datenfehler als Missing überschreiben und trotzdem beide Varianten unterscheidbar halten:
+
+```{stata xl4, eval = F}
+tab gender
+replace gender = .k if gender == -4
+tab gender
+tab gender, m
+
+label define gend_lab 1 "Frau" 2 "Mann" .k "keine Angabe"
+lab val gender gend_lab
+tab gender
+tab gender, m
+```
+
+```{stata xl4T, echo = F}
+quietly{
+import excel "Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
+rename x1 gender
+rename x2 pets
+rename x3 earlybird
+rename x4 stata
+label variable gender		  "Geschlecht"
+label variable pets			  "Haustierbesitz?"
+label variable earlybird	"Frühaufsteher"
+label variable stata     	"Stata macht Spaß"
+  }
+replace gender = .k if gender == -4
+label define gend_lab 1 "Frau" 2 "Mann" .k "keine Angabe"
+lab val gender gend_lab
+tab gender, nol
+tab gender, m
+```
+
+Für die weiteren Variablen können wir ähnlich vorgehen: 
+```{stata xl5, eval = F}
+lab def dummy_lab 0 "Nein" 1 "Ja" .k "keine Angabe" .d "Datenfehler"
+lab val earlybird dummy_lab
+
+tab earlybird
+recode  earlybird (-9=.d) (-4=.k)
+	* oder:
+	replace earlybird = .k if earlybird == -4
+	replace earlybird = .d if earlybird == -9
+tab earlybird,m
+```
+```{stata xl5T, echo = F}
+quietly{
+import excel "Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
+rename x1 gender
+rename x2 pets
+rename x3 earlybird
+rename x4 stata
+label variable gender		  "Geschlecht"
+label variable pets			  "Haustierbesitz?"
+label variable earlybird	"Frühaufsteher"
+label variable stata     	"Stata macht Spaß"
+  }
+lab def dummy_lab 0 "Nein" 1 "Ja" .k "keine Angabe" .d "Datenfehler"
+lab val earlybird dummy_lab
+recode  earlybird (-9=.d) (-4=.k)
+tab earlybird,m
+```
+
+
+und wir verwenden eine fortgeschrittene Programmierung: foreach-Schleife
+```{stata xlloop, eval = F}
+foreach v of varlist earlybird pets {
+	replace `v' = .k if `v' == -4
+	replace `v' = .d if `v' == -9	
+	lab val `v' dummy_lab
+}
+// oder
+foreach v of varlist earlybird pets {
+	recode  `v' (-9=.d) (-4=.k)
+	lab val `v' dummy_lab
+}
+```
+
+
+```{stata xlloopT, echo = F}
+quietly{
+import excel "Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
+rename x1 gender
+rename x2 pets
+rename x3 earlybird
+rename x4 stata
+label variable gender		  "Geschlecht"
+label variable pets			  "Haustierbesitz?"
+label variable earlybird	"Frühaufsteher"
+label variable stata     	"Stata macht Spaß"
+}
+foreach v of varlist earlybird pets {
+	recode  `v' (-9=.d) (-4=.k)
+	lab val `v' dummy_lab
+}
+```
+
+
+### exportieren
+```{stata xlexp, eval = F}
+compress // variablen auf minimale speichergröße bringen
+save "Datensatz_ready.dta", replace
+```
+Dieser Datensatz kann mit `use` geladen werden.
+
+## `adopath`
+
+Mit `adopath` können wir die Ordner anzeigen, wo die `ado`s liegen.
+Mit `which` können wir den Speicherort eines `ado` ansehen:
+```{stata ado, eval = F}
+which mdesc
+```
+```{stata ado2, echo = F}
+dis ""
+which mdesc
+```
+
+Mit `adopath ++ PFAD` können wir `ado` aus zusätzlichen Ordner verwenden:
+```{stata ado3, eval = F}
+adopath ++ "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1\Stata_Einführung_BIBB/u"
+```
+
 ## Beobachtungen markieren mit `gen` & `if`
 
 Die Kombination aus `gen` und `if` hilft uns, wenn wir eine Variable nur für einige Zeilen erstellen wollen. Das hilft insbesondere, wenn wir bestimmte Beobachtungen markieren wollen. Beispielsweise Frauen (`S1` = 1), die einer Nebentätigkeit (`nt` = 1) nachgehen:

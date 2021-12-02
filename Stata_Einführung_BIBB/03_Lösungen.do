@@ -4,13 +4,15 @@
 * -------------------------------- *
 
 
+use D:/Datenspeicher/BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta, clear
+
 * 1 ---------------------------
 	* Laden Sie den BIBB/BAuA Erwerbstätigenbefragung 2018 (`BIBBBAuA_2018_suf1.dta`). Analysieren Sie die Einkommensangaben (`F518_SUF`):
     * Denken Sie daran, die fehlenden Werte für `F518_SUF` mit als Missing zu überschreiben! (bspw. `mvdecode`, sehen Sie mit `labelbook F518` Codebuch nach, welche Werte als fehlende Angaben zu betrachten sind)
 d F518_SUF
 labelbook F518
-mvdecode F518_SUF, mv( 99998/ 99999)
-
+mvdecode F518_SUF, mv( 99998/99999)
+mdesc F518_SUF
 	
 	* Betrachten Sie die Einkommensangaben mit `summarize`
 su F518_SUF
@@ -19,6 +21,7 @@ su F518_SUF
     * Wo liegt das arith. Mittel für die Einkommensangaben?
 *3532.109 
     * Wie können Sie sich den Median mit Hilfe von `summarize` ausgeben lassen?
+su F518_SUF, detail
 su F518_SUF, d
     * Bei welchem Wert liegt die 75%-Perzentilsgrenze?
 *  4200  
@@ -31,7 +34,7 @@ su F518_SUF, d
 tabstat 	F518_SUF, stat(mean p25 p50 p75 var cv)
 
     * Berechnen Sie nun alle Werte getrennt für Männer und Frauen (Variable `S1`) - welche Werte erhalten Sie jeweils für die Kennzahlen?
-tabstat 	F518_SUF, stat(mean p25 p50 p75 var cv), by(S1)
+tabstat 	F518_SUF, stat(mean p25 p50 p75 var cv) by(S1)
     * Vergleichen Sie die Werte! Wie unterscheiden sich die Einkommensangaben zwischen Männern und Frauen?
   
   
