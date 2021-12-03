@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-02" />
+<meta name="date" content="2021-12-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -346,9 +346,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11" data-path="anova.html"><a href="anova.html"><i class="fa fa-check"></i><b>11</b> ANOVA</a>
 <ul>
-<li class="chapter" data-level="11.0.1" data-path="anova.html"><a href="anova.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>11.0.1</b> ANOVA vs. t-Tests</a></li>
-<li class="chapter" data-level="11.0.2" data-path="anova.html"><a href="anova.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>11.0.2</b> ANOVA vs. lineare Regression</a></li>
-<li class="chapter" data-level="11.1" data-path="anova.html"><a href="anova.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>11.1</b> ANOVA mehrere Gruppen</a></li>
+<li class="chapter" data-level="11.1" data-path="anova.html"><a href="anova.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>11.1</b> ANOVA vs. lineare Regression</a></li>
+<li class="chapter" data-level="11.2" data-path="anova.html"><a href="anova.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>11.2</b> ANOVA vs. t-Tests</a></li>
+<li class="chapter" data-level="11.3" data-path="anova.html"><a href="anova.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>11.3</b> ANOVA mehrere Gruppen</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>12</b> Literatur</a>
 <ul>
@@ -364,6 +364,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.1.3" data-path="appendix.html"><a href="appendix.html#variablenbeschreibung-label-variable"><i class="fa fa-check"></i><b>13.1.3</b> Variablenbeschreibung: <code>label variable</code></a></li>
 <li class="chapter" data-level="13.1.4" data-path="appendix.html"><a href="appendix.html#werte-labeln-label-values"><i class="fa fa-check"></i><b>13.1.4</b> Werte labeln <code>label values</code></a></li>
 <li class="chapter" data-level="13.1.5" data-path="appendix.html"><a href="appendix.html#exportieren"><i class="fa fa-check"></i><b>13.1.5</b> exportieren</a></li>
+<li class="chapter" data-level="13.1.6" data-path="appendix.html"><a href="appendix.html#übung"><i class="fa fa-check"></i><b>13.1.6</b> Übung</a></li>
 </ul></li>
 <li class="chapter" data-level="13.2" data-path="appendix.html"><a href="appendix.html#adopath"><i class="fa fa-check"></i><b>13.2</b> <code>adopath</code></a></li>
 <li class="chapter" data-level="13.3" data-path="appendix.html"><a href="appendix.html#log-file"><i class="fa fa-check"></i><b>13.3</b> log file</a></li>
@@ -621,6 +622,90 @@ keine Angabe |          3       20.00      100.00
 <div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="appendix.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">compress</span> <span class="co">// variablen auf minimale speichergröße bringen</span></span>
 <span id="cb13-2"><a href="appendix.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">save</span> <span class="st">&quot;Datensatz_ready.dta&quot;</span>, <span class="kw">replace</span></span></code></pre></div>
 <p>Dieser Datensatz kann mit <code>use</code> geladen werden.</p>
+</div>
+<div id="übung" class="section level3" number="13.1.6">
+<h3><span class="header-section-number">13.1.6</span> Übung</h3>
+<p>Lesen Sie die <code>Rohdaten2.xlsx</code> ein und hinterlegen Sie folgende Labels und Missing-Codes:</p>
+<table class="table table-condensed" style="font-size: 12px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Variablenname
+</th>
+<th style="text-align:left;">
+Beschreibung
+</th>
+<th style="text-align:left;">
+Details
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+id
+</td>
+<td style="text-align:left;">
+Befragten-Identifikationsnummer
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+x1
+</td>
+<td style="text-align:left;">
+Geschlecht
+</td>
+<td style="text-align:left;">
+0 = Frau, 1 = Mann, -9 keine Angabe
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+x2
+</td>
+<td style="text-align:left;">
+Haustiere?
+</td>
+<td style="text-align:left;">
+1 = nein, 2 = ja, -9 keine Angabe, -1 Datenfehler
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+x3
+</td>
+<td style="text-align:left;">
+Frühaufsteher?
+</td>
+<td style="text-align:left;">
+1 = nein, 2 = ja, -9 keine Angabe, -1 Datenfehler
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+x4
+</td>
+<td style="text-align:left;">
+5er Likert-Skala: Stata macht Spaß
+</td>
+<td style="text-align:left;">
+0 = trifft überhaupt nicht zu
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-family: monospace;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+4 = tifft voll zu
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="adopath" class="section level2" number="13.2">
