@@ -73,7 +73,10 @@ marginsplot
 * ---------------------- *
 	d F200
 	mvdecode F200, mv(97/99)
+	
 	reg F518_SUF i.educ F200
+	
+	
 	su F200
 	margins, at( F200 = (15(5)45) educ = (1(1)3))
 	marginsplot

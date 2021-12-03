@@ -39,6 +39,5 @@ tab 	 educ F411_01, gamma // Gamma
 	tab F103 F228, nol
 	mvdecode F103 F228, mv(9)
 
-tab F103 F228, chi 
-tab F103 F228, V
+tab F103 F228, chi V
 // geringer, signifikanter Zusammenhang

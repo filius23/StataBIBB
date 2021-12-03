@@ -18,7 +18,6 @@ import excel "Rohdaten.xlsx", sheet("Sheet1") firstrow case(lower) clear
 list
  * browse
 
-
 /* Aus Dokumentation wissen wir:
 	 
 	 
@@ -53,7 +52,7 @@ list
 
 label variable gender		"Geschlecht"
 label variable pets			"Haustierbesitz?"
-label variable earlybird	"Frühaufsteher"
+label variable earlybird	"Sind Sie ein*e Frühaufsteher*in?"
 label variable stata     	"Stata macht Spaß"
 
 list 
@@ -95,7 +94,18 @@ tab earlybird,m
 compress // variablen auf minimale speichergröße bringen
 save "Datensatz_ready.dta", replace
 	
-	
+
+* -------------------------------- *
+* probanden mit datenfehler rausfiltern
+
+list 
+
+list, nol
+
+drop  if earlybird == .d // nur earlybird fehler raus	
+keep  if earlybird != .d  // alle außer earlybird == Datenfehler
+
+drop  if earlybird == .d | pets == .d // earlybird oder pet fehler raus
 	
 * -------------------------------- *
 * fortgeschrittene Programmierung: foreach-Schleife

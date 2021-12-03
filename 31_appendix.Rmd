@@ -235,9 +235,9 @@ Lesen Sie die `Rohdaten2.xlsx` ein und hinterlegen Sie folgende Labels und Missi
 tribble(
     ~"Variablenname", ~"Beschreibung", ~"Details",
 	 "id" ,		"Befragten-Identifikationsnummer", "",
-	 "x1" ,		"Geschlecht", "0 = Frau, 1 = Mann, -9 keine Angabe",
-	 "x2" ,		"Haustiere?", "0 = nein, 1 =  ja, -9  keine Angabe, -1 Datenfehler",
-	 "x3" ,		"Frühaufsteher?", "0 = nein, 1 =  ja, -9  keine Angabe, -1 Datenfehler",
+	 "x1" ,		"Geschlecht", "0 = Frau, 1 = Mann, -4 keine Angabe",
+	 "x2" ,		"Haustiere?", "0 = nein, 1 =  ja, -4  keine Angabe, -9 Datenfehler",
+	 "x3" ,		"Frühaufsteher?", "0 = nein, 1 =  ja, -4  keine Angabe, -9 Datenfehler",
 	 "x4"	,		"5er Likert-Skala: Stata macht Spaß", "0 = trifft überhaupt nicht zu",
 	 ""	,		"", "4 = tifft voll zu"
 ) %>% 
