@@ -1,4 +1,4 @@
-* -------------------------------- *
+﻿* -------------------------------- *
 * Kapitel 7: Inferenz - Hypothesentests und Gewichtung
 * Lösungen
 * -------------------------------- *
@@ -9,9 +9,11 @@ use "D:\Datenspeicher\BIBB_BAuA/BIBBBAuA_2018_suf1.0.dta", clear
 * 1 -----------------
 	* Berechnen Sie das Konfidenzintervall für die durchschnittliche Arbeitszeit (az)
 tabstat az, stat(mean sd n)
+summarize az
 display invttail( 20012-1, .025)
-dis 38.30557 - 1.9600825 * 11.75297 /sqrt(20012)
-dis 38.30557 + 1.9600825 * 11.75297 /sqrt(20012)
+* mean(x) +/- t * sd/sqrt(n)
+display 38.30557 - 1.9600825 * 11.75297 /sqrt(20012)
+display 38.30557 + 1.9600825 * 11.75297 /sqrt(20012)
 mean az	
 	
 * 2 Testen Sie die Hypothese, dass die eigentliche durchschnittliche Arbeitszeit 38.5 Stunden beträgt. Interpretieren Sie die Ergebnisse im Sinne einen rechts-, links- und beidseitigen Tests!

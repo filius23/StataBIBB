@@ -24,7 +24,7 @@
 <meta name="author" content="Andreas Filser" />
 
 
-<meta name="date" content="2021-12-02" />
+<meta name="date" content="2021-12-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -344,8 +344,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11" data-path="anova.html"><a href="anova.html"><i class="fa fa-check"></i><b>11</b> ANOVA</a>
 <ul>
-<li class="chapter" data-level="11.0.1" data-path="anova.html"><a href="anova.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>11.0.1</b> ANOVA vs. t-Tests</a></li>
-<li class="chapter" data-level="11.0.2" data-path="anova.html"><a href="anova.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>11.0.2</b> ANOVA vs. lineare Regression</a></li>
+<li class="chapter" data-level="11.0.1" data-path="anova.html"><a href="anova.html#anova-vs.-lineare-regression"><i class="fa fa-check"></i><b>11.0.1</b> ANOVA vs. lineare Regression</a></li>
+<li class="chapter" data-level="11.0.2" data-path="anova.html"><a href="anova.html#anova-vs.-t-tests"><i class="fa fa-check"></i><b>11.0.2</b> ANOVA vs. t-Tests</a></li>
 <li class="chapter" data-level="11.1" data-path="anova.html"><a href="anova.html#anova-mehrere-gruppen"><i class="fa fa-check"></i><b>11.1</b> ANOVA mehrere Gruppen</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="lit.html"><a href="lit.html"><i class="fa fa-check"></i><b>12</b> Literatur</a>
@@ -442,45 +442,12 @@ Bartlett&#39;s test for equal variances:  chi2(1) = 862.7132  Prob&gt;chi2 = 0.0
 <p>Außerdem werden uns die Sum of Squares für die Unterschiede innerhalb und zwischen den Gruppen angezeigt. Wir sehen hier, dass die Varianz innerhalb der Gruppen die Gruppendifferenz deutlich übersteigt: die Sum of Squares zwischen den Gruppen sind mit <code>1.9886e+11</code> deutlich geringer als die Within-group SS <code>8.5219e+09</code>.
 (<code>8.5219e+09</code> steht für <code>8,521,900,000</code>, also <code>4.883*10^9</code> “,<code>1.9886e+11</code> entspricht <code>198,860,000,000</code>).
 Wir können aus den Zahlen für die Sum of Squares auch die Varianzaufklärung durch die Variable <code>S1</code> berechnen (<code>between</code>/<code>Total</code>):</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="anova.html#cb5-1" aria-hidden="true" tabindex="-1"></a>dis  (8.5219e+09/ 2.0738e+11)</span></code></pre></div>
-<pre><code> variable F518_SUF not found
-r(111);
-
-
-.04109316</code></pre>
-<p>Durch Kenntnis der Varibale <code>S1</code> können also 4.11% der gesamten Varianz (“Unterschiede”) des Einkommens erklärt werden.</p>
-<div id="anova-vs.-t-tests" class="section level3" number="11.0.1">
-<h3><span class="header-section-number">11.0.1</span> ANOVA vs. t-Tests</h3>
-<p>Der t-Test wird beim Vergleich zweier Gruppen verwendet, während die ANOVA für den Vergleich von mehr als 2 Gruppen verwendet wird. Wenn wir den p-Wert unter Verwendung der ANOVA für 2 Gruppen berechnen, erhalten wir die gleichen Ergebnisse wie beim t-Test - hier also einen signifikanten Gruppenunterschied:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="anova.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> F518_SUF, <span class="kw">by</span>(S1) unequ</span></code></pre></div>
-<pre><code> variable F518_SUF not found
-r(111);
-
-
-
-
-
-Two-sample t test with unequal variances
-------------------------------------------------------------------------------
-   Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
----------+--------------------------------------------------------------------
-mÃ¤nnlich |   8,495    4232.735    42.87073    3951.324    4148.698    4316.772
-weiblich |   8,140    2800.926    31.62129    2852.935     2738.94    2862.912
----------+--------------------------------------------------------------------
-combined |  16,635    3532.109    27.37647    3530.928    3478.448    3585.769
----------+--------------------------------------------------------------------
-    diff |            1431.809    53.27106                1327.392    1536.227
-------------------------------------------------------------------------------
-    diff = mean(mÃ¤nnlich) - mean(weiblich)                        t =  26.8778
-Ho: diff = 0                     Satterthwaite&#39;s degrees of freedom =  15471.3
-
-    Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
- Pr(T &lt; t) = 1.0000         Pr(|T| &gt; |t|) = 0.0000          Pr(T &gt; t) = 0.0000</code></pre>
-</div>
-<div id="anova-vs.-lineare-regression" class="section level3" number="11.0.2">
-<h3><span class="header-section-number">11.0.2</span> ANOVA vs. lineare Regression</h3>
+<p><code>dis  (8.5219e+09/ 2.0738e+11) = 04109316</code>
+Durch Kenntnis der Varibale <code>S1</code> können also 4.11% der gesamten Varianz (“Unterschiede”) des Einkommens erklärt werden.</p>
+<div id="anova-vs.-lineare-regression" class="section level3" number="11.0.1">
+<h3><span class="header-section-number">11.0.1</span> ANOVA vs. lineare Regression</h3>
 <p>Die lineare Regression wird zur Analyse kontinuierlicher Beziehungen verwendet; die Regression ist jedoch im Wesentlichen die gleiche wie die ANOVA. Bei der ANOVA berechnen wir Mittelwerte und Abweichungen unserer Daten von den Mittelwerten. Bei der linearen Regression berechnen wir die beste Linie durch die Daten und berechnen die Abweichungen der Daten von dieser Linie. Stata gibt uns das F-Verhältnis bei Regressionsmodellen direkt mit aus. Zu beachten ist aber hier, dass wir für eine kategoriale unabhängige Variable <code>i.</code> voranstellen müssen:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="anova.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.S1</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb5-1"><a href="anova.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.S1</span></code></pre></div>
 <pre><code> variable F518_SUF not found
 r(111);
 
@@ -514,11 +481,39 @@ r(111);
 <p><a href="#anova1">Übungen 3</a></p>
 <hr />
 </div>
+<div id="anova-vs.-t-tests" class="section level3" number="11.0.2">
+<h3><span class="header-section-number">11.0.2</span> ANOVA vs. t-Tests</h3>
+<p>Der t-Test wird beim Vergleich zweier Gruppen verwendet, während die ANOVA für den Vergleich von mehr als 2 Gruppen verwendet wird. Wenn wir den p-Wert unter Verwendung der ANOVA für 2 Gruppen berechnen, erhalten wir die gleichen Ergebnisse wie beim t-Test - hier also einen signifikanten Gruppenunterschied:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb7-1"><a href="anova.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">ttest</span> F518_SUF, <span class="kw">by</span>(S1) unequ</span></code></pre></div>
+<pre><code> variable F518_SUF not found
+r(111);
+
+
+
+
+
+Two-sample t test with unequal variances
+------------------------------------------------------------------------------
+   Group |     Obs        Mean    Std. Err.   Std. Dev.   [95% Conf. Interval]
+---------+--------------------------------------------------------------------
+mÃ¤nnlich |   8,495    4232.735    42.87073    3951.324    4148.698    4316.772
+weiblich |   8,140    2800.926    31.62129    2852.935     2738.94    2862.912
+---------+--------------------------------------------------------------------
+combined |  16,635    3532.109    27.37647    3530.928    3478.448    3585.769
+---------+--------------------------------------------------------------------
+    diff |            1431.809    53.27106                1327.392    1536.227
+------------------------------------------------------------------------------
+    diff = mean(mÃ¤nnlich) - mean(weiblich)                        t =  26.8778
+Ho: diff = 0                     Satterthwaite&#39;s degrees of freedom =  15471.3
+
+    Ha: diff &lt; 0                 Ha: diff != 0                 Ha: diff &gt; 0
+ Pr(T &lt; t) = 1.0000         Pr(|T| &gt; |t|) = 0.0000          Pr(T &gt; t) = 0.0000</code></pre>
+</div>
 <div id="anova-mehrere-gruppen" class="section level2" number="11.1">
 <h2><span class="header-section-number">11.1</span> ANOVA mehrere Gruppen</h2>
 <p>Der Vorteil von ANOVA ist aber, dass sich auch Gruppenunterschiede für Variablen mit mehr als zwei Ausprägungen untersuchen lassen, bspw. Schulbildungsniveaus:</p>
 <p><img src="StataBIBB1_files/figure-html/anova_plot2-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="anova.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">oneway</span> F518_SUF m1202, <span class="kw">tabulate</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb9-1"><a href="anova.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">oneway</span> F518_SUF m1202, <span class="kw">tabulate</span></span></code></pre></div>
 <pre><code> variable F518_SUF not found
 r(111);
 
@@ -553,7 +548,7 @@ Bartlett&#39;s test for equal variances:  chi2(3) =  4.3e+03  Prob&gt;chi2 = 0.0
 <li>dass Befragte mit einem Abschluss der Fachhochschule, Universität/ geh., höhere Beamte die höchsten Durchschnittseinkommen haben (<code>Mean</code> = <code>4643.9031</code>), Befatgte ohne Berufsabschluss die niedrigsten (<code>Mean</code> = <code>2150.7608</code>) usw.</li>
 </ul>
 <p>Auch hier der Vergleich zu Regressionsmodellen einer kategorialen UV:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb13-1"><a href="anova.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.m1202</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode stata"><code class="sourceCode stata"><span id="cb11-1"><a href="anova.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">reg</span> F518_SUF i.m1202</span></code></pre></div>
 <pre><code> variable F518_SUF not found
 r(111);
 

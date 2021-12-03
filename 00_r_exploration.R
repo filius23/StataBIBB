@@ -59,3 +59,6 @@ map(1:length(chp1), function(x){
 
 # befehle ----
 knitr::purl(input = "07_gewichtung.Rmd",output = "./stata_prog/07_Befehle.do")
+
+
+pagedown::chrome_print(rmarkdown::render('../pdf/StataBIBB1.Rmd'))
