@@ -9,7 +9,7 @@
 * ---------------------- *
 * 1: Berechnen Sie ein Regressionsmodell mit der Arbeitszeit (`az`) aus der Hauptbeschäftigung als abh. Variable und dem Alter der Befragten (`zpalter`) als unabh. Variable: arbeiten ältere Befragte eher mehr oder eher weniger? Wie ist der Koeffizient zu interpretieren? Was können Sie über die Varianzaufklärung sagen?
 
-reg az zpalter
+reg az zpalter 
 
 // Um 1 Jahr ältere Befragte arbeiten durchschnittlich 0.027 Stunden weniger, der Koeffizient ist statistisch signifikant
 
@@ -18,7 +18,18 @@ reg az zpalter
 
 mvdecode m1202,mv(-1)
 reg az i.m1202
+tab m1202
+tab m1202, nol
+margins, at(m1202 = (1 2 3 4))
+margins, at(m1202 = (1(1)4) )
+marginsplot
 
+ * label bearbeiten
+ d m1202
+	label define M1202 1 "ohne" 2 "dual" 3 "aufstieg" 4 "uni", replace
+ tab m1202
+ 
+ 
 * Im Vergleich zu Befragten ohne Ausbildungsabschluss arbeiten Befragte mit duale o. schulische Berufsausbildung/einf.,mittl. Beamte  um 2.72h mehr, stat.  signifikant
 * Im Vergleich zu Befragten ohne Ausbildungsabschluss arbeiten Befragte mit Aufstiegsfortbildung (Meister, Techniker, kfm. AFB u.ä.)  um 6.33h mehr, stat.  signifikant
 * Im Vergleich zu Befragten ohne Ausbildungsabschluss arbeiten Befragte mit         Fachhochschule, Universität/ geh., höhere Beamte  um 5.16h mehr, stat.  signifikant

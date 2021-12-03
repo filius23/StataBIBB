@@ -222,10 +222,10 @@ Dieser Datensatz kann mit `use` geladen werden.
 ```{r gendata2, include=F,eval = F}
 set.seed(26188)
 data.frame(id = 1:15,
-           x1 = sample(c(1:2,-4), size = 15,replace = T),
+           x1 = sample(c(0:1,-4), size = 15,replace = T),
            x2 = sample(c(1,0,-4,-9),     15,replace = T),
            x3 = sample(c(1,0,-4,-9),     15,replace = T),
-           x4 = sample(1:5,              15,replace = T)) %>% 
+           x4 = sample(0:4,              15,replace = T)) %>% 
   xlsx::write.xlsx("./Stata_Einführung_BIBB/Rohdaten2.xlsx",row.names = F)
 ```
 
@@ -236,8 +236,8 @@ tribble(
     ~"Variablenname", ~"Beschreibung", ~"Details",
 	 "id" ,		"Befragten-Identifikationsnummer", "",
 	 "x1" ,		"Geschlecht", "0 = Frau, 1 = Mann, -9 keine Angabe",
-	 "x2" ,		"Haustiere?", "1 = nein, 2 =  ja, -9  keine Angabe, -1 Datenfehler",
-	 "x3" ,		"Frühaufsteher?", "1 = nein, 2 =  ja, -9  keine Angabe, -1 Datenfehler",
+	 "x2" ,		"Haustiere?", "0 = nein, 1 =  ja, -9  keine Angabe, -1 Datenfehler",
+	 "x3" ,		"Frühaufsteher?", "0 = nein, 1 =  ja, -9  keine Angabe, -1 Datenfehler",
 	 "x4"	,		"5er Likert-Skala: Stata macht Spaß", "0 = trifft überhaupt nicht zu",
 	 ""	,		"", "4 = tifft voll zu"
 ) %>% 

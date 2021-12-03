@@ -186,7 +186,7 @@ Durch Kenntnis der Varibale `S1` können also 4.11% der gesamten Varianz ("Unter
 
 
 
-## ANOVA vs. lineare Regression
+### ANOVA vs. lineare Regression
 
 Die lineare Regression wird zur Analyse kontinuierlicher Beziehungen verwendet; die Regression ist jedoch im Wesentlichen die gleiche wie die ANOVA. Bei der ANOVA berechnen wir Mittelwerte und Abweichungen unserer Daten von den Mittelwerten. Bei der linearen Regression berechnen wir die beste Linie durch die Daten und berechnen die Abweichungen der Daten von dieser Linie. Stata gibt uns das F-Verhältnis bei Regressionsmodellen direkt mit aus. Zu beachten ist aber hier, dass wir für eine kategoriale unabhängige Variable `i.` voranstellen müssen:
 
@@ -216,7 +216,7 @@ reg F518_SUF i.S1
 
 
 
-## ANOVA vs. t-Tests
+### ANOVA vs. t-Tests
 
 Der t-Test wird beim Vergleich zweier Gruppen verwendet, während die ANOVA für den Vergleich von mehr als 2 Gruppen verwendet wird. Wenn wir den p-Wert unter Verwendung der ANOVA für 2 Gruppen berechnen, erhalten wir die gleichen Ergebnisse wie beim t-Test - hier also einen signifikanten Gruppenunterschied:
 ```{stata ttest_anova1, eval =F }

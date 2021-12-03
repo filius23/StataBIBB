@@ -62,10 +62,16 @@ tab S3 educ , m
 
 reg F518_SUF i.educ
 
+
+* grafische Darstellung von Regressionsergebnissen:
+reg F518_SUF ib3.educ
+margins, at( educ = (1(1)3) )
+marginsplot
+
 * ---------------------- *
 * mehrere unabh. Variablen
 * ---------------------- *
-		
+	d F200
 	mvdecode F200, mv(97/99)
 	reg F518_SUF i.educ F200
 	su F200
@@ -89,7 +95,7 @@ reg F518_SUF i.educ
 	graph export "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1/pics/09_mplot3.png", replace
 	
 	
-	marginsplot, /// scheme(s1mono)  ///
+	marginsplot, /// 
 				graphregion(fcolor(white)) /// Hintergundfarbe (außerhalb des eigentlichen Plots)
                 plot1(color("57 65 101")  msize(small)) /// Farbe & Größe für erste Gruppe
 				ci1opts(color("57 65 101")) /// Farbe für Konfidenzintervalle der ersten Gruppe

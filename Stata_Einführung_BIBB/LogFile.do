@@ -5,7 +5,7 @@ log using "D:\oCloud\Home-Cloud\Lehre\BIBB\StataBIBB1\Stata_Einführung_BIBB/log
 * ------------------------------------------------ *
 * Alter, Bildung, Geschlecht in der ETB 2018
 * ------------------------------------------------ *
-glo data "D:\Datenspeicher\BIBB_BAuA/"
+global data "D:\Datenspeicher\BIBB_BAuA/"
 use "${data}/BIBBBAuA_2018_suf1.0.dta", clear
 mvdecode zpalter, mv(9999)	  // dieses log enthält auch kommentare
 mvdecode m1202,mv(-1)   // noch einen 
