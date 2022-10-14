@@ -2,9 +2,9 @@
 
 
 ```{r setup1, echo = F, message=F, warning = F}
-if(Sys.getenv("USERNAME") == "Filser" ) .libPaths("D:/R-library4")  # set library
-stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
-# stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
+if(Sys.getenv("USERNAME") == "filse" ) .libPaths("D:/R-library4")  # set library
+# stataexe <- "C:/Program Files (x86)/Stata13/StataSE-64.exe"
+stataexe <- "C:/Program Files/Stata16/StataSE-64.exe"
 knitr::opts_chunk$set(engine.path=list(stata=stataexe))
 library(Statamarkdown)
 library(tidyverse)

@@ -4,3 +4,8 @@
 .httr-oauth
 .DS_Store
 00_*
+/prog_polished_alt/
+/TN_Besch/
+/Stata_Einführung_BIBB/
+*pdf
+*pptx
